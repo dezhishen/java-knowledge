@@ -1,0 +1,2294 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>02b-A.-并发与Java基础 · Java知识网络</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 5.1.5">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="02c-B.-JVM.html" />
+    
+    
+    <link rel="prev" href="02a-使用方法.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    一、认知地基
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../01-一-认知地基/01-术语翻译与入门总览.html">
+            
+                <a href="../../01-一-认知地基/01-术语翻译与入门总览.html">
+            
+                    
+                    01 术语翻译与入门总览
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../../01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.html">
+            
+                <a href="../../01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.html">
+            
+                    
+                    01a-这份文件解决什么问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.2" data-path="../../01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.html">
+            
+                <a href="../../01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.html">
+            
+                    
+                    01b-高频术语翻译（人话版）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.3" data-path="../../01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.html">
+            
+                <a href="../../01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.html">
+            
+                    
+                    01c-学习地图（从不会到会讲）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4" data-path="../../01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.html">
+            
+                <a href="../../01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.html">
+            
+                    
+                    01d-学习标准（你每天检查）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../01-一-认知地基/02-学习方法与面试策略.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略.html">
+            
+                    
+                    02 学习方法与面试策略
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../../01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.html">
+            
+                    
+                    02a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../../01-一-认知地基/02-学习方法与面试策略/02b-术语翻译.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02b-术语翻译.html">
+            
+                    
+                    02b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="../../01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.html">
+            
+                    
+                    02c-面试到底在考什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="../../01-一-认知地基/02-学习方法与面试策略/02d-怎么学才不会忘.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02d-怎么学才不会忘.html">
+            
+                    
+                    02d-怎么学才不会忘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="../../01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.html">
+            
+                    
+                    02e-如何把项目讲出高级感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="../../01-一-认知地基/02-学习方法与面试策略/02f-本章30秒复述.html">
+            
+                <a href="../../01-一-认知地基/02-学习方法与面试策略/02f-本章30秒复述.html">
+            
+                    
+                    02f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构.html">
+            
+                    
+                    03 根因视角-物理机操作系统数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03a-你为什么会感觉“雾里看花”.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03a-你为什么会感觉“雾里看花”.html">
+            
+                    
+                    03a-你为什么会感觉“雾里看花”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03b-一张总图：程序性能从哪来.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03b-一张总图：程序性能从哪来.html">
+            
+                    
+                    03b-一张总图：程序性能从哪来
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03c-A.-物理机层（CPU-内存-磁盘）.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03c-A.-物理机层（CPU-内存-磁盘）.html">
+            
+                    
+                    03c-A.-物理机层（CPU-内存-磁盘）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03d-B.-操作系统层（调度-系统调用-网络）.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03d-B.-操作系统层（调度-系统调用-网络）.html">
+            
+                    
+                    03d-B.-操作系统层（调度-系统调用-网络）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03e-C.-数据结构层（复杂度与实际开销）.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03e-C.-数据结构层（复杂度与实际开销）.html">
+            
+                    
+                    03e-C.-数据结构层（复杂度与实际开销）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03f-面试高频追问与标准答案.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03f-面试高频追问与标准答案.html">
+            
+                    
+                    03f-面试高频追问与标准答案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.7" data-path="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03g-学习落地法（每天45分钟）.html">
+            
+                <a href="../../01-一-认知地基/03-根因视角-物理机操作系统数据结构/03g-学习落地法（每天45分钟）.html">
+            
+                    
+                    03g-学习落地法（每天45分钟）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    二、Java平台
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../02-二-Java平台/01-java语言基础.html">
+            
+                <a href="../../02-二-Java平台/01-java语言基础.html">
+            
+                    
+                    01 Java语言基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../../02-二-Java平台/01-java语言基础/01a-面向对象与抽象边界.html">
+            
+                <a href="../../02-二-Java平台/01-java语言基础/01a-面向对象与抽象边界.html">
+            
+                    
+                    01a-面向对象与抽象边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="../../02-二-Java平台/01-java语言基础/01b-泛型与类型系统.html">
+            
+                <a href="../../02-二-Java平台/01-java语言基础/01b-泛型与类型系统.html">
+            
+                    
+                    01b-泛型与类型系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="../../02-二-Java平台/01-java语言基础/01c-异常模型与错误边界.html">
+            
+                <a href="../../02-二-Java平台/01-java语言基础/01c-异常模型与错误边界.html">
+            
+                    
+                    01c-异常模型与错误边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="../../02-二-Java平台/01-java语言基础/01d-String与不可变对象.html">
+            
+                <a href="../../02-二-Java平台/01-java语言基础/01d-String与不可变对象.html">
+            
+                    
+                    01d-String与不可变对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../02-二-Java平台/02-java集合基础.html">
+            
+                <a href="../../02-二-Java平台/02-java集合基础.html">
+            
+                    
+                    02 Java集合基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1" data-path="../../02-二-Java平台/02-java集合基础/02a-List结构选择.html">
+            
+                <a href="../../02-二-Java平台/02-java集合基础/02a-List结构选择.html">
+            
+                    
+                    02a-List结构选择
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="../../02-二-Java平台/02-java集合基础/02b-Map结构与哈希冲突.html">
+            
+                <a href="../../02-二-Java平台/02-java集合基础/02b-Map结构与哈希冲突.html">
+            
+                    
+                    02b-Map结构与哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.3" data-path="../../02-二-Java平台/02-java集合基础/02c-Set语义与去重边界.html">
+            
+                <a href="../../02-二-Java平台/02-java集合基础/02c-Set语义与去重边界.html">
+            
+                    
+                    02c-Set语义与去重边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.4" data-path="../../02-二-Java平台/02-java集合基础/02d-并发容器与适用边界.html">
+            
+                <a href="../../02-二-Java平台/02-java集合基础/02d-并发容器与适用边界.html">
+            
+                    
+                    02d-并发容器与适用边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../../02-二-Java平台/03-java并发基础.html">
+            
+                <a href="../../02-二-Java平台/03-java并发基础.html">
+            
+                    
+                    03 Java并发基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.3.1" data-path="../../02-二-Java平台/03-java并发基础/03a-JMM与可见性约束.html">
+            
+                <a href="../../02-二-Java平台/03-java并发基础/03a-JMM与可见性约束.html">
+            
+                    
+                    03a-JMM与可见性约束
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2" data-path="../../02-二-Java平台/03-java并发基础/03b-线程池与调度成本.html">
+            
+                <a href="../../02-二-Java平台/03-java并发基础/03b-线程池与调度成本.html">
+            
+                    
+                    03b-线程池与调度成本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.3" data-path="../../02-二-Java平台/03-java并发基础/03c-锁CAS与冲突治理.html">
+            
+                <a href="../../02-二-Java平台/03-java并发基础/03c-锁CAS与冲突治理.html">
+            
+                    
+                    03c-锁CAS与冲突治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.4" data-path="../../02-二-Java平台/03-java并发基础/03d-观测与线上排障闭环.html">
+            
+                <a href="../../02-二-Java平台/03-java并发基础/03d-观测与线上排障闭环.html">
+            
+                    
+                    03d-观测与线上排障闭环
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../../02-二-Java平台/04-jvm与性能调优.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优.html">
+            
+                    
+                    04 JVM与性能调优
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../../02-二-Java平台/04-jvm与性能调优/04a-先用人话说清楚.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04a-先用人话说清楚.html">
+            
+                    
+                    04a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../../02-二-Java平台/04-jvm与性能调优/04b-术语翻译.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04b-术语翻译.html">
+            
+                    
+                    04b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../../02-二-Java平台/04-jvm与性能调优/04c-JVM-内存和-GC.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04c-JVM-内存和-GC.html">
+            
+                    
+                    04c-JVM-内存和-GC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../../02-二-Java平台/04-jvm与性能调优/04d-性能分析方法.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04d-性能分析方法.html">
+            
+                    
+                    04d-性能分析方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="../../02-二-Java平台/04-jvm与性能调优/04e-线上排障.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04e-线上排障.html">
+            
+                    
+                    04e-线上排障
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.6" data-path="../../02-二-Java平台/04-jvm与性能调优/04f-本章30秒复述.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04f-本章30秒复述.html">
+            
+                    
+                    04f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.7" data-path="../../02-二-Java平台/04-jvm与性能调优/04g-追根究底：JVM-背后的物理机与操作系统.html">
+            
+                <a href="../../02-二-Java平台/04-jvm与性能调优/04g-追根究底：JVM-背后的物理机与操作系统.html">
+            
+                    
+                    04g-追根究底：JVM-背后的物理机与操作系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    三、存储与中间件
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../03-三-存储与中间件/01-mysql与事务索引.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引.html">
+            
+                    
+                    01 MySQL与事务索引
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01a-先用人话说清楚.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01a-先用人话说清楚.html">
+            
+                    
+                    01a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01b-术语翻译.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01b-术语翻译.html">
+            
+                    
+                    01b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01c-索引.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01c-索引.html">
+            
+                    
+                    01c-索引
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.4" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01d-事务与隔离.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01d-事务与隔离.html">
+            
+                    
+                    01d-事务与隔离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.5" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01e-死锁与慢-SQL.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01e-死锁与慢-SQL.html">
+            
+                    
+                    01e-死锁与慢-SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.6" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01f-本章30秒复述.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01f-本章30秒复述.html">
+            
+                    
+                    01f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.7" data-path="../../03-三-存储与中间件/01-mysql与事务索引/01g-追根究底：MySQL-背后的页结构与操作系统-IO.html">
+            
+                <a href="../../03-三-存储与中间件/01-mysql与事务索引/01g-追根究底：MySQL-背后的页结构与操作系统-IO.html">
+            
+                    
+                    01g-追根究底：MySQL-背后的页结构与操作系统-IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../03-三-存储与中间件/02-redis缓存与高可用.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用.html">
+            
+                    
+                    02 Redis缓存与高可用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02a-先用人话说清楚.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02a-先用人话说清楚.html">
+            
+                    
+                    02a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02b-术语翻译.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02b-术语翻译.html">
+            
+                    
+                    02b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.3" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02c-缓存为什么快.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02c-缓存为什么快.html">
+            
+                    
+                    02c-缓存为什么快
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.4" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02d-一致性与三大问题.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02d-一致性与三大问题.html">
+            
+                    
+                    02d-一致性与三大问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.5" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02e-高可用.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02e-高可用.html">
+            
+                    
+                    02e-高可用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.6" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02f-本章30秒复述.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02f-本章30秒复述.html">
+            
+                    
+                    02f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.7" data-path="../../03-三-存储与中间件/02-redis缓存与高可用/02g-追根究底：Redis-背后的事件循环、内存与网络.html">
+            
+                <a href="../../03-三-存储与中间件/02-redis缓存与高可用/02g-追根究底：Redis-背后的事件循环、内存与网络.html">
+            
+                    
+                    02g-追根究底：Redis-背后的事件循环、内存与网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../03-三-存储与中间件/03-kafka与消息队列.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列.html">
+            
+                    
+                    03 Kafka与消息队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.3.1" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03a-先用人话说清楚.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03a-先用人话说清楚.html">
+            
+                    
+                    03a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.2" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03b-术语翻译.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03b-术语翻译.html">
+            
+                    
+                    03b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03c-MQ-的作用.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03c-MQ-的作用.html">
+            
+                    
+                    03c-MQ-的作用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.4" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03d-重复和丢失.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03d-重复和丢失.html">
+            
+                    
+                    03d-重复和丢失
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.5" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03e-消费稳定性.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03e-消费稳定性.html">
+            
+                    
+                    03e-消费稳定性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.6" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03f-本章30秒复述.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03f-本章30秒复述.html">
+            
+                    
+                    03f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.7" data-path="../../03-三-存储与中间件/03-kafka与消息队列/03g-追根究底：Kafka-背后的顺序写、Page-Cache-与零拷贝.html">
+            
+                <a href="../../03-三-存储与中间件/03-kafka与消息队列/03g-追根究底：Kafka-背后的顺序写、Page-Cache-与零拷贝.html">
+            
+                    
+                    03g-追根究底：Kafka-背后的顺序写、Page-Cache-与零拷贝
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../03-三-存储与中间件/04-spring-springboot生态.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态.html">
+            
+                    
+                    04 Spring-SpringBoot生态
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.4.1" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04a-先用人话说清楚.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04a-先用人话说清楚.html">
+            
+                    
+                    04a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.2" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04b-术语翻译.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04b-术语翻译.html">
+            
+                    
+                    04b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.3" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04c-IoC-DI-AOP.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04c-IoC-DI-AOP.html">
+            
+                    
+                    04c-IoC-DI-AOP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.4" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04d-事务.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04d-事务.html">
+            
+                    
+                    04d-事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.5" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04e-Boot-治理.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04e-Boot-治理.html">
+            
+                    
+                    04e-Boot-治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.6" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04f-本章30秒复述.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04f-本章30秒复述.html">
+            
+                    
+                    04f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.7" data-path="../../03-三-存储与中间件/04-spring-springboot生态/04g-追根究底：Spring-背后的代理机制与并发语义.html">
+            
+                <a href="../../03-三-存储与中间件/04-spring-springboot生态/04g-追根究底：Spring-背后的代理机制与并发语义.html">
+            
+                    
+                    04g-追根究底：Spring-背后的代理机制与并发语义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    四、分布式与架构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../04-四-分布式与架构/01-分布式架构与中间件.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件.html">
+            
+                    
+                    01 分布式架构与中间件
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1.1" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01a-先用人话说清楚.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01a-先用人话说清楚.html">
+            
+                    
+                    01a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.2" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01b-术语翻译.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01b-术语翻译.html">
+            
+                    
+                    01b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.3" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01c-一致性和可用性.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01c-一致性和可用性.html">
+            
+                    
+                    01c-一致性和可用性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.4" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01d-分布式锁.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01d-分布式锁.html">
+            
+                    
+                    01d-分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.5" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01e-服务发现与配置中心.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01e-服务发现与配置中心.html">
+            
+                    
+                    01e-服务发现与配置中心
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.6" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01f-本章30秒复述.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01f-本章30秒复述.html">
+            
+                    
+                    01f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.7" data-path="../../04-四-分布式与架构/01-分布式架构与中间件/01g-追根究底：分布式背后的时钟、网络分区与一致性边界.html">
+            
+                <a href="../../04-四-分布式与架构/01-分布式架构与中间件/01g-追根究底：分布式背后的时钟、网络分区与一致性边界.html">
+            
+                    
+                    01g-追根究底：分布式背后的时钟、网络分区与一致性边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../04-四-分布式与架构/02-微服务与治理.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理.html">
+            
+                    
+                    02 微服务与治理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="../../04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.html">
+            
+                    
+                    02a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="../../04-四-分布式与架构/02-微服务与治理/02b-术语翻译.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02b-术语翻译.html">
+            
+                    
+                    02b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="../../04-四-分布式与架构/02-微服务与治理/02c-服务拆分.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02c-服务拆分.html">
+            
+                    
+                    02c-服务拆分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.4" data-path="../../04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.html">
+            
+                    
+                    02d-限流熔断降级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.5" data-path="../../04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.html">
+            
+                    
+                    02e-可观测与告警
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.6" data-path="../../04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.html">
+            
+                <a href="../../04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.html">
+            
+                    
+                    02f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../04-四-分布式与架构/03-高并发设计专题.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题.html">
+            
+                    
+                    03 高并发设计专题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.3.1" data-path="../../04-四-分布式与架构/03-高并发设计专题/03a-先用人话说清楚.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03a-先用人话说清楚.html">
+            
+                    
+                    03a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.2" data-path="../../04-四-分布式与架构/03-高并发设计专题/03b-术语翻译.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03b-术语翻译.html">
+            
+                    
+                    03b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.3" data-path="../../04-四-分布式与架构/03-高并发设计专题/03c-容量评估.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03c-容量评估.html">
+            
+                    
+                    03c-容量评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.4" data-path="../../04-四-分布式与架构/03-高并发设计专题/03d-热点治理.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03d-热点治理.html">
+            
+                    
+                    03d-热点治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.5" data-path="../../04-四-分布式与架构/03-高并发设计专题/03e-幂等与补偿.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03e-幂等与补偿.html">
+            
+                    
+                    03e-幂等与补偿
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3.6" data-path="../../04-四-分布式与架构/03-高并发设计专题/03f-本章30秒复述.html">
+            
+                <a href="../../04-四-分布式与架构/03-高并发设计专题/03f-本章30秒复述.html">
+            
+                    
+                    03f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    五、工程与实战
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../05-五-工程与实战/01-工程化与质量保障.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障.html">
+            
+                    
+                    01 工程化与质量保障
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../../05-五-工程与实战/01-工程化与质量保障/01a-先用人话说清楚.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01a-先用人话说清楚.html">
+            
+                    
+                    01a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../../05-五-工程与实战/01-工程化与质量保障/01b-术语翻译.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01b-术语翻译.html">
+            
+                    
+                    01b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../../05-五-工程与实战/01-工程化与质量保障/01c-代码质量.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01c-代码质量.html">
+            
+                    
+                    01c-代码质量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.4" data-path="../../05-五-工程与实战/01-工程化与质量保障/01d-测试体系.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01d-测试体系.html">
+            
+                    
+                    01d-测试体系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.5" data-path="../../05-五-工程与实战/01-工程化与质量保障/01e-发布治理.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01e-发布治理.html">
+            
+                    
+                    01e-发布治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.6" data-path="../../05-五-工程与实战/01-工程化与质量保障/01f-本章30秒复述.html">
+            
+                <a href="../../05-五-工程与实战/01-工程化与质量保障/01f-本章30秒复述.html">
+            
+                    
+                    01f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../../05-五-工程与实战/02-场景题与系统设计实战.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战.html">
+            
+                    
+                    02 场景题与系统设计实战
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02a-先用人话说清楚.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02a-先用人话说清楚.html">
+            
+                    
+                    02a-先用人话说清楚
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02b-术语翻译.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02b-术语翻译.html">
+            
+                    
+                    02b-术语翻译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02c-设计题回答模板.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02c-设计题回答模板.html">
+            
+                    
+                    02c-设计题回答模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.4" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02d-订单系统题.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02d-订单系统题.html">
+            
+                    
+                    02d-订单系统题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.5" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02e-秒杀与故障题.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02e-秒杀与故障题.html">
+            
+                    
+                    02e-秒杀与故障题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.6" data-path="../../05-五-工程与实战/02-场景题与系统设计实战/02f-本章30秒复述.html">
+            
+                <a href="../../05-五-工程与实战/02-场景题与系统设计实战/02f-本章30秒复述.html">
+            
+                    
+                    02f-本章30秒复述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    六、训练与固化
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../01-45x6-学习计划.html">
+            
+                <a href="../01-45x6-学习计划.html">
+            
+                    
+                    01 45x6学习计划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1.1" data-path="../01-45x6-学习计划/01a-零基础执行法（先听懂再深入）.html">
+            
+                <a href="../01-45x6-学习计划/01a-零基础执行法（先听懂再深入）.html">
+            
+                    
+                    01a-零基础执行法（先听懂再深入）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.2" data-path="../01-45x6-学习计划/01b-根因训练法（防止只停留在表面）.html">
+            
+                <a href="../01-45x6-学习计划/01b-根因训练法（防止只停留在表面）.html">
+            
+                    
+                    01b-根因训练法（防止只停留在表面）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.3" data-path="../01-45x6-学习计划/01c-节奏定义.html">
+            
+                <a href="../01-45x6-学习计划/01c-节奏定义.html">
+            
+                    
+                    01c-节奏定义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.4" data-path="../01-45x6-学习计划/01d-每日固定模板.html">
+            
+                <a href="../01-45x6-学习计划/01d-每日固定模板.html">
+            
+                    
+                    01d-每日固定模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.5" data-path="../01-45x6-学习计划/01e-周计划（可循环）.html">
+            
+                <a href="../01-45x6-学习计划/01e-周计划（可循环）.html">
+            
+                    
+                    01e-周计划（可循环）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.6" data-path="../01-45x6-学习计划/01f-每天交付物清单.html">
+            
+                <a href="../01-45x6-学习计划/01f-每天交付物清单.html">
+            
+                    
+                    01f-每天交付物清单
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.1.7" data-path="../01-45x6-学习计划/01g-每日原理与概念学习单（按45-6直接执行）.html">
+            
+                <a href="../01-45x6-学习计划/01g-每日原理与概念学习单（按45-6直接执行）.html">
+            
+                    
+                    01g-每日原理与概念学习单（按45-6直接执行）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../02-面试问答标准答案-零基础版.html">
+            
+                <a href="../02-面试问答标准答案-零基础版.html">
+            
+                    
+                    02 面试问答标准答案-零基础版
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.2.1" data-path="02a-使用方法.html">
+            
+                <a href="02a-使用方法.html">
+            
+                    
+                    02a-使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.2.2" data-path="02b-A.-并发与Java基础.html">
+            
+                <a href="02b-A.-并发与Java基础.html">
+            
+                    
+                    02b-A.-并发与Java基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.3" data-path="02c-B.-JVM.html">
+            
+                <a href="02c-B.-JVM.html">
+            
+                    
+                    02c-B.-JVM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.4" data-path="02d-C.-Spring.html">
+            
+                <a href="02d-C.-Spring.html">
+            
+                    
+                    02d-C.-Spring
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.5" data-path="02e-D.-MySQL.html">
+            
+                <a href="02e-D.-MySQL.html">
+            
+                    
+                    02e-D.-MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.6" data-path="02f-E.-Redis.html">
+            
+                <a href="02f-E.-Redis.html">
+            
+                    
+                    02f-E.-Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.7" data-path="02g-F.-Kafka.html">
+            
+                <a href="02g-F.-Kafka.html">
+            
+                    
+                    02g-F.-Kafka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.8" data-path="02h-G.-微服务治理.html">
+            
+                <a href="02h-G.-微服务治理.html">
+            
+                    
+                    02h-G.-微服务治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.9" data-path="02i-H.-高并发设计.html">
+            
+                <a href="02i-H.-高并发设计.html">
+            
+                    
+                    02i-H.-高并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.10" data-path="02j-I.-系统设计.html">
+            
+                <a href="02j-I.-系统设计.html">
+            
+                    
+                    02j-I.-系统设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.11" data-path="02k-J.-根因追问（物理机-OS-数据结构）.html">
+            
+                <a href="02k-J.-根因追问（物理机-OS-数据结构）.html">
+            
+                    
+                    02k-J.-根因追问（物理机-OS-数据结构）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../03-教材生成流程-固化提示词.html">
+            
+                <a href="../03-教材生成流程-固化提示词.html">
+            
+                    
+                    03 教材生成流程-固化提示词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >02b-A.-并发与Java基础</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="14-面试问答标准答案（零基础版）---a-并发与java基础">14 面试问答标准答案（零基础版） - A. 并发与Java基础</h1>
+<h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
+<ul>
+<li>待补充：本节要解决的物理机/操作系统/网络先天约束。</li>
+</ul>
+<h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
+<ul>
+<li>待补充：关键数字（延迟/吞吐/容量）与来源背景。</li>
+</ul>
+<h2 id="六段因果链">六段因果链</h2>
+<h3 id="1-约束来源">1) 约束来源</h3>
+<ul>
+<li>待补充。</li>
+</ul>
+<h3 id="2-问题场景">2) 问题场景</h3>
+<ul>
+<li>待补充：典型业务规模与触发条件。</li>
+</ul>
+<h3 id="3-概念诞生">3) 概念诞生</h3>
+<ul>
+<li>待补充：该概念如何绕过约束。</li>
+</ul>
+<h3 id="4-解决与未解决">4) 解决与未解决</h3>
+<ul>
+<li>解决了：待补充。</li>
+<li>没解决：待补充。</li>
+<li>新复杂度：待补充。</li>
+</ul>
+<h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方案</th>
+<th>核心理由</th>
+<th>失效条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>待补充</td>
+<td>待补充</td>
+<td>待补充</td>
+<td>待补充</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-高并发变化">6) 高并发变化</h3>
+<ul>
+<li>待补充：规模放大后（QPS/数据量/节点）需要怎样调整。</li>
+<li>容量估算：待补充。</li>
+</ul>
+<h2 id="持续观测与线上排障">持续观测与线上排障</h2>
+<h3 id="关键指标">关键指标</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>正常范围</th>
+<th>告警阈值</th>
+<th>采集方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>待补充</td>
+<td>待补充</td>
+<td>待补充</td>
+<td>待补充</td>
+<td>待补充</td>
+</tr>
+</tbody>
+</table>
+<h3 id="排查命令">排查命令</h3>
+<ul>
+<li>待补充。</li>
+</ul>
+<h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
+<h2 id="a-并发与java基础">A. 并发与Java基础</h2>
+<h3 id="问：volatile-和-synchronized-的区别是什么？">问：volatile 和 synchronized 的区别是什么？</h3>
+<ul>
+<li>标准答：volatile 保证可见性和有序性，但不保证复合操作原子性；synchronized 同时保证可见性和原子性，适合对共享资源做完整保护。</li>
+</ul>
+<h3 id="问：线程池为什么不能随便开很大？">问：线程池为什么不能随便开很大？</h3>
+<ul>
+<li>标准答：线程越多并不一定越快，超过 CPU/IO 承载后会引发频繁切换和资源争抢，导致延迟上升。</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="02a-使用方法.html" class="navigation navigation-prev " aria-label="Previous page: 02a-使用方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="02c-B.-JVM.html" class="navigation navigation-next " aria-label="Next page: 02c-B.-JVM">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"02b-A.-并发与Java基础","level":"1.7.2.2","depth":3,"next":{"title":"02c-B.-JVM","level":"1.7.2.3","depth":3,"path":"06-六-训练与固化/02-面试问答标准答案-零基础版/02c-B.-JVM.md","ref":"06-六-训练与固化/02-面试问答标准答案-零基础版/02c-B.-JVM.md","articles":[]},"previous":{"title":"02a-使用方法","level":"1.7.2.1","depth":3,"path":"06-六-训练与固化/02-面试问答标准答案-零基础版/02a-使用方法.md","ref":"06-六-训练与固化/02-面试问答标准答案-零基础版/02a-使用方法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":2,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"06-六-训练与固化/02-面试问答标准答案-零基础版/02b-A.-并发与Java基础.md","mtime":"2026-03-20T05:47:43.951Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T05:47:51.588Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
