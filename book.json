@@ -1,14 +1,11 @@
 {
   "title": "Java知识网络",
-  "styles": {
-    "website": "styles/website.css"
-  },
   "plugins": [
     "page-toc-button"
   ],
   "pluginsConfig": {
     "page-toc-button": {
-      "maxTocDepth": 2,
+      "maxTocDepth": 3,
       "minTocSize": 2
     }
   }
