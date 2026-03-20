@@ -7,9 +7,6 @@
     "page-toc-button"
   ],
   "pluginsConfig": {
-    "theme-default": {
-      "showLevel": 1
-    },
     "page-toc-button": {
       "maxTocDepth": 2,
       "minTocSize": 2
