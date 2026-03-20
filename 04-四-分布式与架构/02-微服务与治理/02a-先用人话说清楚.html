@@ -2091,30 +2091,35 @@
                                 <h1 id="09-微服务与治理（零基础版）---先用人话说清楚">09 微服务与治理（零基础版） - 先用人话说清楚</h1>
 <h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
 <ul>
-<li>待补充：本节要解决的物理机/操作系统/网络先天约束。</li>
+<li>先用人话说清楚 要解决的是单机边界、网络不可靠和节点状态不一致这三类分布式问题。</li>
 </ul>
 <h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
 <ul>
-<li>待补充：关键数字（延迟/吞吐/容量）与来源背景。</li>
+<li>跨机器网络调用比本地内存访问慢几个数量级。</li>
+<li>网络分区、时钟漂移、节点重启都是常态而不是例外。</li>
+<li>状态一旦分散到多个节点，正确性成本会显著上升。</li>
 </ul>
 <h2 id="六段因果链">六段因果链</h2>
 <h3 id="1-约束来源">1) 约束来源</h3>
 <ul>
-<li>待补充。</li>
+<li>分布式问题的根源不是“机器多”，而是“机器多且彼此不可靠”。</li>
+<li>所有治理能力最终都在为正确性、可用性和恢复速度服务。</li>
 </ul>
 <h3 id="2-问题场景">2) 问题场景</h3>
 <ul>
-<li>待补充：典型业务规模与触发条件。</li>
+<li>服务从单体拆成多节点后，调用链更长、故障面更大。</li>
+<li>当峰值流量与局部故障叠加时，没有治理能力会迅速雪崩。</li>
 </ul>
 <h3 id="3-概念诞生">3) 概念诞生</h3>
 <ul>
-<li>待补充：该概念如何绕过约束。</li>
+<li>先用人话说清楚 机制就是为了在不可靠网络里维持系统可控。</li>
+<li>重点不是理论完美，而是明确边界和止损顺序。</li>
 </ul>
 <h3 id="4-解决与未解决">4) 解决与未解决</h3>
 <ul>
-<li>解决了：待补充。</li>
-<li>没解决：待补充。</li>
-<li>新复杂度：待补充。</li>
+<li>解决了：让扩容、故障和变更变得可预期。</li>
+<li>没解决：不能消灭网络分区和节点失败，只能降低影响范围。</li>
+<li>新复杂度：需要引入更多中间件、监控与流程治理。</li>
 </ul>
 <h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
 <table>
@@ -2128,17 +2133,29 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>核心交易</td>
+<td>优先正确和可回滚</td>
+<td>避免乱账</td>
+<td>资源耗尽无降级</td>
+</tr>
+<tr>
+<td>外围展示</td>
+<td>优先可用和缓存</td>
+<td>提升体验</td>
+<td>缓存不一致过久</td>
+</tr>
+<tr>
+<td>高峰活动</td>
+<td>先限流再扩容</td>
+<td>防止雪崩</td>
+<td>缺少容量基线</td>
 </tr>
 </tbody>
 </table>
 <h3 id="6-高并发变化">6) 高并发变化</h3>
 <ul>
-<li>待补充：规模放大后（QPS/数据量/节点）需要怎样调整。</li>
-<li>容量估算：待补充。</li>
+<li>高并发下必须明确限流、熔断、降级、恢复四个顺序。</li>
+<li>容量估算：假设峰值 QPS 8000、单实例可稳定承载 500，则至少需要 16 个实例再加安全余量。</li>
 </ul>
 <h2 id="持续观测与线上排障">持续观测与线上排障</h2>
 <h3 id="关键指标">关键指标</h3>
@@ -2154,19 +2171,34 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>下游超时率</td>
+<td>小于 1%</td>
+<td>大于 3%</td>
+<td>APM/服务网格</td>
+<td>看依赖是否抖动</td>
+</tr>
+<tr>
+<td>熔断触发次数</td>
+<td>低频波动</td>
+<td>持续增长</td>
+<td>治理面板</td>
+<td>看依赖是否不稳</td>
+</tr>
+<tr>
+<td>实例存活数</td>
+<td>满足最小副本</td>
+<td>低于冗余线</td>
+<td>注册中心/监控</td>
+<td>看可用性余量</td>
 </tr>
 </tbody>
 </table>
 <h3 id="排查命令">排查命令</h3>
 <ul>
-<li>待补充。</li>
+<li>ss -s：看连接压力。</li>
+<li>curl -s http://<host>/actuator/health：看实例健康。</host></li>
+<li>grep -RIn 熔断 04-四-分布式与架构：抽查治理设计。</li>
 </ul>
-<h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
 <h2 id="先用人话说清楚">先用人话说清楚</h2>
 <ul>
 <li>微服务是把大应用拆成多个小服务。</li>
@@ -2215,7 +2247,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"02a-先用人话说清楚","level":"1.5.2.1","depth":3,"next":{"title":"02b-术语翻译","level":"1.5.2.2","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","ref":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","articles":[]},"previous":{"title":"02 微服务与治理","level":"1.5.2","depth":2,"path":"04-四-分布式与架构/02-微服务与治理.md","ref":"04-四-分布式与架构/02-微服务与治理.md","articles":[{"title":"02a-先用人话说清楚","level":"1.5.2.1","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","ref":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","articles":[]},{"title":"02b-术语翻译","level":"1.5.2.2","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","ref":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","articles":[]},{"title":"02c-服务拆分","level":"1.5.2.3","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02c-服务拆分.md","ref":"04-四-分布式与架构/02-微服务与治理/02c-服务拆分.md","articles":[]},{"title":"02d-限流熔断降级","level":"1.5.2.4","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.md","ref":"04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.md","articles":[]},{"title":"02e-可观测与告警","level":"1.5.2.5","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.md","ref":"04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.md","articles":[]},{"title":"02f-本章30秒复述","level":"1.5.2.6","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.md","ref":"04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","mtime":"2026-03-20T06:24:17.487Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:24:25.530Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"02a-先用人话说清楚","level":"1.5.2.1","depth":3,"next":{"title":"02b-术语翻译","level":"1.5.2.2","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","ref":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","articles":[]},"previous":{"title":"02 微服务与治理","level":"1.5.2","depth":2,"path":"04-四-分布式与架构/02-微服务与治理.md","ref":"04-四-分布式与架构/02-微服务与治理.md","articles":[{"title":"02a-先用人话说清楚","level":"1.5.2.1","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","ref":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","articles":[]},{"title":"02b-术语翻译","level":"1.5.2.2","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","ref":"04-四-分布式与架构/02-微服务与治理/02b-术语翻译.md","articles":[]},{"title":"02c-服务拆分","level":"1.5.2.3","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02c-服务拆分.md","ref":"04-四-分布式与架构/02-微服务与治理/02c-服务拆分.md","articles":[]},{"title":"02d-限流熔断降级","level":"1.5.2.4","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.md","ref":"04-四-分布式与架构/02-微服务与治理/02d-限流熔断降级.md","articles":[]},{"title":"02e-可观测与告警","level":"1.5.2.5","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.md","ref":"04-四-分布式与架构/02-微服务与治理/02e-可观测与告警.md","articles":[]},{"title":"02f-本章30秒复述","level":"1.5.2.6","depth":3,"path":"04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.md","ref":"04-四-分布式与架构/02-微服务与治理/02f-本章30秒复述.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"04-四-分布式与架构/02-微服务与治理/02a-先用人话说清楚.md","mtime":"2026-03-20T07:32:37.022Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T07:32:45.131Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

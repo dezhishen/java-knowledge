@@ -2091,34 +2091,35 @@
                                 <h1 id="00-术语翻译与入门总览---学习地图（从不会到会讲）">00 术语翻译与入门总览 - 学习地图（从不会到会讲）</h1>
 <h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
 <ul>
-<li>人脑工作记忆有限，直接硬啃复杂术语会很快过载；需要分层学习路径把复杂度切片。</li>
+<li>学习地图（从不会到会讲） 要解决的核心问题，不是“知道更多”，而是“在压力下仍能说得清、用得上”。</li>
 </ul>
 <h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
 <ul>
-<li>学习系统和分布式一样有吞吐上限，单次输入太多会造成遗忘和混淆。</li>
-<li>工程问题常见跨层链路：应用-&gt;JVM-&gt;OS-&gt;网络-&gt;存储，学习顺序必须和链路顺序一致。</li>
+<li>学习时间有限，信息输入必须分层。</li>
+<li>面试表达窗口短，答案必须先结构化再展开。</li>
+<li>没有复盘和口述，知识很难进入长期记忆。</li>
 </ul>
 <h2 id="六段因果链">六段因果链</h2>
 <h3 id="1-约束来源">1) 约束来源</h3>
 <ul>
-<li>信息量大、名词多、反馈慢，是学习中最主要的“系统瓶颈”。</li>
-<li>没有阶段目标时，容易陷入“看了很多但说不出来”。</li>
+<li>人的短时记忆有限，靠堆知识点无法稳定输出。</li>
+<li>没有模板时，临场表达会严重受情绪和环境影响。</li>
 </ul>
 <h3 id="2-问题场景">2) 问题场景</h3>
 <ul>
-<li>面试前 4 到 8 周，知识点超过 100 个，若没有路线图，复习会失控。</li>
-<li>项目经历有限时，表达容易只讲功能，不讲约束与取舍。</li>
+<li>面试时一题通常只有 30 到 90 秒给出首轮结论。</li>
+<li>项目追问时，若没有指标和边界，答案会快速失去可信度。</li>
 </ul>
 <h3 id="3-概念诞生">3) 概念诞生</h3>
 <ul>
-<li>学习地图把目标拆成四段：听懂、讲清、会选、能追问。</li>
-<li>每段只关注一类能力，降低切换成本。</li>
+<li>学习地图（从不会到会讲） 这类方法论，就是为了把零散经验压缩成可复用的表达与学习框架。</li>
+<li>先用结构减轻认知负担，再用案例和追问补深度。</li>
 </ul>
 <h3 id="4-解决与未解决">4) 解决与未解决</h3>
 <ul>
-<li>解决了：每天知道学什么、练什么、如何验收。</li>
-<li>没解决：不保证自动内化，仍要靠复述和实战复盘。</li>
-<li>新复杂度：需要坚持打卡和周复盘，否则路线图会失效。</li>
+<li>解决了：提升输入到输出的转化效率。</li>
+<li>没解决：不能替代真实项目经历和故障处理经验。</li>
+<li>新复杂度：需要坚持做口述、复盘和错题整理。</li>
 </ul>
 <h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
 <table>
@@ -2132,10 +2133,22 @@
 </thead>
 <tbody>
 <tr>
-<td>零基础起步</td>
-<td>术语层-&gt;原理层-&gt;题目层</td>
-<td>逐层递进不崩溃</td>
-<td>跳层学习</td>
+<td>日常学习</td>
+<td>短输入+短输出</td>
+<td>可持续</td>
+<td>只看不说</td>
+</tr>
+<tr>
+<td>面试冲刺</td>
+<td>30秒/90秒模板</td>
+<td>提高检索速度</td>
+<td>没有项目例子</td>
+</tr>
+<tr>
+<td>项目复盘</td>
+<td>指标+风险+取舍</td>
+<td>建立可信度</td>
+<td>无量化结果</td>
 </tr>
 <tr>
 <td>在职准备面试</td>
@@ -2153,8 +2166,8 @@
 </table>
 <h3 id="6-高并发变化">6) 高并发变化</h3>
 <ul>
-<li>知识规模放大时，单点突破要升级为主题化训练：并发、JVM、MySQL、缓存、MQ按周轮转。</li>
-<li>容量估算：每天可吸收新概念数一般在 6 到 12 个，超过后必须加复盘，否则遗忘率显著上升。</li>
+<li>学习内容放大后，要做主题轮转而不是无序加量。</li>
+<li>容量估算：每天有效学习 2 小时时，新知与复盘建议保持 1:1。</li>
 </ul>
 <h2 id="持续观测与线上排障">持续观测与线上排障</h2>
 <h3 id="关键指标">关键指标</h3>
@@ -2170,34 +2183,34 @@
 </thead>
 <tbody>
 <tr>
-<td>当日复述成功率</td>
+<td>30秒答题完成率</td>
+<td>大于 80%</td>
+<td>小于 60%</td>
+<td>录音回放</td>
+<td>看表达结构</td>
+</tr>
+<tr>
+<td>追问通过率</td>
+<td>大于 60%</td>
+<td>小于 40%</td>
+<td>模拟问答</td>
+<td>看深度稳定性</td>
+</tr>
+<tr>
+<td>错题回收率</td>
 <td>大于 70%</td>
 <td>小于 50%</td>
-<td>录音自测</td>
-<td>反映理解质量</td>
-</tr>
-<tr>
-<td>错题复发率</td>
-<td>小于 30%</td>
-<td>大于 50%</td>
-<td>错题本周对比</td>
-<td>反映掌握稳定性</td>
-</tr>
-<tr>
-<td>每周完整输出次数</td>
-<td>大于等于 2</td>
-<td>等于 0</td>
-<td>模拟面试记录</td>
-<td>反映表达能力</td>
+<td>错题本</td>
+<td>看复盘效果</td>
 </tr>
 </tbody>
 </table>
 <h3 id="排查命令">排查命令</h3>
 <ul>
-<li><code>grep -RIn '待补充' 01-一-认知地基</code>：找未完成内容。</li>
-<li><code>grep -RIn '^## 面试题与标准答案' 0* 01-* 02-* 03-*</code>：抽查问答覆盖度。</li>
+<li>grep -RIn 面试 01-一-认知地基：抽查问答覆盖度。</li>
+<li>grep -RIn 本章30秒复述 01-一-认知地基：抽查输出模板。</li>
+<li>grep -RIn 风险 01-一-认知地基：抽查取舍意识。</li>
 </ul>
-<h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
 <h2 id="学习地图（从不会到会讲）">学习地图（从不会到会讲）</h2>
 <ol>
 <li>第一步：先看术语翻译，能听懂。</li>
@@ -2248,7 +2261,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"01c-学习地图（从不会到会讲）","level":"1.2.1.3","depth":3,"next":{"title":"01d-学习标准（你每天检查）","level":"1.2.1.4","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","articles":[]},"previous":{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","mtime":"2026-03-20T06:24:17.485Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:24:25.530Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"01c-学习地图（从不会到会讲）","level":"1.2.1.3","depth":3,"next":{"title":"01d-学习标准（你每天检查）","level":"1.2.1.4","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","articles":[]},"previous":{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","mtime":"2026-03-20T07:32:37.019Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T07:32:45.131Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
