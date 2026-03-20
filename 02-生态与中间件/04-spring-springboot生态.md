@@ -1,4 +1,3 @@
-[toc]
 
 # 04 Spring 与 Spring Boot（零基础版）
 

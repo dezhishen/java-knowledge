@@ -1,0 +1,12 @@
+{
+  "title": "Java高级开发面试知识网络",
+  "plugins": [
+    "page-toc-button"
+  ],
+  "pluginsConfig": {
+    "page-toc-button": {
+      "maxTocDepth": 3,
+      "minTocSize": 2
+    }
+  }
+}
