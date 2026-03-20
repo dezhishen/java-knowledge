@@ -2091,30 +2091,36 @@
                                 <h1 id="00-术语翻译与入门总览---这份文件解决什么问题">00 术语翻译与入门总览 - 这份文件解决什么问题</h1>
 <h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
 <ul>
-<li>待补充：本节要解决的物理机/操作系统/网络先天约束。</li>
+<li>机器世界的真实速度差是指数级的，但新人先接触到的往往是抽象术语，导致“知道词，不知道代价”。</li>
 </ul>
 <h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
 <ul>
-<li>待补充：关键数字（延迟/吞吐/容量）与来源背景。</li>
+<li>CPU寄存器访问约 1ns，主内存约 100ns，差约 100 倍。</li>
+<li>NVMe SSD 随机读常见在 100us 量级，比内存慢约 1000 倍。</li>
+<li>机房内一次网络往返常见 0.2ms 到 1ms，比内存慢约 2000 到 10000 倍。</li>
+<li>一次数据库查询在业务系统里常见 2ms 到 20ms，常常是接口耗时主因。</li>
 </ul>
 <h2 id="六段因果链">六段因果链</h2>
 <h3 id="1-约束来源">1) 约束来源</h3>
 <ul>
-<li>待补充。</li>
+<li>硬件和网络速度差太大，任何“跨层调用”都会放大延迟成本。</li>
+<li>术语如果不映射到真实成本，学习会停留在背词阶段。</li>
 </ul>
 <h3 id="2-问题场景">2) 问题场景</h3>
 <ul>
-<li>待补充：典型业务规模与触发条件。</li>
+<li>订单接口日常 QPS 200 时能跑通，活动峰值 QPS 2000 时，链路上每多一次远程调用都可能把 P99 推高。</li>
+<li>新人只会说“加缓存、加线程”，但无法解释为什么慢、慢在哪里、先改哪一层。</li>
 </ul>
 <h3 id="3-概念诞生">3) 概念诞生</h3>
 <ul>
-<li>待补充：该概念如何绕过约束。</li>
+<li>“术语翻译”本质是建立一层低成本认知缓存：先把术语映射到场景和代价，再进入原理。</li>
+<li>这样做不是替代原理，而是降低入门摩擦，避免在第一步被抽象名词劝退。</li>
 </ul>
 <h3 id="4-解决与未解决">4) 解决与未解决</h3>
 <ul>
-<li>解决了：待补充。</li>
-<li>没解决：待补充。</li>
-<li>新复杂度：待补充。</li>
+<li>解决了：看文档时能快速抓住重点，不再被名词堆砌拖慢。</li>
+<li>没解决：不能替代深入原理和实战验证，仍需后续章节补齐。</li>
+<li>新复杂度：需要维护术语表版本，防止“人话解释”过时。</li>
 </ul>
 <h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
 <table>
@@ -2128,17 +2134,29 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>零基础入门</td>
+<td>先术语翻译，再学原理</td>
+<td>先降低认知负担，学习可持续</td>
+<td>只看翻译不看原理</td>
+</tr>
+<tr>
+<td>线上问题复盘</td>
+<td>术语映射到指标和命令</td>
+<td>讨论能落到证据层</td>
+<td>指标体系缺失</td>
+</tr>
+<tr>
+<td>面试准备</td>
+<td>术语+30秒口述模板</td>
+<td>能快速表达，不空泛</td>
+<td>没有项目例子支撑</td>
 </tr>
 </tbody>
 </table>
 <h3 id="6-高并发变化">6) 高并发变化</h3>
 <ul>
-<li>待补充：规模放大后（QPS/数据量/节点）需要怎样调整。</li>
-<li>容量估算：待补充。</li>
+<li>规模放大后，术语要升级为“决策词典”：每个词都要绑定触发条件和止损动作。</li>
+<li>容量估算：并发数约等于 QPS 乘 RT。示例：QPS=2000、RT=0.2s，则并发约 400；并发上升会直接推高线程池和连接池压力。</li>
 </ul>
 <h2 id="持续观测与线上排障">持续观测与线上排障</h2>
 <h3 id="关键指标">关键指标</h3>
@@ -2154,17 +2172,34 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>API P95延迟</td>
+<td>小于 100ms</td>
+<td>大于 200ms 持续5分钟</td>
+<td>APM/网关指标</td>
+<td>观察体验劣化</td>
+</tr>
+<tr>
+<td>错误率</td>
+<td>小于 0.5%</td>
+<td>大于 1%</td>
+<td>网关/应用日志</td>
+<td>观察可用性</td>
+</tr>
+<tr>
+<td>连接池等待时间</td>
+<td>小于 10ms</td>
+<td>大于 50ms</td>
+<td>应用指标/JMX</td>
+<td>观察下游阻塞</td>
 </tr>
 </tbody>
 </table>
 <h3 id="排查命令">排查命令</h3>
 <ul>
-<li>待补充。</li>
+<li><code>top -H -p &lt;pid&gt;</code>：看进程内线程CPU占用。</li>
+<li><code>vmstat 1 5</code>：看系统整体运行队列和上下文切换。</li>
+<li><code>iostat -x 1 3</code>：看磁盘利用率和等待时间。</li>
+<li><code>ss -s</code>：看网络连接总体状态。</li>
 </ul>
 <h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
 <h2 id="这份文件解决什么问题">这份文件解决什么问题</h2>
@@ -2215,7 +2250,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"01a-这份文件解决什么问题","level":"1.2.1.1","depth":3,"next":{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},"previous":{"title":"01 术语翻译与入门总览","level":"1.2.1","depth":2,"path":"01-一-认知地基/01-术语翻译与入门总览.md","ref":"01-一-认知地基/01-术语翻译与入门总览.md","articles":[{"title":"01a-这份文件解决什么问题","level":"1.2.1.1","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","articles":[]},{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},{"title":"01c-学习地图（从不会到会讲）","level":"1.2.1.3","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","articles":[]},{"title":"01d-学习标准（你每天检查）","level":"1.2.1.4","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","mtime":"2026-03-20T06:06:32.392Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:06:37.232Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"01a-这份文件解决什么问题","level":"1.2.1.1","depth":3,"next":{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},"previous":{"title":"01 术语翻译与入门总览","level":"1.2.1","depth":2,"path":"01-一-认知地基/01-术语翻译与入门总览.md","ref":"01-一-认知地基/01-术语翻译与入门总览.md","articles":[{"title":"01a-这份文件解决什么问题","level":"1.2.1.1","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","articles":[]},{"title":"01b-高频术语翻译（人话版）","level":"1.2.1.2","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01b-高频术语翻译（人话版）.md","articles":[]},{"title":"01c-学习地图（从不会到会讲）","level":"1.2.1.3","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01c-学习地图（从不会到会讲）.md","articles":[]},{"title":"01d-学习标准（你每天检查）","level":"1.2.1.4","depth":3,"path":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","ref":"01-一-认知地基/01-术语翻译与入门总览/01d-学习标准（你每天检查）.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/01-术语翻译与入门总览/01a-这份文件解决什么问题.md","mtime":"2026-03-20T06:24:17.485Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:24:25.530Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -2091,30 +2091,34 @@
                                 <h1 id="01-学习方法与面试策略（零基础版）---术语翻译">01 学习方法与面试策略（零基础版） - 术语翻译</h1>
 <h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
 <ul>
-<li>待补充：本节要解决的物理机/操作系统/网络先天约束。</li>
+<li>术语如果没有场景锚点，记忆会快速衰减，遇到追问无法迁移。</li>
 </ul>
 <h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
 <ul>
-<li>待补充：关键数字（延迟/吞吐/容量）与来源背景。</li>
+<li>面试表达窗口短，通常一题 1 到 2 分钟。</li>
+<li>候选人需要在极小时间预算内把抽象词转成业务动作和结果。</li>
 </ul>
 <h2 id="六段因果链">六段因果链</h2>
 <h3 id="1-约束来源">1) 约束来源</h3>
 <ul>
-<li>待补充。</li>
+<li>术语是压缩表达，不包含上下文。</li>
+<li>没有上下文，面试官无法判断你是否真的做过。</li>
 </ul>
 <h3 id="2-问题场景">2) 问题场景</h3>
 <ul>
-<li>待补充：典型业务规模与触发条件。</li>
+<li>项目答辩时常出现术语堆叠：分布式、可观测、降级，但无法给出证据链。</li>
+<li>业务高峰时，若术语不对应指标，故障讨论容易跑偏。</li>
 </ul>
 <h3 id="3-概念诞生">3) 概念诞生</h3>
 <ul>
-<li>待补充：该概念如何绕过约束。</li>
+<li>术语翻译方法要求每个词都绑定三件事：一句人话、一个场景、一个风险。</li>
+<li>先理解词，再理解词之间关系，最后进入选型。</li>
 </ul>
 <h3 id="4-解决与未解决">4) 解决与未解决</h3>
 <ul>
-<li>解决了：待补充。</li>
-<li>没解决：待补充。</li>
-<li>新复杂度：待补充。</li>
+<li>解决了：沟通时减少误解，回答更像工程师而非背题者。</li>
+<li>没解决：无法替代真实项目经验。</li>
+<li>新复杂度：需要持续更新术语表，避免模板化空话。</li>
 </ul>
 <h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
 <table>
@@ -2128,17 +2132,29 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>学新章节前</td>
+<td>先读术语卡片</td>
+<td>降低陌生感</td>
+<td>只记定义</td>
+</tr>
+<tr>
+<td>复盘故障时</td>
+<td>术语绑定指标</td>
+<td>便于定位</td>
+<td>无监控数据</td>
+</tr>
+<tr>
+<td>模拟面试时</td>
+<td>术语绑定案例</td>
+<td>可验证</td>
+<td>没有个人贡献</td>
 </tr>
 </tbody>
 </table>
 <h3 id="6-高并发变化">6) 高并发变化</h3>
 <ul>
-<li>待补充：规模放大后（QPS/数据量/节点）需要怎样调整。</li>
-<li>容量估算：待补充。</li>
+<li>在高并发语境下，术语必须附带边界，比如限流阈值、重试次数、熔断时间窗。</li>
+<li>容量估算示例：峰值系数 5，日均 QPS 600，则峰值约 3000，术语讨论必须转成容量语言。</li>
 </ul>
 <h2 id="持续观测与线上排障">持续观测与线上排障</h2>
 <h3 id="关键指标">关键指标</h3>
@@ -2154,17 +2170,32 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>术语复述准确率</td>
+<td>大于 85%</td>
+<td>小于 65%</td>
+<td>每日抽问</td>
+<td>看基础牢固度</td>
+</tr>
+<tr>
+<td>术语场景绑定率</td>
+<td>大于 70%</td>
+<td>小于 50%</td>
+<td>模拟问答记录</td>
+<td>看迁移能力</td>
+</tr>
+<tr>
+<td>术语误用率</td>
+<td>小于 10%</td>
+<td>大于 20%</td>
+<td>复盘标注</td>
+<td>看表达质量</td>
 </tr>
 </tbody>
 </table>
 <h3 id="排查命令">排查命令</h3>
 <ul>
-<li>待补充。</li>
+<li>grep -RIn 术语翻译 01-一-认知地基</li>
+<li>grep -RIn 面试 01-一-认知地基/02-学习方法与面试策略</li>
 </ul>
 <h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
 <h2 id="术语翻译">术语翻译</h2>
@@ -2217,7 +2248,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"02b-术语翻译","level":"1.2.2.2","depth":3,"next":{"title":"02c-面试到底在考什么","level":"1.2.2.3","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","ref":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","articles":[]},"previous":{"title":"02a-先用人话说清楚","level":"1.2.2.1","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.md","ref":"01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/02-学习方法与面试策略/02b-术语翻译.md","mtime":"2026-03-20T06:06:32.393Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:06:37.232Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"02b-术语翻译","level":"1.2.2.2","depth":3,"next":{"title":"02c-面试到底在考什么","level":"1.2.2.3","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","ref":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","articles":[]},"previous":{"title":"02a-先用人话说清楚","level":"1.2.2.1","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.md","ref":"01-一-认知地基/02-学习方法与面试策略/02a-先用人话说清楚.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/02-学习方法与面试策略/02b-术语翻译.md","mtime":"2026-03-20T06:24:17.485Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:24:25.530Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

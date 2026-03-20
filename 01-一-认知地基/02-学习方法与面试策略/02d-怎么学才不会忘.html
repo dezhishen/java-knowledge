@@ -2091,30 +2091,34 @@
                                 <h1 id="01-学习方法与面试策略（零基础版）---2-怎么学才不会忘">01 学习方法与面试策略（零基础版） - 2. 怎么学才不会忘</h1>
 <h2 id="本节核心约束（先读这个）">本节核心约束（先读这个）</h2>
 <ul>
-<li>待补充：本节要解决的物理机/操作系统/网络先天约束。</li>
+<li>遗忘是自然规律，不做间隔复习和主动输出，知识会快速衰减。</li>
 </ul>
 <h2 id="物理基础（建立直觉）">物理基础（建立直觉）</h2>
 <ul>
-<li>待补充：关键数字（延迟/吞吐/容量）与来源背景。</li>
+<li>一次被动阅读的保持率通常低于主动复述。</li>
+<li>24小时内不复盘，记忆损失会显著上升。</li>
 </ul>
 <h2 id="六段因果链">六段因果链</h2>
 <h3 id="1-约束来源">1) 约束来源</h3>
 <ul>
-<li>待补充。</li>
+<li>学习输入容易，检索输出难。</li>
+<li>没有重复检索，长期记忆难形成。</li>
 </ul>
 <h3 id="2-问题场景">2) 问题场景</h3>
 <ul>
-<li>待补充：典型业务规模与触发条件。</li>
+<li>学完并发或数据库一周后，面试时常出现关键术语卡壳。</li>
+<li>章节数量增多后，前面内容会被后面内容覆盖。</li>
 </ul>
 <h3 id="3-概念诞生">3) 概念诞生</h3>
 <ul>
-<li>待补充：该概念如何绕过约束。</li>
+<li>反遗忘方法强调三件事：间隔复习、主动回忆、场景应用。</li>
+<li>先用短复述，再用追问，最后用项目例子固化。</li>
 </ul>
 <h3 id="4-解决与未解决">4) 解决与未解决</h3>
 <ul>
-<li>解决了：待补充。</li>
-<li>没解决：待补充。</li>
-<li>新复杂度：待补充。</li>
+<li>解决了：减少看过就忘，提升可稳定输出能力。</li>
+<li>没解决：不能替代真实故障经验。</li>
+<li>新复杂度：需要日程纪律和复盘记录。</li>
 </ul>
 <h3 id="5-场景选型（含失效条件）">5) 场景选型（含失效条件）</h3>
 <table>
@@ -2128,17 +2132,29 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>日常学习</td>
+<td>1天1复述1复盘</td>
+<td>成本低且有效</td>
+<td>只有输入无输出</td>
+</tr>
+<tr>
+<td>周末整合</td>
+<td>周错题回放</td>
+<td>修补薄弱点</td>
+<td>不记录错题</td>
+</tr>
+<tr>
+<td>面试前冲刺</td>
+<td>高频模拟问答</td>
+<td>提升检索速度</td>
+<td>不做时间限制</td>
 </tr>
 </tbody>
 </table>
 <h3 id="6-高并发变化">6) 高并发变化</h3>
 <ul>
-<li>待补充：规模放大后（QPS/数据量/节点）需要怎样调整。</li>
-<li>容量估算：待补充。</li>
+<li>知识规模扩大后，学习也要做限流：一天最多引入一个重难主题，避免认知雪崩。</li>
+<li>容量估算示例：每天 2 小时有效学习，建议新知 60 分钟，复盘 60 分钟。</li>
 </ul>
 <h2 id="持续观测与线上排障">持续观测与线上排障</h2>
 <h3 id="关键指标">关键指标</h3>
@@ -2154,17 +2170,32 @@
 </thead>
 <tbody>
 <tr>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
-<td>待补充</td>
+<td>次日复述通过率</td>
+<td>大于 75%</td>
+<td>小于 55%</td>
+<td>录音抽查</td>
+<td>看短期固化</td>
+</tr>
+<tr>
+<td>周复盘完成率</td>
+<td>大于 90%</td>
+<td>小于 70%</td>
+<td>打卡记录</td>
+<td>看执行稳定性</td>
+</tr>
+<tr>
+<td>错题回收率</td>
+<td>大于 70%</td>
+<td>小于 50%</td>
+<td>错题本对比</td>
+<td>看修补效果</td>
 </tr>
 </tbody>
 </table>
 <h3 id="排查命令">排查命令</h3>
 <ul>
-<li>待补充。</li>
+<li>grep -RIn 错题 01-一-认知地基/02-学习方法与面试策略</li>
+<li>grep -RIn 本章30秒复述 01-一-认知地基/02-学习方法与面试策略</li>
 </ul>
 <h2 id="原始资料摘录（迁移自旧版）">原始资料摘录（迁移自旧版）</h2>
 <h2 id="2-怎么学才不会忘">2. 怎么学才不会忘</h2>
@@ -2233,7 +2264,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"02d-怎么学才不会忘","level":"1.2.2.4","depth":3,"next":{"title":"02e-如何把项目讲出高级感","level":"1.2.2.5","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.md","ref":"01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.md","articles":[]},"previous":{"title":"02c-面试到底在考什么","level":"1.2.2.3","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","ref":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/02-学习方法与面试策略/02d-怎么学才不会忘.md","mtime":"2026-03-20T06:06:32.393Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:06:37.232Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"02d-怎么学才不会忘","level":"1.2.2.4","depth":3,"next":{"title":"02e-如何把项目讲出高级感","level":"1.2.2.5","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.md","ref":"01-一-认知地基/02-学习方法与面试策略/02e-如何把项目讲出高级感.md","articles":[]},"previous":{"title":"02c-面试到底在考什么","level":"1.2.2.3","depth":3,"path":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","ref":"01-一-认知地基/02-学习方法与面试策略/02c-面试到底在考什么.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-一-认知地基/02-学习方法与面试策略/02d-怎么学才不会忘.md","mtime":"2026-03-20T06:24:17.485Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-20T06:24:25.530Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
