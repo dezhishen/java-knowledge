@@ -5,7 +5,7 @@
   ],
   "pluginsConfig": {
     "page-toc-button": {
-      "maxTocDepth": 3,
+      "maxTocDepth": 2,
       "minTocSize": 2
     }
   }
