@@ -28,11 +28,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install GitBook Plugins
-        run: npx honkit install
-
       - name: Build GitBook
-        run: npx honkit build . _book
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
