@@ -1,0 +1,8 @@
+/* Sidebar accordion mode: only keep the active chapter path expanded. */
+.book-summary ul.summary li.chapter > ul {
+  display: none;
+}
+
+.book-summary ul.summary li.chapter.active > ul {
+  display: block;
+}
