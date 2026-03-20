@@ -1,0 +1,712 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>02 Java语言与集合并发基础 · HonKit</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="03-jvm与性能调优.html" />
+    
+    
+    <link rel="prev" href="../00-导读与方法/01-学习方法与面试策略.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../00-导读与方法/00-术语翻译与入门总览.html">
+            
+                <a href="../00-导读与方法/00-术语翻译与入门总览.html">
+            
+                    
+                    00 术语翻译与入门总览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../00-导读与方法/01-学习方法与面试策略.html">
+            
+                <a href="../00-导读与方法/01-学习方法与面试策略.html">
+            
+                    
+                    01 学习方法与面试策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="02-java语言与集合并发基础.html">
+            
+                <a href="02-java语言与集合并发基础.html">
+            
+                    
+                    02 Java语言与集合并发基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="03-jvm与性能调优.html">
+            
+                <a href="03-jvm与性能调优.html">
+            
+                    
+                    03 JVM与性能调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../02-生态与中间件/04-spring-springboot生态.html">
+            
+                <a href="../02-生态与中间件/04-spring-springboot生态.html">
+            
+                    
+                    04 Spring-SpringBoot生态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../02-生态与中间件/05-mysql与事务索引.html">
+            
+                <a href="../02-生态与中间件/05-mysql与事务索引.html">
+            
+                    
+                    05 MySQL与事务索引
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../02-生态与中间件/06-redis缓存与高可用.html">
+            
+                <a href="../02-生态与中间件/06-redis缓存与高可用.html">
+            
+                    
+                    06 Redis缓存与高可用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../02-生态与中间件/07-kafka与消息队列.html">
+            
+                <a href="../02-生态与中间件/07-kafka与消息队列.html">
+            
+                    
+                    07 Kafka与消息队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../03-架构与治理/08-分布式架构与中间件.html">
+            
+                <a href="../03-架构与治理/08-分布式架构与中间件.html">
+            
+                    
+                    08 分布式架构与中间件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../03-架构与治理/09-微服务与治理.html">
+            
+                <a href="../03-架构与治理/09-微服务与治理.html">
+            
+                    
+                    09 微服务与治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../03-架构与治理/10-高并发设计专题.html">
+            
+                <a href="../03-架构与治理/10-高并发设计专题.html">
+            
+                    
+                    10 高并发设计专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../04-工程与实战/11-工程化与质量保障.html">
+            
+                <a href="../04-工程与实战/11-工程化与质量保障.html">
+            
+                    
+                    11 工程化与质量保障
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../04-工程与实战/12-场景题与系统设计实战.html">
+            
+                <a href="../04-工程与实战/12-场景题与系统设计实战.html">
+            
+                    
+                    12 场景题与系统设计实战
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../05-训练与计划/13-45x6-学习计划.html">
+            
+                <a href="../05-训练与计划/13-45x6-学习计划.html">
+            
+                    
+                    13 45*6学习计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../05-训练与计划/14-面试问答标准答案-零基础版.html">
+            
+                <a href="../05-训练与计划/14-面试问答标准答案-零基础版.html">
+            
+                    
+                    14 面试问答标准答案-零基础版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../06-根因与固化/15-根因视角-物理机操作系统数据结构.html">
+            
+                <a href="../06-根因与固化/15-根因视角-物理机操作系统数据结构.html">
+            
+                    
+                    15 根因视角-物理机操作系统数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../06-根因与固化/16-教材生成流程-固化提示词.html">
+            
+                <a href="../06-根因与固化/16-教材生成流程-固化提示词.html">
+            
+                    
+                    16 教材生成流程-固化提示词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >02 Java语言与集合并发基础</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>[toc]</p>
+<h1 id="02-java语言与集合并发基础">02 Java语言与集合并发基础</h1>
+<h2 id="先用人话把这章说清楚">先用人话把这章说清楚</h2>
+<ul>
+<li>你可以把“并发”理解成：一个餐厅同时来很多客人，后厨怎么不乱。</li>
+<li>程序里的“线程”就是多个小厨师；“锁”就是同一口锅同一时间只能一个人用。</li>
+<li>这章核心不是背术语，而是学会回答两个问题：<ul>
+<li>为什么会乱？</li>
+<li>怎么让它快而且不出错？</li>
+</ul>
+</li>
+</ul>
+<h2 id="术语翻译（先看这个）">术语翻译（先看这个）</h2>
+<ul>
+<li>线程：程序里同时干活的“工人”。</li>
+<li>共享变量：大家都能改的一张“公共白板”。</li>
+<li>可见性：A 改了白板，B 能不能马上看到。</li>
+<li>原子性：一个动作要么全做完，要么不做，不能只做一半。</li>
+<li>锁：同一时间只允许一个人改白板。</li>
+<li>线程池：提前招好一批工人，来活就派，不临时招人。</li>
+<li>队列：排队等处理的任务清单。</li>
+</ul>
+<h2 id="1-java内存模型（jmm）与可见性">1. Java内存模型（JMM）与可见性</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>可以把 JMM 理解成“多人协作写白板的规则书”。</li>
+<li>它规定了：谁改了数据，别人什么时候能看到，以及动作顺序会不会被打乱。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>不懂这个规则，就会出现“你电脑上没问题，一上线上多人同时访问就出错”。</li>
+<li>这种问题最难查，因为偶发、难复现。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>第一步：先记住一个原则，多个线程改同一份数据，必须有同步手段。</li>
+<li>第二步：简单状态用 volatile；复杂修改（如 i++）用锁或原子类。</li>
+<li>第三步：写并发代码后做压力测试，不要只跑单线程。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>读很多、写很少、逻辑简单：先选 volatile。</li>
+<li>会涉及多步修改、必须绝对正确：先选锁。</li>
+<li>冲突不高、追求性能：再考虑 CAS。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么 volatile 不能保证 i++ 正确？</li>
+<li>答：因为 i++ 是“读-改-写”三步，不是原子操作。volatile 只保证看得见，不保证三步合成一步。</li>
+<li>问：什么时候必须上锁？</li>
+<li>答：只要对共享数据有复合操作，并且结果必须准确，就要上锁或用原子类保证原子性。</li>
+</ul>
+<h2 id="2-线程池与异步编排">2. 线程池与异步编排</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>线程池就是“固定工人团队”。任务来了直接分配，不用每次临时创建线程。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>线程创建很贵；无限创建会把机器拖垮，响应变慢甚至崩掉。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>按任务类型分池：计算任务一组，IO任务一组。</li>
+<li>队列必须有上限，不能无限堆。</li>
+<li>必须有拒绝策略：忙不过来时要快速失败或降级。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>要求快响应：小队列，满了就拒绝，保护系统。</li>
+<li>要求多处理：队列可以稍大，但要配合超时和降级。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么不建议用无界队列？</li>
+<li>答：因为任务会无限堆积，内存被吃光，最终触发雪崩。</li>
+<li>问：线程池最少要看哪些监控？</li>
+<li>答：活跃线程数、队列长度、任务拒绝数、任务执行耗时。</li>
+</ul>
+<h2 id="3-集合与并发容器">3. 集合与并发容器</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>容器就是“装数据的盒子”，并发容器是“多人同时用也不容易出错的盒子”。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>容器用错了，会出现数据错乱、性能暴跌、CPU 飙高。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>多线程场景优先用并发容器，不要直接用普通 HashMap。</li>
+<li>读多写少才用 CopyOnWriteArrayList；写多会非常慢。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>高频读写混合：ConcurrentHashMap。</li>
+<li>大量排队消费：BlockingQueue。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么多线程下不能直接用 HashMap？</li>
+<li>答：因为它不是线程安全的，可能出现数据覆盖、丢失，甚至死循环风险（历史实现中）。</li>
+<li>问：CopyOnWriteArrayList 适合什么场景？</li>
+<li>答：读很多写很少，比如配置快照、白名单读取。</li>
+</ul>
+<h2 id="4-锁优化与无锁思路">4. 锁优化与无锁思路</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>锁优化就是“尽量减少抢同一把锁”，无锁思路是“尽量让大家不互相堵”。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>锁一多，线程就排队，系统变慢，延迟升高。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>缩小上锁范围：只锁真正需要保护的几行代码。</li>
+<li>数据分片：把一把大锁拆成多把小锁。</li>
+<li>热点请求先削峰，再慢慢处理。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>冲突不高：CAS 能更快。</li>
+<li>冲突很高：用分片锁或队列串行，避免 CAS 一直自旋浪费 CPU。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：CAS 一定比锁快吗？</li>
+<li>答：不一定。冲突低时通常快；冲突高时会大量重试，反而更慢。</li>
+<li>问：锁优化第一步做什么？</li>
+<li>答：先定位热点锁（数据驱动），再做缩小临界区和分片改造。</li>
+</ul>
+<h2 id="本章5分钟复述模板（可直接背）">本章5分钟复述模板（可直接背）</h2>
+<ul>
+<li>并发问题本质是多人同时改同一份数据。</li>
+<li>先保证正确，再追求性能：<ul>
+<li>简单可见性用 volatile。</li>
+<li>复合操作用锁或原子类。</li>
+<li>任务执行用线程池，不要无限建线程。</li>
+<li>容器要按读写比例选。</li>
+<li>高并发下通过分片、削峰、限流减少冲突。</li>
+</ul>
+</li>
+</ul>
+<h2 id="追根究底：物理机--操作系统--数据结构">追根究底：物理机 / 操作系统 / 数据结构</h2>
+<h3 id="1-物理机视角：为什么-volatile-和锁会生效">1) 物理机视角：为什么 volatile 和锁会“生效”</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>多核 CPU 下，每个核心都有缓存；线程看到的值不一定立刻一致。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>如果没有缓存一致性协议和内存屏障，线程 A 写入后线程 B 可能看不到最新值。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>volatile：通过内存屏障约束重排并刷新可见性。</li>
+<li>锁：进入/退出临界区时形成更强的可见性和有序性保证。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>单变量状态同步：volatile。</li>
+<li>多变量一致性与复合写：锁或原子类。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么说 volatile 只能保可见性不能保原子性？</li>
+<li>答：因为它解决的是“看得见”和“顺序”，不把读-改-写三步合成不可分割的一步。</li>
+</ul>
+<h3 id="2-操作系统视角：为什么线程多了反而更慢">2) 操作系统视角：为什么线程多了反而更慢</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>线程切换需要保存/恢复执行现场，属于真实系统开销。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>线程过多会导致上下文切换、锁竞争、缓存失效同时上升。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>线程池按任务类型分离：CPU 密集与 IO 密集分开。</li>
+<li>用有界队列控制积压，避免把延迟问题变成内存问题。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>延迟敏感：小队列 + 快失败。</li>
+<li>吞吐敏感：适度队列 + 降级兜底。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么线程不是越多越好？</li>
+<li>答：超过系统承载后，切换和争抢成本会吃掉收益，吞吐下降、延迟升高。</li>
+</ul>
+<h3 id="3-数据结构视角：为什么-concurrenthashmap-能抗并发">3) 数据结构视角：为什么 ConcurrentHashMap 能抗并发</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>它用哈希桶分散冲突，并把写锁范围尽量缩小到局部。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>全局一把大锁会让所有线程排队，局部同步能提升并行度。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>key 设计要均匀，减少热点桶。</li>
+<li>高频更新场景用分片键降低冲突。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>高读高写：ConcurrentHashMap。</li>
+<li>高频排队消费：BlockingQueue。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：ConcurrentHashMap 比 HashMap 快在哪里？</li>
+<li>答：不是单纯“快”，而是在并发场景下通过局部同步和更合理的结构减少冲突与数据错误。</li>
+</ul>
+<h3 id="4-一条可复述的根因链">4) 一条可复述的根因链</h3>
+<ul>
+<li>现象：接口偶发超时、CPU 升高。</li>
+<li>根因：线程暴涨 -&gt; 切换增多 -&gt; 锁竞争上升 -&gt; 队列堆积 -&gt; 延迟抖动。</li>
+<li>处理：限流 + 线程池收敛 + 热点分片 + 缩临界区。</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../00-导读与方法/01-学习方法与面试策略.html" class="navigation navigation-prev " aria-label="Previous page: 01 学习方法与面试策略">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="03-jvm与性能调优.html" class="navigation navigation-next " aria-label="Next page: 03 JVM与性能调优">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"02 Java语言与集合并发基础","level":"1.4","depth":1,"next":{"title":"03 JVM与性能调优","level":"1.5","depth":1,"path":"01-基础与原理/03-jvm与性能调优.md","ref":"01-基础与原理/03-jvm与性能调优.md","articles":[]},"previous":{"title":"01 学习方法与面试策略","level":"1.3","depth":1,"path":"00-导读与方法/01-学习方法与面试策略.md","ref":"00-导读与方法/01-学习方法与面试策略.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"01-基础与原理/02-java语言与集合并发基础.md","mtime":"2026-03-20T03:56:09.660Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-03-20T03:56:20.025Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

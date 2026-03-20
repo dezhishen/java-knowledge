@@ -1,0 +1,648 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>06 Redis缓存与高可用 · HonKit</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="07-kafka与消息队列.html" />
+    
+    
+    <link rel="prev" href="05-mysql与事务索引.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../00-导读与方法/00-术语翻译与入门总览.html">
+            
+                <a href="../00-导读与方法/00-术语翻译与入门总览.html">
+            
+                    
+                    00 术语翻译与入门总览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../00-导读与方法/01-学习方法与面试策略.html">
+            
+                <a href="../00-导读与方法/01-学习方法与面试策略.html">
+            
+                    
+                    01 学习方法与面试策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../01-基础与原理/02-java语言与集合并发基础.html">
+            
+                <a href="../01-基础与原理/02-java语言与集合并发基础.html">
+            
+                    
+                    02 Java语言与集合并发基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../01-基础与原理/03-jvm与性能调优.html">
+            
+                <a href="../01-基础与原理/03-jvm与性能调优.html">
+            
+                    
+                    03 JVM与性能调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="04-spring-springboot生态.html">
+            
+                <a href="04-spring-springboot生态.html">
+            
+                    
+                    04 Spring-SpringBoot生态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="05-mysql与事务索引.html">
+            
+                <a href="05-mysql与事务索引.html">
+            
+                    
+                    05 MySQL与事务索引
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8" data-path="06-redis缓存与高可用.html">
+            
+                <a href="06-redis缓存与高可用.html">
+            
+                    
+                    06 Redis缓存与高可用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="07-kafka与消息队列.html">
+            
+                <a href="07-kafka与消息队列.html">
+            
+                    
+                    07 Kafka与消息队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../03-架构与治理/08-分布式架构与中间件.html">
+            
+                <a href="../03-架构与治理/08-分布式架构与中间件.html">
+            
+                    
+                    08 分布式架构与中间件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../03-架构与治理/09-微服务与治理.html">
+            
+                <a href="../03-架构与治理/09-微服务与治理.html">
+            
+                    
+                    09 微服务与治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../03-架构与治理/10-高并发设计专题.html">
+            
+                <a href="../03-架构与治理/10-高并发设计专题.html">
+            
+                    
+                    10 高并发设计专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../04-工程与实战/11-工程化与质量保障.html">
+            
+                <a href="../04-工程与实战/11-工程化与质量保障.html">
+            
+                    
+                    11 工程化与质量保障
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../04-工程与实战/12-场景题与系统设计实战.html">
+            
+                <a href="../04-工程与实战/12-场景题与系统设计实战.html">
+            
+                    
+                    12 场景题与系统设计实战
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../05-训练与计划/13-45x6-学习计划.html">
+            
+                <a href="../05-训练与计划/13-45x6-学习计划.html">
+            
+                    
+                    13 45*6学习计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../05-训练与计划/14-面试问答标准答案-零基础版.html">
+            
+                <a href="../05-训练与计划/14-面试问答标准答案-零基础版.html">
+            
+                    
+                    14 面试问答标准答案-零基础版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../06-根因与固化/15-根因视角-物理机操作系统数据结构.html">
+            
+                <a href="../06-根因与固化/15-根因视角-物理机操作系统数据结构.html">
+            
+                    
+                    15 根因视角-物理机操作系统数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../06-根因与固化/16-教材生成流程-固化提示词.html">
+            
+                <a href="../06-根因与固化/16-教材生成流程-固化提示词.html">
+            
+                    
+                    16 教材生成流程-固化提示词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >06 Redis缓存与高可用</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>[toc]</p>
+<h1 id="06-redis-缓存与高可用（零基础版）">06 Redis 缓存与高可用（零基础版）</h1>
+<h2 id="先用人话说清楚">先用人话说清楚</h2>
+<ul>
+<li>Redis 像超快记事本，把常用数据放在内存里，读写更快。</li>
+<li>但内存有限，策略不当会出大问题。</li>
+</ul>
+<h2 id="术语翻译">术语翻译</h2>
+<ul>
+<li>缓存命中：要的数据在缓存里，直接拿到。</li>
+<li>穿透：请求的数据根本不存在，缓存挡不住。</li>
+<li>击穿：某个热点数据刚好过期，大量请求打到数据库。</li>
+<li>雪崩：很多缓存同一时间失效，数据库被瞬间打爆。</li>
+</ul>
+<h2 id="1-缓存为什么快">1. 缓存为什么快</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>Redis 用内存存数据，访问成本低。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>可以显著降低数据库压力和响应时间。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>定义好 key 命名和过期时间。</li>
+<li>给热点数据做预热。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>热点数据用本地缓存 + Redis 双层结构。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么缓存能提速？</li>
+<li>答：因为内存访问远快于磁盘数据库，大量读请求可在缓存层直接消化。</li>
+</ul>
+<h2 id="2-一致性与三大问题">2. 一致性与三大问题</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>缓存和数据库可能不一致，并可能出现穿透、击穿、雪崩。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>缓存策略不合理会把压力反冲数据库。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>空值缓存和布隆过滤器防穿透。</li>
+<li>互斥锁或逻辑过期防击穿。</li>
+<li>随机过期和分批重建防雪崩。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>先保数据库，再保缓存命中率。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：缓存一致性常见做法？</li>
+<li>答：常用先更新数据库再删除缓存，并加重试保证删除成功率。</li>
+</ul>
+<h2 id="3-高可用">3. 高可用</h2>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>主从、哨兵、集群保障 Redis 故障后仍可服务。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>缓存层一旦不可用，主库压力会暴涨。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>明确故障切换方案，定期演练。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>写压力大时优先分片扩容，避免单点瓶颈。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：Redis 故障时你怎么止损？</li>
+<li>答：先限流和降级，保护数据库，再恢复缓存和热点数据。</li>
+</ul>
+<h2 id="本章30秒复述">本章30秒复述</h2>
+<ul>
+<li>Redis 负责快，数据库负责准。</li>
+<li>缓存问题本质是流量回源问题。</li>
+<li>高并发要先防雪崩，再谈命中率。</li>
+</ul>
+<h2 id="追根究底：redis-背后的事件循环、内存与网络">追根究底：Redis 背后的事件循环、内存与网络</h2>
+<h3 id="1-redis-为什么快，但也会被单点热点拖慢">1) Redis 为什么快，但也会被单点热点拖慢</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>Redis 核心命令执行模型偏单线程事件循环，避免了大量锁竞争。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>单线程让执行路径短、开销小；但单 key 热点会独占处理时间。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>热点 key 分片（如 user:123 拆成多个桶）。</li>
+<li>大 key 拆分，避免一次操作阻塞太久。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>高热点场景优先“拆热点 + 本地缓存兜底”。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：Redis 单线程是不是性能瓶颈？</li>
+<li>答：大多数场景不是，瓶颈常在网络、内存带宽或热点 key；但极端热点会成为单线程处理瓶颈。</li>
+</ul>
+<h3 id="2-为什么内存淘汰会引发抖动">2) 为什么内存淘汰会引发抖动</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>内存接近上限时，Redis 会按淘汰策略删除键值。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>淘汰和回源叠加会导致命中率波动，数据库压力瞬时上升。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>保留足够内存余量。</li>
+<li>热点数据设置更稳定过期策略并提前预热。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>对核心业务优先保证命中稳定性，而不是单纯压榨内存利用率。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么明明 Redis 在，数据库还是被打满？</li>
+<li>答：常见是热点失效、淘汰抖动或穿透流量导致大规模回源。</li>
+</ul>
+<h3 id="3-网络-io-和序列化为什么影响缓存收益">3) 网络 I/O 和序列化为什么影响缓存收益</h3>
+<h3 id="是什么">是什么</h3>
+<ul>
+<li>缓存访问不仅是 Redis 命令，还包含网络传输与序列化反序列化。</li>
+</ul>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>大对象或低效序列化会放大 CPU 与网络开销，抵消缓存速度优势。</li>
+</ul>
+<h3 id="怎么做">怎么做</h3>
+<ul>
+<li>控制 value 大小，避免超大对象。</li>
+<li>选更高效的序列化方案，必要时做字段裁剪。</li>
+</ul>
+<h3 id="高并发如何选择">高并发如何选择</h3>
+<ul>
+<li>低延迟链路优先短小数据结构与批量管道，减少往返次数。</li>
+</ul>
+<h3 id="面试题与标准答案">面试题与标准答案</h3>
+<ul>
+<li>问：为什么加了 Redis 后 RT 仍不理想？</li>
+<li>答：可能瓶颈转移到了网络和序列化成本，而不是 Redis 命令执行本身。</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="05-mysql与事务索引.html" class="navigation navigation-prev " aria-label="Previous page: 05 MySQL与事务索引">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="07-kafka与消息队列.html" class="navigation navigation-next " aria-label="Next page: 07 Kafka与消息队列">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"06 Redis缓存与高可用","level":"1.8","depth":1,"next":{"title":"07 Kafka与消息队列","level":"1.9","depth":1,"path":"02-生态与中间件/07-kafka与消息队列.md","ref":"02-生态与中间件/07-kafka与消息队列.md","articles":[]},"previous":{"title":"05 MySQL与事务索引","level":"1.7","depth":1,"path":"02-生态与中间件/05-mysql与事务索引.md","ref":"02-生态与中间件/05-mysql与事务索引.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"02-生态与中间件/06-redis缓存与高可用.md","mtime":"2026-03-20T03:56:09.661Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-03-20T03:56:20.025Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
