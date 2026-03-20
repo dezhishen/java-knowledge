@@ -1,41 +1,41 @@
-require(["gitbook", "jquery"], (gitbook, $) => {
+require(['gitbook', 'jquery'], function(gitbook, $) {
     // Configuration
-    const MAX_SIZE = 4;
-    const MIN_SIZE = 0;
-    let BUTTON_ID;
+    var MAX_SIZE       = 4,
+        MIN_SIZE       = 0,
+        BUTTON_ID;
 
     // Current fontsettings state
-    let fontState;
+    var fontState;
 
     // Default themes
-    let THEMES = [
+    var THEMES = [
         {
-            config: "white",
-            text: "White",
+            config: 'white',
+            text: 'White',
             id: 0
         },
         {
-            config: "sepia",
-            text: "Sepia",
+            config: 'sepia',
+            text: 'Sepia',
             id: 1
         },
         {
-            config: "night",
-            text: "Night",
+            config: 'night',
+            text: 'Night',
             id: 2
         }
     ];
 
     // Default font families
-    let FAMILIES = [
+    var FAMILIES = [
         {
-            config: "serif",
-            text: "Serif",
+            config: 'serif',
+            text: 'Serif',
             id: 0
         },
         {
-            config: "sans",
-            text: "Sans",
+            config: 'sans',
+            text: 'Sans',
             id: 1
         }
     ];
@@ -64,7 +64,7 @@ require(["gitbook", "jquery"], (gitbook, $) => {
 
     // Save current font settings
     function saveFontSettings() {
-        gitbook.storage.set("fontState", fontState);
+        gitbook.storage.set('fontState', fontState);
         update();
     }
 
@@ -92,7 +92,7 @@ require(["gitbook", "jquery"], (gitbook, $) => {
             e.preventDefault();
         }
 
-        const familyId = getFontFamilyId(configName);
+        var familyId = getFontFamilyId(configName);
         fontState.family = familyId;
         saveFontSettings();
     }
@@ -103,15 +103,17 @@ require(["gitbook", "jquery"], (gitbook, $) => {
             e.preventDefault();
         }
 
-        const $book = gitbook.state.$book;
+        var $book = gitbook.state.$book;
 
         // Remove currently applied color theme
-        if (fontState.theme !== 0) $book.removeClass(`color-theme-${fontState.theme}`);
+        if (fontState.theme !== 0)
+            $book.removeClass('color-theme-'+fontState.theme);
 
         // Set new color theme
-        const themeId = getThemeId(configName);
+        var themeId = getThemeId(configName);
         fontState.theme = themeId;
-        if (fontState.theme !== 0) $book.addClass(`color-theme-${fontState.theme}`);
+        if (fontState.theme !== 0)
+            $book.addClass('color-theme-'+fontState.theme);
 
         saveFontSettings();
     }
@@ -120,52 +122,50 @@ require(["gitbook", "jquery"], (gitbook, $) => {
     // Default to first font-family
     function getFontFamilyId(configName) {
         // Search for plugin configured font family
-        const configFamily = $.grep(FAMILIES, (family) => {
+        var configFamily = $.grep(FAMILIES, function(family) {
             return family.config == configName;
         })[0];
-
         // Fallback to default font family
-        return (configFamily && configFamily.id) || 0;
+        return (!!configFamily)? configFamily.id : 0;
     }
 
     // Return the correct id for a theme config key
     // Default to first theme
     function getThemeId(configName) {
         // Search for plugin configured theme
-        const configTheme = $.grep(THEMES, (theme) => {
+        var configTheme = $.grep(THEMES, function(theme) {
             return theme.config == configName;
         })[0];
-
         // Fallback to default theme
-        return (configTheme && configTheme.id) || 0;
+        return (!!configTheme)? configTheme.id : 0;
     }
 
     function update() {
-        const $book = gitbook.state.$book;
+        var $book = gitbook.state.$book;
 
-        $(".font-settings .font-family-list li").removeClass("active");
-        $(`.font-settings .font-family-list li:nth-child(${fontState.family + 1})`).addClass("active");
+        $('.font-settings .font-family-list li').removeClass('active');
+        $('.font-settings .font-family-list li:nth-child('+(fontState.family+1)+')').addClass('active');
 
-        $book[0].className = $book[0].className.replace(/\bfont-\S+/g, "");
-        $book.addClass(`font-size-${fontState.size}`);
-        $book.addClass(`font-family-${fontState.family}`);
+        $book[0].className = $book[0].className.replace(/\bfont-\S+/g, '');
+        $book.addClass('font-size-'+fontState.size);
+        $book.addClass('font-family-'+fontState.family);
 
-        if (fontState.theme !== 0) {
-            $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, "");
-            $book.addClass(`color-theme-${fontState.theme}`);
+        if(fontState.theme !== 0) {
+            $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
+            $book.addClass('color-theme-'+fontState.theme);
         }
     }
 
     function init(config) {
         // Search for plugin configured font family
-        const configFamily = getFontFamilyId(config.family);
-        const configTheme = getThemeId(config.theme);
+        var configFamily = getFontFamilyId(config.family),
+            configTheme = getThemeId(config.theme);
 
         // Instantiate font state object
-        fontState = gitbook.storage.get("fontState", {
-            size: config.size || 2,
+        fontState = gitbook.storage.get('fontState', {
+            size:   config.size || 2,
             family: configFamily,
-            theme: configTheme
+            theme:  configTheme
         });
 
         update();
@@ -173,37 +173,37 @@ require(["gitbook", "jquery"], (gitbook, $) => {
 
     function updateButtons() {
         // Remove existing fontsettings buttons
-        if (BUTTON_ID) {
+        if (!!BUTTON_ID) {
             gitbook.toolbar.removeButton(BUTTON_ID);
         }
 
         // Create buttons in toolbar
         BUTTON_ID = gitbook.toolbar.createButton({
-            icon: "fa fa-font",
-            label: "Font Settings",
-            className: "font-settings",
+            icon: 'fa fa-font',
+            label: 'Font Settings',
+            className: 'font-settings',
             dropdown: [
                 [
                     {
-                        text: "A",
-                        className: "font-reduce",
+                        text: 'A',
+                        className: 'font-reduce',
                         onClick: reduceFontSize
                     },
                     {
-                        text: "A",
-                        className: "font-enlarge",
+                        text: 'A',
+                        className: 'font-enlarge',
                         onClick: enlargeFontSize
                     }
                 ],
-                $.map(FAMILIES, (family) => {
-                    family.onClick = function (e) {
+                $.map(FAMILIES, function(family) {
+                    family.onClick = function(e) {
                         return changeFontFamily(family.config, e);
                     };
 
                     return family;
                 }),
-                $.map(THEMES, (theme) => {
-                    theme.onClick = function (e) {
+                $.map(THEMES, function(theme) {
+                    theme.onClick = function(e) {
                         return changeColorTheme(theme.config, e);
                     };
 
@@ -214,8 +214,8 @@ require(["gitbook", "jquery"], (gitbook, $) => {
     }
 
     // Init configuration at start
-    gitbook.events.bind("start", (e, config) => {
-        const opts = config.fontsettings;
+    gitbook.events.bind('start', function(e, config) {
+        var opts = config.fontsettings;
 
         // Generate buttons at start
         updateButtons();
@@ -227,12 +227,14 @@ require(["gitbook", "jquery"], (gitbook, $) => {
     // Expose API
     gitbook.fontsettings = {
         enlargeFontSize: enlargeFontSize,
-        reduceFontSize: reduceFontSize,
-        setTheme: changeColorTheme,
-        setFamily: changeFontFamily,
-        getThemes: getThemes,
-        setThemes: setThemes,
-        getFamilies: getFamilies,
-        setFamilies: setFamilies
+        reduceFontSize:  reduceFontSize,
+        setTheme:        changeColorTheme,
+        setFamily:       changeFontFamily,
+        getThemes:       getThemes,
+        setThemes:       setThemes,
+        getFamilies:     getFamilies,
+        setFamilies:     setFamilies
     };
 });
+
+

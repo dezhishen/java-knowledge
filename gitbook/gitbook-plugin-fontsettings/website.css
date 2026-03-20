@@ -2,39 +2,39 @@
  * Theme 1
  */
 .color-theme-1 .dropdown-menu {
-  background-color: #111;
-  border-color: hsl(194, 5%, 52%);
+  background-color: #111111;
+  border-color: #7e888b;
 }
 .color-theme-1 .dropdown-menu .dropdown-caret .caret-inner {
-  border-bottom: 9px solid #111;
+  border-bottom: 9px solid #111111;
 }
 .color-theme-1 .dropdown-menu .buttons {
-  border-color: hsl(194, 5%, 52%);
+  border-color: #7e888b;
 }
 .color-theme-1 .dropdown-menu .button {
-  color: #AFA790;
+  color: #afa790;
 }
 .color-theme-1 .dropdown-menu .button:hover {
-  color: #73553C;
+  color: #73553c;
 }
 /*
  * Theme 2
  */
 .color-theme-2 .dropdown-menu {
-  background-color: hsl(229, 20%, 22%);
-  border-color: hsl(230, 19%, 19%);
+  background-color: #2d3143;
+  border-color: #272a3a;
 }
 .color-theme-2 .dropdown-menu .dropdown-caret .caret-inner {
-  border-bottom: 9px solid hsl(229, 20%, 22%);
+  border-bottom: 9px solid #2d3143;
 }
 .color-theme-2 .dropdown-menu .buttons {
-  border-color: hsl(230, 19%, 19%);
+  border-color: #272a3a;
 }
 .color-theme-2 .dropdown-menu .button {
-  color: hsl(228, 13%, 44%);
+  color: #62677f;
 }
 .color-theme-2 .dropdown-menu .button:hover {
-  color: hsl(240, 5%, 96%);
+  color: #f4f4f5;
 }
 .book .book-header .font-settings .font-enlarge {
   line-height: 30px;
@@ -46,29 +46,17 @@
 }
 .book.color-theme-1 .book-body {
   color: #704214;
-  background: #F3EACB;
+  background: #f3eacb;
 }
 .book.color-theme-1 .book-body .page-wrapper .page-inner section {
-  background: #F3EACB;
-}
-.book.color-theme-1 #book-search-input {
-  background: transparent;
-}
-.book.color-theme-1 #book-search-results .search-results .has-results .search-results-item {
-  color: #b16820;
+  background: #f3eacb;
 }
 .book.color-theme-2 .book-body {
-  color: hsl(214, 29%, 80%);
-  background: hsl(228, 21%, 14%);
+  color: #bdcadb;
+  background: #1c1f2b;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section {
-  background: hsl(228, 21%, 14%);
-}
-.book.color-theme-2 #book-search-input {
-  background: transparent;
-}
-.book.color-theme-2 #book-search-results .search-results .has-results .search-results-item {
-  color: hsl(214, 29%, 65%);
+  background: #1c1f2b;
 }
 .book.font-size-0 .book-body .page-inner section {
   font-size: 1.2rem;
@@ -134,16 +122,16 @@
 .book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table tr {
   color: inherit;
   background-color: #fdf6e3;
-  border-color: #444;
+  border-color: #444444;
 }
 .book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
   background-color: #fbeecb;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal {
-  color: hsl(214, 29%, 80%);
+  color: #bdcadb;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal a {
-  color: hsl(193, 61%, 53%);
+  color: #3eb1d0;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h1,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h2,
@@ -151,51 +139,51 @@
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h4,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h5,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h6 {
-  color: hsl(60, 100%, 99%);
+  color: #fffffa;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h1,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h2 {
-  border-color: hsl(230, 17%, 26%);
+  border-color: #373b4e;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h6 {
-  color: hsl(230, 17%, 26%);
+  color: #373b4e;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal hr {
-  background-color: hsl(230, 17%, 26%);
+  background-color: #373b4e;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal blockquote {
-  border-color: hsl(230, 17%, 26%);
+  border-color: #373b4e;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code {
-  color: hsl(206, 43%, 73%);
-  background: hsl(229, 20%, 22%);
-  border-color: hsl(229, 20%, 22%);
+  color: #9dbed8;
+  background: #2d3143;
+  border-color: #2d3143;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .highlight {
-  background-color: hsl(233, 18%, 19%);
+  background-color: #282a39;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table th,
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table td {
-  border-color: hsl(230, 17%, 28%);
+  border-color: #3b3f54;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table tr {
-  color: hsl(216, 24%, 77%);
-  background-color: hsl(229, 19%, 22%);
-  border-color: hsl(230, 17%, 28%);
+  color: #b6c2d2;
+  background-color: #2d3143;
+  border-color: #3b3f54;
 }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
-  background-color: hsl(229, 17%, 25%);
+  background-color: #35394b;
 }
 .book.color-theme-1 .book-header {
-  color: #AFA790;
+  color: #afa790;
   background: transparent;
 }
 .book.color-theme-1 .book-header .btn {
-  color: #AFA790;
+  color: #afa790;
 }
 .book.color-theme-1 .book-header .btn:hover {
-  color: #73553C;
+  color: #73553c;
   background: none;
 }
 .book.color-theme-1 .book-header h1 {
@@ -206,58 +194,55 @@
   background: transparent;
 }
 .book.color-theme-2 .book-header .btn {
-  color: hsl(230, 17%, 28%);
+  color: #3b3f54;
 }
 .book.color-theme-2 .book-header .btn:hover {
-  color: hsl(60, 100%, 98%);
+  color: #fffff5;
   background: none;
 }
 .book.color-theme-2 .book-header h1 {
-  color: hsl(214, 29%, 80%);
+  color: #bdcadb;
 }
 .book.color-theme-1 .book-body .navigation {
-  color: #AFA790;
+  color: #afa790;
 }
 .book.color-theme-1 .book-body .navigation:hover {
-  color: #73553C;
+  color: #73553c;
 }
 .book.color-theme-2 .book-body .navigation {
-  color: hsl(224, 19%, 27%);
+  color: #383f52;
 }
 .book.color-theme-2 .book-body .navigation:hover {
-  color: hsl(60, 100%, 98%);
+  color: #fffff5;
 }
 /*
  * Theme 1
  */
 .book.color-theme-1 .book-summary {
-  color: #AFA790;
-  background: #111;
+  color: #afa790;
+  background: #111111;
   border-right: 1px solid rgba(0, 0, 0, 0.07);
 }
-.book.color-theme-1 .book-summary .book-search,
-.book.color-theme-1 .book-summary #book-search-input {
+.book.color-theme-1 .book-summary .book-search {
   background: transparent;
 }
 .book.color-theme-1 .book-summary .book-search input,
-.book.color-theme-1 .book-summary #book-search-input input,
-.book.color-theme-1 .book-summary .book-search input:focus,
-.book.color-theme-1 .book-summary #book-search-input input:focus {
+.book.color-theme-1 .book-summary .book-search input:focus {
   border: 1px solid transparent;
 }
 .book.color-theme-1 .book-summary ul.summary li.divider {
-  background: hsl(194, 5%, 52%);
+  background: #7e888b;
   box-shadow: none;
 }
 .book.color-theme-1 .book-summary ul.summary li i.fa-check {
-  color: hsl(120, 60%, 50%);
+  color: #33cc33;
 }
 .book.color-theme-1 .book-summary ul.summary li.done > a {
-  color: #877F6A;
+  color: #877f6a;
 }
 .book.color-theme-1 .book-summary ul.summary li a,
 .book.color-theme-1 .book-summary ul.summary li span {
-  color: #877F6A;
+  color: #877f6a;
   background: transparent;
   font-weight: normal;
 }
@@ -271,39 +256,36 @@
  * Theme 2
  */
 .book.color-theme-2 .book-summary {
-  color: hsl(226, 20%, 78%);
-  background: hsl(229, 20%, 22%);
+  color: #bcc1d2;
+  background: #2d3143;
   border-right: none;
 }
-.book.color-theme-2 .book-summary .book-search,
-.book.color-theme-2 .book-summary #book-search-input {
+.book.color-theme-2 .book-summary .book-search {
   background: transparent;
 }
 .book.color-theme-2 .book-summary .book-search input,
-.book.color-theme-2 .book-summary #book-search-input input,
-.book.color-theme-2 .book-summary .book-search input:focus,
-.book.color-theme-2 .book-summary #book-search-input input:focus {
+.book.color-theme-2 .book-summary .book-search input:focus {
   border: 1px solid transparent;
 }
 .book.color-theme-2 .book-summary ul.summary li.divider {
-  background: hsl(230, 19%, 19%);
+  background: #272a3a;
   box-shadow: none;
 }
 .book.color-theme-2 .book-summary ul.summary li i.fa-check {
-  color: hsl(120, 60%, 50%);
+  color: #33cc33;
 }
 .book.color-theme-2 .book-summary ul.summary li.done > a {
-  color: hsl(227, 13%, 44%);
+  color: #62687f;
 }
 .book.color-theme-2 .book-summary ul.summary li a,
 .book.color-theme-2 .book-summary ul.summary li span {
-  color: hsl(226, 22%, 80%);
+  color: #c1c6d7;
   background: transparent;
   font-weight: 600;
 }
 .book.color-theme-2 .book-summary ul.summary li.active > a,
 .book.color-theme-2 .book-summary ul.summary li a:hover {
-  color: hsl(240, 5%, 96%);
-  background: hsl(233, 19%, 18%);
+  color: #f4f4f5;
+  background: #252737;
   font-weight: 600;
 }
