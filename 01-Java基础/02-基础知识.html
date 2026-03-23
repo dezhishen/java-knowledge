@@ -108,6 +108,38 @@
                 <span>
             
                     
+                    开发理论
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00-开发理论/01-开发原则.html">
+            
+                <a href="../00-开发理论/01-开发原则.html">
+            
+                    
+                    开发原则
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
                     Java基础
             
                 </span>
@@ -117,7 +149,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="01-面对对象.html">
+        <li class="chapter " data-level="1.3.1" data-path="01-面对对象.html">
             
                 <a href="01-面对对象.html">
             
@@ -130,12 +162,44 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.2" data-path="02-基础知识.html">
+        <li class="chapter active" data-level="1.3.2" data-path="02-基础知识.html">
             
                 <a href="02-基础知识.html">
             
                     
                     基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Java并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../03-Java并发/01-理论基础.html">
+            
+                <a href="../03-Java并发/01-理论基础.html">
+            
+                    
+                    理论基础
             
                 </a>
             
@@ -340,6 +404,83 @@ System.out.println(m == n); <span class="hljs-comment">// true</span>
     }
 }
 </code></pre>
+<h3 id="隐式类型转换">隐式类型转换</h3>
+<p>类型精度高的无法隐式类型转换为类型精度比它低的。</p>
+<p>整型字面量默认是 int。一般情况下不能把 int 隐式赋值给 short，因为这是窄化转换。但如果右侧是编译期可确定的常量表达式，并且常量值在 short 的表示范围内，Java 允许进行隐式窄化赋值。</p>
+<pre><code>int x = 1;
+short s = x; // 编译错误
+short a = 1;
+short b = 2;
+// short c = a + b; // 编译错误：a+b 会被提升为 int
+int c = a + b; // 正常
+
+short s = (short) 1_000_000; // 允许写，但会溢出，结果不是你以为的值
+
+short s = 1; // 可以
+final int x = 1; // 原因：final int x = 1 的 x 也是编译期常量（前提是用常量表达式初始化），编译器可以在编译期就确定它的值是 1，因此允许窄化。
+short s = x; // 可以
+</code></pre><h2 id="继承">继承</h2>
+<h3 id="访问权限">访问权限</h3>
+<p>Java 中有三个<strong>访问权限修饰符</strong>: private、protected 以及 public，如果不加访问修饰符，表示包级可见。</p>
+<p>可以对类或类中的成员(字段以及方法)加上访问修饰符。</p>
+<ul>
+<li>类可见表示其它类可以用这个类创建实例对象。</li>
+<li>成员可见表示其它类可以用这个类的实例对象访问到该成员；</li>
+</ul>
+<p><strong>protected 用于修饰成员，表示在继承体系中成员对于子类可见，但是这个访问修饰符对于类没有意义。</strong></p>
+<p>设计良好的模块会隐藏所有的实现细节，把它的 API 与它的实现清晰地隔离开来。模块之间<strong>只通过它们的 API 进行通信</strong>，一个模块不需要知道其他模块的内部工作情况，这个概念被称为信息隐藏或封装。因此访问权限应当尽可能地使每个类或者成员<strong>不</strong>被外界访问。</p>
+<p>如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了确保可以使用父类实例的地方都可以使用子类实例，也就是确保满足<a href="../00-开发理论/01-开发原则.html">里氏替换原则</a>。</p>
+<p>字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。(java没有内置的属性机制，导致在实践中形成了一套以<code>getter,setter</code>为核心的属性管理机制)</p>
+<blockquote>
+<p>但是也有例外，如果是包级私有的类或者私有的嵌套类，那么直接暴露成员不会有特别大的影响。（因为管理起来简单，直接可以在当前类找到）</p>
+</blockquote>
+<h3 id="抽象类与接口">抽象类与接口</h3>
+<p>略</p>
+<blockquote>
+<p>一般情况下，使用接口，尤其jdk1.8后，接口也有默认方法。哪怕不存在所谓的要实现方法，也可以做一个接口，方便后续迭代，或者工具类的开发。</p>
+</blockquote>
+<h3 id="super">super</h3>
+<p>访问父类的构造函数: 可以使用 super() 函数访问父类的构造函数，从而委托父类完成一些初始化的工作。
+访问父类的成员: 如果子类重写了父类的中某个方法的实现，可以通过使用 super 关键字来引用父类的方法实现。</p>
+<h3 id="重写与重载">重写与重载</h3>
+<ol>
+<li>重写(Override)
+存在于继承体系中，指子类实现了一个与父类在方法声明上完全相同的一个方法。</li>
+</ol>
+<p>为了满足里式替换原则，重写有以下两个限制:</p>
+<ul>
+<li>子类方法的访问权限必须大于等于父类方法；</li>
+<li>子类方法的返回类型必须是父类方法返回类型或为其子类型。</li>
+</ul>
+<p>使用 <code>@Override</code> 注解，可以让编译器帮忙检查是否满足上面的两个限制条件。</p>
+<ol>
+<li>重载(Overload)</li>
+</ol>
+<p>存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。</p>
+<p>应该注意的是，返回值不同，其它都相同不算是重载。</p>
+<h2 id="object-通用方法">Object 通用方法</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> Class&lt;?&gt; getClass()
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">native</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object obj)</span>
+
+<span class="hljs-keyword">protected</span> <span class="hljs-keyword">native</span> Object <span class="hljs-title function_">clone</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> CloneNotSupportedException
+
+<span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">notify</span><span class="hljs-params">()</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">notifyAll</span><span class="hljs-params">()</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">wait</span><span class="hljs-params">(<span class="hljs-type">long</span> timeout)</span> <span class="hljs-keyword">throws</span> InterruptedException
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">wait</span><span class="hljs-params">(<span class="hljs-type">long</span> timeout, <span class="hljs-type">int</span> nanos)</span> <span class="hljs-keyword">throws</span> InterruptedException
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">wait</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException
+
+<span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">finalize</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable {}
+</code></pre>
 
                                 
                                 </section>
@@ -379,7 +520,7 @@ System.out.println(m == n); <span class="hljs-comment">// true</span>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基础知识","level":"1.2.2","depth":2,"previous":{"title":"面对对象","level":"1.2.1","depth":2,"path":"01-Java基础/01-面对对象.md","ref":"01-Java基础/01-面对对象.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-Java基础/02-基础知识.md","mtime":"2026-03-23T06:41:25.488Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-23T06:41:33.487Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"基础知识","level":"1.3.2","depth":2,"next":{"title":"Java并发","level":"1.4","depth":1,"ref":"","articles":[{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]}]},"previous":{"title":"面对对象","level":"1.3.1","depth":2,"path":"01-Java基础/01-面对对象.md","ref":"01-Java基础/01-面对对象.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-Java基础/02-基础知识.md","mtime":"2026-03-23T09:33:42.580Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-23T09:33:50.605Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
