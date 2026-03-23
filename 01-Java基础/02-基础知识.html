@@ -1,0 +1,451 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>基础知识 · Java知识网络</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 5.1.5">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="01-面对对象.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Java基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="01-面对对象.html">
+            
+                <a href="01-面对对象.html">
+            
+                    
+                    面对对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="02-基础知识.html">
+            
+                <a href="02-基础知识.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >基础知识</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="基础知识">基础知识</h1>
+<h2 id="数据类型">数据类型</h2>
+<p>八个基本类型:</p>
+<ul>
+<li>boolean/1</li>
+<li>byte/8</li>
+<li>char/16</li>
+<li>short/16</li>
+<li>int/32</li>
+<li>float/32</li>
+<li>long/64</li>
+<li>double/64</li>
+</ul>
+<p>所有的基础类型都有其包装类，⚠️：String 并非基础类型</p>
+<h2 id="缓存池">缓存池</h2>
+<p>编译器会在缓冲池范围内的基本类型自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">123</span>) <span class="hljs-comment">//每次都会新建一个对象</span>
+Integer.valueOf(<span class="hljs-number">123</span>) <span class="hljs-comment">//会使用缓存池中的对象，多次调用会取得同一个对象的引用。</span>
+
+<span class="hljs-type">Integer</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">123</span>);
+<span class="hljs-type">Integer</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">123</span>);
+System.out.println(x == y);    <span class="hljs-comment">// false</span>
+<span class="hljs-type">Integer</span> <span class="hljs-variable">z</span> <span class="hljs-operator">=</span> Integer.valueOf(<span class="hljs-number">123</span>);
+<span class="hljs-type">Integer</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> Integer.valueOf(<span class="hljs-number">123</span>);
+System.out.println(z == k);   <span class="hljs-comment">// true</span>
+</code></pre>
+<p>编译器会在缓冲池范围内的基本类型自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。</p>
+<pre><code class="lang-java"><span class="hljs-type">Integer</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> <span class="hljs-number">123</span>;
+<span class="hljs-type">Integer</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> <span class="hljs-number">123</span>;
+System.out.println(m == n); <span class="hljs-comment">// true</span>
+</code></pre>
+<h3 id="基本类型对应的缓冲池如下">基本类型对应的缓冲池如下:</h3>
+<ul>
+<li>boolean values true and false</li>
+<li>all byte values</li>
+<li>short values between -128 and 127</li>
+<li>int values between -128 and 127</li>
+<li>char in the range \u0000 to \u007F</li>
+</ul>
+<h2 id="string">String</h2>
+<p>String是final的，内部使用 char 数组存储数据，该数组被声明为 final，这意味着 value 数组初始化之后就不能再引用其它数组。并且 String 内部没有改变 value 数组的方法，因此可以保证 String 不可变。即：String 的公开规范保证其值不可变</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">String</span>
+    <span class="hljs-keyword">implements</span> <span class="hljs-title class_">java</span>.io.Serializable, Comparable&lt;String&gt;, CharSequence {
+    <span class="hljs-comment">/** The value is used for character storage. */</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">char</span> value[];
+    ...
+</code></pre>
+<p>String 的不可变性是指：一旦某个 String 对象被创建，它所表示的字符序列就不会被改变。对字符串进行拼接、替换等操作时，不会修改原对象，而是返回一个新的 String 对象（或复用等价对象）。
+需要区分：变量的引用可以重新赋值指向其他 String，这不违反不可变性，因为变化的是引用的指向，而不是原 String 对象的内部状态。</p>
+<h3 id="好处">好处</h3>
+<ol>
+<li>可以缓存 hash 值
+因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。</li>
+<li>String Pool 的需要
+如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。</li>
+<li>安全性
+String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。</li>
+<li>线程安全
+String 不可变性天生具备线程安全，可以在多个线程中安全地使用。<h3 id="string常量池">String常量池</h3>
+<h4 id="stringintern">String.intern()</h4>
+使用 String.intern() 可以保证相同内容的字符串变量引用同一的内存对象。
+采用 "bbb" 这种使用双引号的形式创建字符串实例，会自动地将新建的对象放入 String Pool 中<blockquote>
+<p>注意，实践中，使用 <code>equals</code> 判断值是否相等，因为实际世界中，极少存在字符串要内存地址相同这样的判断。</p>
+<h3 id="stringbuilderstringbuffer">StringBuilder(),StringBuffer()</h3>
+<p>一般用于拼接字符串（String不可变），StringBuffer() 线程安全</p>
+<h3 id="gc">GC</h3>
+<p>字符串常量池在 <code>堆内存</code>中实现。
+因为在堆上，所以只要没有引用了，就可以被正常的垃圾回收机制回收。
+原则：只要常量池结构里不再强引用该字符串对象，并且程序其他地方也没有强引用它，就能回收。
+当然也需要触发GC才行
+字面量字符串通常几乎等同于跟随类加载器存活，如在类中定义 <code>private String abc = "abc";</code></p>
+<h2 id="运算">运算</h2>
+<h3 id="参数传递">参数传递</h3>
+<p>Java 的参数是以值传递的形式传入方法中，而不是引用传递。
+在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中改变指针引用的对象，那么这两个指针此时指向的是完全不同的对象，一方改变其所指向对象的内容对另一方没有影响。</p>
+</blockquote>
+</li>
+</ol>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> {
+    String name;
+
+    Dog(String name) {
+        <span class="hljs-built_in">this</span>.name = name;
+    }
+
+    String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;
+    }
+
+    <span class="hljs-keyword">void</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String name)</span> {
+        <span class="hljs-built_in">this</span>.name = name;
+    }
+
+    String <span class="hljs-title function_">getObjectAddress</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.toString();
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PassByValueExample</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-type">Dog</span> <span class="hljs-variable">dog</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>(<span class="hljs-string">"A"</span>);
+        System.out.println(dog.getObjectAddress()); <span class="hljs-comment">// Dog@4554617c</span>
+        func(dog);
+        System.out.println(dog.getObjectAddress()); <span class="hljs-comment">// Dog@4554617c</span>
+        System.out.println(dog.getName());          <span class="hljs-comment">// A</span>
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">func</span><span class="hljs-params">(Dog dog)</span> {
+        System.out.println(dog.getObjectAddress()); <span class="hljs-comment">// Dog@4554617c</span>
+        dog = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>(<span class="hljs-string">"B"</span>);
+        System.out.println(dog.getObjectAddress()); <span class="hljs-comment">// Dog@74a14482</span>
+        System.out.println(dog.getName());          <span class="hljs-comment">// B</span>
+    }
+}
+</code></pre>
+<blockquote>
+<p>如果想要避免方法内部修改</p>
+<pre><code class="lang-java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Dog dog)</span> {
+    <span class="hljs-comment">// dog = new Dog("B"); // 编译错误：不能给 final 形参再次赋值</span>
+    System.out.println(dog.getObjectAddress());
+}
+</code></pre>
+</blockquote>
+<p>但是如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PassByValueExample</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-type">Dog</span> <span class="hljs-variable">dog</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>(<span class="hljs-string">"A"</span>);
+        func(dog);
+        System.out.println(dog.getName());          <span class="hljs-comment">// B</span>
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">func</span><span class="hljs-params">(Dog dog)</span> {
+        dog.setName(<span class="hljs-string">"B"</span>);
+    }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="01-面对对象.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 面对对象">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"基础知识","level":"1.2.2","depth":2,"previous":{"title":"面对对象","level":"1.2.1","depth":2,"path":"01-Java基础/01-面对对象.md","ref":"01-Java基础/01-面对对象.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-Java基础/02-基础知识.md","mtime":"2026-03-23T06:38:19.252Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-23T06:38:23.866Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
