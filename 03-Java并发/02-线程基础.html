@@ -11,12 +11,17 @@
         
         
     
+    
     <link rel="stylesheet" href="../gitbook/style.css">
 
     
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
                 
             
                 
@@ -47,6 +52,9 @@
         
     
         
+    
+
+
     
 
         
@@ -272,33 +280,39 @@
                                 
                                 <h1 id="线程基础">线程基础</h1>
 <h2 id="线程状态">线程状态</h2>
-<pre><code class="lang-mermaid">graph LR
-    创建一个线程对象 --"new Thread()"--&gt; New
-    New --"Thread.start()"--&gt; Runnable
-    Runnable --"Lock"--&gt; Blocked
-    Blocked --"UnLock" --&gt; Runnable
-    Runnable --"Object.wait(time)"--&gt; Timed_Waiting
-    Timed_Waiting --"时间到了，或者被notify" --&gt;Runnable
-    Runnable --"Object.wait()"--&gt; Waiting
-    Waiting --"Object.notify()"--&gt;Runnable
-    Runnable --&gt; Terminated
-</code></pre>
-<h3 id="线程状态说明：">线程状态说明：</h3>
+<div class="mermaid">
+graph LR
+    A["创建线程对象"] --&gt;|"new Thread()"| NEW["New"]
+    NEW --&gt;|"Thread.start()"| RUN["Runnable"]
+    RUN --&gt;|"获取锁失败"| BLOCK["Blocked"]
+    BLOCK --&gt;|"锁释放"| RUN
+    RUN --&gt;|"Object.wait(time)"| TWAIT["Timed Waiting"]
+    TWAIT --&gt;|"超时或被 notify"| RUN
+    RUN --&gt;|"Object.wait()"| WAIT["Waiting"]
+    WAIT --&gt;|"Object.notify()"| RUN
+    RUN --&gt; END["Terminated"]
+</div>
+
+<h3 id="线程状态说明">线程状态说明</h3>
 <h4 id="new"><strong>New</strong></h4>
 <p>线程对象被创建，但尚未启动。</p>
 <blockquote>
 <p>通过 <code>new Thread()</code> 创建线程对象时，线程处于 New 状态。</p>
+</blockquote>
 <h4 id="runnable"><strong>Runnable</strong></h4>
-<p>线程正在运行或准备运行。
-调用 <code>Thread.start()</code> 方法后，线程进入 Runnable 状态，等待 CPU 调度执行。
+<p>线程正在运行或准备运行。</p>
+<blockquote>
+<p>调用 <code>Thread.start()</code> 方法后，线程进入 Runnable 状态，等待 CPU 调度执行。
 其他线程<code>notify()</code>
 <code>Timed Waiting</code> 时间结束后。</p>
+</blockquote>
 <h4 id="blocked"><strong>Blocked</strong></h4>
-<p>线程被阻塞，等待获取锁。
-当一个线程试图获取一个被其他线程持有的锁时，它会进入 Blocked 状态，直到锁被释放。</p>
+<p>线程被阻塞，等待获取锁。</p>
+<blockquote>
+<p>当一个线程试图获取一个被其他线程持有的锁时，它会进入 Blocked 状态，直到锁被释放。</p>
+</blockquote>
 <h4 id="watting"><strong>Watting</strong></h4>
 <p>等待其它线程显式地唤醒，否则不会被分配 CPU 时间片。</p>
-</blockquote>
 <table>
 <thead>
 <tr>
@@ -835,12 +849,13 @@ after
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"线程基础","level":"1.4.2","depth":2,"previous":{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/02-线程基础.md","mtime":"2026-03-24T09:17:37.168Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-24T09:17:44.956Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"线程基础","level":"1.4.2","depth":2,"previous":{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/02-线程基础.md","mtime":"2026-03-24T09:31:57.625Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-24T09:32:02.873Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    
     <noscript>
         <style>
             .honkit-cloak {
@@ -893,6 +908,10 @@ after
         
     
         
+        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
+        
+    
+        
         <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
         
     
@@ -912,6 +931,8 @@ after
         <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
         
     
+
+    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
 
     </body>
 </html>
