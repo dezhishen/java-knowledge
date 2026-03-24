@@ -7,6 +7,7 @@
     "serve": "honkit serve ."
   },
   "devDependencies": {
+    "gitbook-plugin-mermaid-gb3": "^2.1.0",
     "honkit": "^5.1.5",
     "gitbook-plugin-page-toc-button": "^0.1.1"
   }

@@ -1,7 +1,8 @@
 {
   "title": "Java知识网络",
   "plugins": [
-    "page-toc-button"
+    "page-toc-button",
+    "mermaid-gb3"
   ],
   "pluginsConfig": {
     "page-toc-button": {
