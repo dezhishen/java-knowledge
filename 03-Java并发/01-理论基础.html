@@ -333,29 +333,319 @@ Java提供了volatile关键字来保证可见性。</li>
 <h4 id="1-单一线程原则">1. 单一线程原则</h4>
 <p>Single Thread rule</p>
 <p>在一个线程内，在程序前面的操作先行发生于后面的操作。</p>
-<p>image</p>
 <h4 id="2-管程锁定规则">2. 管程锁定规则</h4>
 <p>Monitor Lock Rule</p>
 <p>一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。</p>
-<p>image</p>
 <h4 id="3-volatile-变量规则">3. volatile 变量规则</h4>
 <p>Volatile Variable Rule</p>
 <p>对一个 volatile 变量的写操作先行发生于后面对这个变量的读操作。</p>
-<p>image</p>
-<h4 id="4-线程启动规则">4. 线程启动规则</h4>
-<p>Thread Start Rule</p>
-<p>Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。</p>
-<p>image</p>
-<h4 id="5-线程加入规则">5. 线程加入规则</h4>
-<p>Thread Join Rule</p>
-<p>Thread 对象的结束先行发生于 join() 方法返回。</p>
-<p>image</p>
+<blockquote>
+<p>配合单一线程原则，可以实现如下代码
+```java
+int a = 0;
+volatile boolean ready = false;</p>
+</blockquote>
+<p>// 线程一
+a = 1;
+ready = true;</p>
+<p>// 线程二
+while (!ready) {
+    // 空转等待（示例）
+    // 此处可以休眠或指数退避，仅演示 volatile的能力，不展开
+}
+System.out.println(a); // 期望输出 1</p>
+<pre><code>
+
+#### 4. 线程启动规则
+Thread Start Rule
+
+Thread 对象的 start() 方法调用先行发生于此线程的每一个动作。
+```java
+for (int i = 0; i &lt; 100; i++) {
+    Thread t1 = new Thread(() -&gt; {
+        System.out.println("t1 running");
+    });
+    System.out.println("start t1");
+    t1.start();
+    t1.join();
+    System.out.println("t1 stop");
+
+} 
+// 无论循环多少次
+// 打印的顺序永远是 
+// start t1
+// t1 running
+// t1 stop
+</code></pre><h4 id="5-线程加入规则">5. 线程加入规则</h4>
+<p>Thread Join Rule
+Thread 对象的结束先行发生于 join() 方法返回。</p>
 <h4 id="6-线程中断规则">6. 线程中断规则</h4>
 <p>Thread Interruption Rule</p>
 <p>对线程 interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生，可以通过 interrupted() 方法检测到是否有中断发生。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InterruptHappensBeforeExample1</span> {
+
+    <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+        <span class="hljs-type">Thread</span> <span class="hljs-variable">worker</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; {
+            <span class="hljs-comment">// 一直干活，直到检测到中断</span>
+            <span class="hljs-keyword">while</span> (!Thread.currentThread().isInterrupted()) {
+
+            }
+
+            <span class="hljs-comment">// 到这里说明“检测到中断事件发生”</span>
+            <span class="hljs-comment">// 根据中断规则：主线程在 interrupt() 之前对 data 的写入，在这里应当可见</span>
+            System.out.println(data);
+        });
+
+        worker.start();
+        <span class="hljs-comment">// 主线程先写共享数据</span>
+        data = <span class="hljs-number">42</span>;
+        <span class="hljs-comment">// 再发出中断信号</span>
+        worker.interrupt();
+        <span class="hljs-comment">// 模拟等待，不使用worker.join()单独测试 interrupt()规则</span>
+        <span class="hljs-comment">// data = 43; 如果此处继续写data=43,则可能出现问题，请务必使用join()来保证可见性。</span>
+        <span class="hljs-keyword">try</span> {
+            Thread.sleep(<span class="hljs-number">1000</span>);
+        } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>这个例子里data不是volatile，也没有用synchronized。但当worker线程“检测到中断”为真之后再读取data，按照“线程中断规则”，主线程在interrupt()之前写入的data = 42应当对它可见，所以预期打印42。</p>
+</blockquote>
 <h4 id="7-对象终结规则">7. 对象终结规则</h4>
 <p>Finalizer Rule</p>
 <p>一个对象的初始化完成(构造函数执行结束)先行发生于它的 finalize() 方法的开始。</p>
+<pre><code>@Deprecated(since="9")
+protected void finalize() throws Throwable { }
+</code></pre><blockquote>
+<p>注意，在jdk9以后<code>finalize()</code>标记为过时。</p>
+</blockquote>
+<h5 id="1）try-with-resources（推荐：显式关闭资源）">1）try-with-resources（推荐：显式关闭资源）</h5>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.BufferedReader;
+<span class="hljs-keyword">import</span> java.io.FileReader;
+<span class="hljs-keyword">import</span> java.io.IOException;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TryWithResourcesExample</span> {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException {
+        <span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> <span class="hljs-string">"test.txt"</span>;
+
+        <span class="hljs-keyword">try</span> (<span class="hljs-type">BufferedReader</span> <span class="hljs-variable">reader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>(path))) {
+            <span class="hljs-type">String</span> <span class="hljs-variable">line</span> <span class="hljs-operator">=</span> reader.readLine();
+            System.out.println(line);
+        } <span class="hljs-comment">// 自动调用 reader.close()</span>
+    }
+}
+</code></pre>
+<blockquote>
+<p>适用：文件、套接字、输入输出流、数据库连接等实现了AutoCloseable或Closeable的资源。</p>
+</blockquote>
+<h5 id="2）cleaner（兜底清理：对象不可达后执行清理动作）">2）Cleaner（兜底清理：对象不可达后执行清理动作）</h5>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.lang.ref.Cleaner;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CleanerExample</span> {
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Cleaner</span> <span class="hljs-variable">cleaner</span> <span class="hljs-operator">=</span> Cleaner.create();
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">State</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span> {
+        <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> nativeHandle;
+
+        State(<span class="hljs-type">long</span> nativeHandle) {
+            <span class="hljs-built_in">this</span>.nativeHandle = nativeHandle;
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> {
+            <span class="hljs-keyword">if</span> (nativeHandle != <span class="hljs-number">0</span>) {
+                System.out.println(<span class="hljs-string">"清理本地句柄: "</span> + nativeHandle);
+                <span class="hljs-comment">// releaseNative(nativeHandle);</span>
+                nativeHandle = <span class="hljs-number">0</span>;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> State state;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Cleaner.Cleanable cleanable;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> closed;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">CleanerExample</span><span class="hljs-params">(<span class="hljs-type">long</span> nativeHandle)</span> {
+        <span class="hljs-built_in">this</span>.state = <span class="hljs-keyword">new</span> <span class="hljs-title class_">State</span>(nativeHandle);
+        <span class="hljs-built_in">this</span>.cleanable = cleaner.register(<span class="hljs-built_in">this</span>, state);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doWork</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">if</span> (closed) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">"资源已关闭"</span>);
+        }
+        System.out.println(<span class="hljs-string">"使用本地句柄: "</span> + state.nativeHandle);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">close</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">if</span> (!closed) {
+            closed = <span class="hljs-literal">true</span>;
+            cleanable.clean(); <span class="hljs-comment">// 显式清理</span>
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-type">CleanerExample</span> <span class="hljs-variable">example</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CleanerExample</span>(<span class="hljs-number">10001L</span>);
+        <span class="hljs-keyword">try</span> {
+            example.doWork();
+        } <span class="hljs-keyword">finally</span> {
+            example.close();
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>适用：本地资源（本地内存、文件描述符封装、直接缓冲区包装等）的“忘记关闭时的兜底”，但仍建议<strong>提供显式close()</strong>。</p>
+</blockquote>
+<h5 id="3）phantomreference--referencequeue（更底层：可控的回收通知）">3）PhantomReference + ReferenceQueue（更底层：可控的回收通知）</h5>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.lang.ref.PhantomReference;
+<span class="hljs-keyword">import</span> java.lang.ref.Reference;
+<span class="hljs-keyword">import</span> java.lang.ref.ReferenceQueue;
+<span class="hljs-keyword">import</span> java.util.Map;
+<span class="hljs-keyword">import</span> java.util.concurrent.ConcurrentHashMap;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PhantomReferenceExample</span> {
+
+    <span class="hljs-comment">/**
+     * 模拟“持有本地资源的对象”。
+     * 例如：这个对象内部关联了一个本地内存地址、文件描述符、系统句柄等。
+     *
+     * 重点：这里的 handle 用 long 表示“本地资源标识”，仅用于演示。
+     */</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ResourceOwner</span> {
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> handle;
+
+        ResourceOwner(<span class="hljs-type">long</span> handle) {
+            <span class="hljs-built_in">this</span>.handle = handle;
+        }
+
+        <span class="hljs-type">long</span> <span class="hljs-title function_">handle</span><span class="hljs-params">()</span> {
+            <span class="hljs-keyword">return</span> handle;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+
+        <span class="hljs-comment">/*
+         * ReferenceQueue 的作用：
+         * 当某个对象“即将被回收”，并且它对应的 PhantomReference 被虚拟机入队时，
+         * 我们就能从这个队列里拿到那条 PhantomReference，从而得知“对象已经不可达了”。
+         *
+         * 注意：队列里放的不是原对象，而是“引用对象”（PhantomReference）。
+         */</span>
+        ReferenceQueue&lt;ResourceOwner&gt; referenceQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReferenceQueue</span>&lt;&gt;();
+
+        <span class="hljs-comment">/*
+         * 为什么需要一个 Map 来保存 handle？
+         * 因为 PhantomReference.get() 永远返回 null，
+         * 你无法通过 PhantomReference 再拿回 ResourceOwner 对象，
+         * 所以必须提前把“清理所需的信息”单独保存起来。
+         *
+         * 这里用 Map 的 key 保存 PhantomReference，
+         * value 保存该对象对应的本地资源句柄 handle。
+         */</span>
+        Map&lt;PhantomReference&lt;ResourceOwner&gt;, Long&gt; handles = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcurrentHashMap</span>&lt;&gt;();
+
+        <span class="hljs-comment">/*
+         * 回收线程（也叫清理线程、收割线程）：
+         * 它一直阻塞等待 referenceQueue 中出现“被入队的 PhantomReference”。
+         * 一旦出现，说明对应的 ResourceOwner 已经不可达，可以做兜底清理动作。
+         */</span>
+        <span class="hljs-type">Thread</span> <span class="hljs-variable">reaper</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; {
+            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+                <span class="hljs-keyword">try</span> {
+                    <span class="hljs-comment">/*
+                     * remove() 会阻塞，直到有引用对象进入队列。
+                     * 这比不停轮询更省中央处理器。
+                     */</span>
+                    Reference&lt;? <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ResourceOwner</span>&gt; ref = referenceQueue.remove();
+
+                    <span class="hljs-comment">/*
+                     * 通过这个 PhantomReference 找到之前保存的 handle，
+                     * 然后执行清理（释放本地资源）。
+                     */</span>
+                    <span class="hljs-type">Long</span> <span class="hljs-variable">handle</span> <span class="hljs-operator">=</span> handles.remove(ref);
+                    <span class="hljs-keyword">if</span> (handle != <span class="hljs-literal">null</span>) {
+                        System.out.println(<span class="hljs-string">"检测到对象已不可达，开始释放本地句柄: "</span> + handle);
+
+                        <span class="hljs-comment">// 这里放真正的清理逻辑（演示中只打印）</span>
+                        <span class="hljs-comment">// 例如：releaseNative(handle);</span>
+                    }
+
+                    <span class="hljs-comment">/*
+                     * clear() 用于清除引用对象内部保存的引用信息（虽然 PhantomReference 本来 get() 就是 null）。
+                     * 这是一个良好习惯，帮助引用对象更快变成“无用”状态。
+                     */</span>
+                    ref.clear();
+
+                } <span class="hljs-keyword">catch</span> (InterruptedException exception) {
+                    <span class="hljs-comment">/*
+                     * 如果回收线程被中断，就退出线程。
+                     * 这里是为了让示例更干净，并且体现线程可停止。
+                     */</span>
+                    <span class="hljs-keyword">return</span>;
+                }
+            }
+        });
+
+        <span class="hljs-comment">// 设置为守护线程：主线程结束后，守护线程不会阻止进程退出</span>
+        reaper.setDaemon(<span class="hljs-literal">true</span>);
+        reaper.start();
+
+        <span class="hljs-comment">/*
+         * 创建一个对象，它“拥有”一个本地资源句柄。
+         * 假设句柄 20002 代表某个本地资源。
+         */</span>
+        <span class="hljs-type">ResourceOwner</span> <span class="hljs-variable">owner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResourceOwner</span>(<span class="hljs-number">20002L</span>);
+
+        <span class="hljs-comment">/*
+         * 创建 PhantomReference：
+         * - 第一个参数 owner：被监控的目标对象
+         * - 第二个参数 referenceQueue：当 owner 不可达时，把这条 PhantomReference 放入该队列
+         *
+         * 重要特性：phantom.get() 永远为 null
+         */</span>
+        PhantomReference&lt;ResourceOwner&gt; phantom = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PhantomReference</span>&lt;&gt;(owner, referenceQueue);
+
+        <span class="hljs-comment">/*
+         * 把清理所需信息（handle）保存到 Map。
+         * 将来回收线程从队列里取到 phantom 后，就能用它当 key 找回 handle。
+         */</span>
+        handles.put(phantom, owner.handle());
+
+        <span class="hljs-comment">/*
+         * 断开强引用：
+         * owner 置为 null 后，如果没有其他地方再强引用这个对象，
+         * 那么它就“有机会”在将来的某个时刻被垃圾回收。
+         */</span>
+        owner = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">/*
+         * 主动建议虚拟机进行垃圾回收（不保证立刻发生，只是建议）。
+         * 示例中为了更容易触发演示效果。
+         */</span>
+        System.gc();
+
+        <span class="hljs-comment">/*
+         * 稍微等待一会儿：
+         * 给垃圾回收和回收线程一点时间，让它们有机会完成入队与清理打印。
+         */</span>
+        Thread.sleep(<span class="hljs-number">200</span>);
+
+        System.out.println(<span class="hljs-string">"主线程结束（不代表清理一定已经发生）"</span>);
+    }
+}
+</code></pre>
+<blockquote>
+<p>适用：需要更可控的“对象已不可达”的通知机制（例如框架管理大量本地资源），但实现复杂度更高，一般业务代码不建议直接使用。</p>
+</blockquote>
 <h4 id="8-传递性">8. 传递性</h4>
 <p>Transitivity</p>
 <p>如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C。</p>
@@ -557,7 +847,7 @@ executorService.execute(() -&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"理论基础","level":"1.4.1","depth":2,"previous":{"title":"Java并发","level":"1.4","depth":1,"ref":"","articles":[{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/01-理论基础.md","mtime":"2026-03-23T09:33:42.580Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-23T09:33:50.605Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"理论基础","level":"1.4.1","depth":2,"previous":{"title":"Java并发","level":"1.4","depth":1,"ref":"","articles":[{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/01-理论基础.md","mtime":"2026-03-24T03:25:10.215Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-24T03:25:18.127Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
