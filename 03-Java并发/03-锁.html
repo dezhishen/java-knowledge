@@ -1,0 +1,530 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>锁 · Java知识网络</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 5.1.5">
+        
+        
+        
+    
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="02-线程基础.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    开发理论
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00-开发理论/01-开发原则.html">
+            
+                <a href="../00-开发理论/01-开发原则.html">
+            
+                    
+                    开发原则
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Java基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../01-Java基础/01-面对对象.html">
+            
+                <a href="../01-Java基础/01-面对对象.html">
+            
+                    
+                    面对对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../01-Java基础/02-基础知识.html">
+            
+                <a href="../01-Java基础/02-基础知识.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Java并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01-理论基础.html">
+            
+                <a href="01-理论基础.html">
+            
+                    
+                    理论基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="02-线程基础.html">
+            
+                <a href="02-线程基础.html">
+            
+                    
+                    线程基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="03-锁.html">
+            
+                <a href="03-锁.html">
+            
+                    
+                    锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >锁</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="锁">锁</h1>
+<ul>
+<li>阻塞或唤醒一个Java线程需要操作系统切换CPU状态来完成，<strong>这种状态转换需要耗费处理器时间</strong>。如果同步代码块中的内容过于简单，状态转换消耗的时间有可能比用户代码执行的时间还要长。</li>
+</ul>
+<div class="mermaid">
+graph LR
+    A["Java主流的锁"]--&gt;B1["是否需要锁住同步资源"]
+    B1 --&gt;|"Y"| C1["悲观锁"]
+    B1 --&gt;|"N"| C2["乐观锁"]
+    A--&gt;B2["锁失败，线程需不需要阻塞"]
+    B2 --&gt;|"Y"| C3["阻塞"]
+    B2 --&gt;|"N"| C4["不阻塞"]--&gt;D1["自旋锁"]
+    C4--&gt;D2["适应性自旋锁"]
+    A--&gt;B3["多个线程竞争同步资源的流程细节有没有区别"]
+    B3--&gt;|"不锁住资源，多个线程中只有一个能修改资源成功，其他线程进行重试"|C5["无锁"]
+    B3--&gt;|"同一个线程执行同步资源时自动获取资源"|C6["偏向锁"]
+    B3--&gt;|"多个线程竞争同步资源时，没有获取资源的线程自旋等待锁释放"|C7["轻量级锁"]
+    B3--&gt;|"多个线程竞争同步资源时，没有获取资源的线程阻塞等待唤醒"|C8["重量级锁"]
+    A--&gt;B4["多个线程竞争需不需要排队"]
+    B4--&gt;|"排队"|C9["公平锁"]
+    B4--&gt;|"不排队"|C10["非公平锁"]
+    A--&gt;B5["一个线程中的多个流程能不能重复获取同一把锁"]
+    B5--&gt;|"Y"|C11["可重入锁"]
+    B5--&gt;|"N"|C12["不可重入锁"]
+    A--&gt;B6["多个线程能不能持有同一把锁"]
+    B6--&gt;|"Y"|C13["共享锁"]
+    B6--&gt;|"N"|C14["排它锁"]
+
+</div>
+
+
+<h2 id="1乐观锁与悲观锁">1.乐观锁与悲观锁</h2>
+<blockquote>
+<p>乐观锁与悲观锁是一种广义上的概念，体现了看待线程同步的不同角度。在Java和数据库中都有此概念对应的实际应用。</p>
+</blockquote>
+<p>先说概念。对于同一个数据的并发操作，悲观锁认为自己在使用数据的时候一定有别的线程来修改数据，因此在获取数据的时候会先加锁，确保数据不会被别的线程修改。Java中，synchronized关键字和Lock的实现类都是悲观锁。</p>
+<p>而乐观锁认为自己在使用数据时不会有别的线程修改数据，所以不会添加锁，只是在更新数据的时候去判断之前有没有别的线程更新了这个数据。如果这个数据没有被更新，当前线程将自己修改的数据成功写入。如果数据已经被其他线程更新，则根据不同的实现方式执行不同的操作（例如报错或者自动重试）。</p>
+<p>乐观锁在Java中是通过使用无锁编程来实现，最常采用的是CAS算法，Java原子类中的递增操作就通过CAS自旋实现的。</p>
+<h2 id="2-自旋锁-vs-适应性自旋锁">2. 自旋锁 VS 适应性自旋锁</h2>
+<h2 id="3-无锁-vs-偏向锁-vs-轻量级锁-vs-重量级锁">3. 无锁 VS 偏向锁 VS 轻量级锁 VS 重量级锁</h2>
+<h2 id="4-公平锁-vs-非公平锁">4. 公平锁 VS 非公平锁</h2>
+<h2 id="5-可重入锁-vs-非可重入锁">5. 可重入锁 VS 非可重入锁</h2>
+<h2 id="6-独享锁排他锁-vs-共享锁">6. 独享锁(排他锁) VS 共享锁</h2>
+<h2 id="适用性思考">适用性思考</h2>
+<p>可以从以下维度评估并发控制方案的适用性：</p>
+<ul>
+<li>是否允许失败：是否允许快速失败并由上层重试或补偿</li>
+<li>读写场景：读多写少还是写多读少，是否存在热点键</li>
+<li>性能目标：吞吐优先还是延迟优先
+多数常见业务属于读多写少且延迟优先，因此通常优先选择无锁或少锁方案。</li>
+</ul>
+<p>在强一致性要求不高，或者调用方能够控制重试的前提下，可以优先使用乐观锁解决写冲突：先按版本号尝试更新，并限制重试次数。当冲突持续且达到阈值时，再进入降级策略，例如快速失败，或者切换到加锁路径处理。</p>
+<p>但需要注意，一旦引入加锁路径，如果仍然存在其他线程绕过加锁流程继续写入，那么即使当前线程拿到锁，也无法形成真正的排它更新，锁会退化为“部分线程自觉排队”，并不能保证修改一定成功。为避免该问题，需要在写入入口增加统一的并发协议，也就是“写入闸门”：</p>
+<ul>
+<li>任意线程在进行写操作前，必须先读取闸门标识</li>
+<li>若闸门未开启，走乐观锁快速路径</li>
+<li>若闸门已开启，跳过乐观锁，直接进入加锁流程</li>
+<li>闸门必须设置过期时间，避免异常情况下长期阻塞</li>
+</ul>
+<p>这样可以确保在热点冲突阶段，所有写请求都会收敛到同一条排它路径，从而实现真正意义上的互斥更新。</p>
+<p>流程图如下</p>
+<div class="mermaid">
+flowchart TD
+  A["开始 写请求"] --&gt; B{"闸门开启 lock_mode 等于 1"}
+  B -- "否" --&gt; C["进入乐观锁流程"]
+  B --"是"--&gt;K
+  C --&gt; D["按版本号尝试更新"]
+  D --&gt; F{"更新成功"}
+  F -- "是" --&gt; S["结束 成功"]
+  F -- "否" --&gt; G{"重试次数未超过上限"}
+  G -- "是" --&gt; I["尝试开启闸门 写入令牌和过期时间(必须有过期)"]
+  I --&gt; J{"开启是否成功"}
+  J --"是"--&gt;K{"加锁是否成功?"}
+  K --"是"--&gt;L["更新"] --&gt;M["释放锁"]
+  M --&gt;N{"是否需要打开闸门"}
+  N --"是"--&gt;O["打开闸门(此处先不考虑失败)"] --&gt;S
+  N --"否"--&gt;S
+  G -- "否" --&gt; H["退避等待"]
+  H --&gt; D
+</div>
+
+<blockquote>
+<p>注：上面存在大量未考虑的问题，如：读到的数据的一致性问题，锁的释放是否成功，闸门的成功失败，快速失败等。</p>
+</blockquote>
+<h3 id="1）阈值不是固定值，需要和延迟目标绑定">1）阈值不是固定值，需要和延迟目标绑定</h3>
+<ul>
+<li>延迟优先：阈值应偏小，超过阈值更倾向快速失败而不是排队等待</li>
+<li>吞吐优先：阈值可偏大，允许更多重试或等待锁</li>
+</ul>
+<p>可以描述为：阈值本质是在“平均成功率”和“尾部延迟”之间做权衡。</p>
+<h3 id="2）闸门开启与关闭需要所有权防止误关">2）闸门开启与关闭需要“所有权”防止误关</h3>
+<p>建议给闸门增加令牌字段（例如 gate_token），开启闸门时写入令牌，关闭闸门时必须校验令牌匹配，避免把其他线程刚开启的闸门关掉。</p>
+<blockquote>
+<p>短示例： 关闭闸门条件: id 相同 且 gate_token 相同</p>
+</blockquote>
+<h3 id="3）加锁方式要与存储一致">3）加锁方式要与存储一致</h3>
+<ul>
+<li>如果写操作最终落在数据库，优先考虑数据库行级锁来提供排它性</li>
+<li>如果是跨服务资源，需要分布式锁，但必须保证所有写请求都遵守闸门检查</li>
+</ul>
+<h2 id="分段思路">分段思路</h2>
+<p>当热点写非常集中时，与其不断升级锁，不如从数据结构上拆分冲突面，把“共享写”改造成“可分摊写”，典型做法包括：</p>
+<ul>
+<li>分桶累加：类似 LongAdder，将同一指标拆到多个桶，写入只竞争桶内，读取再聚合</li>
+<li>分桶库存：例如秒杀库存拆成多个桶，用户按哈希取模进入固定桶竞争，降低单点冲突</li>
+<li>事件化写入：把“更新最终值”改为“追加事件”，由异步合并线程汇总落库</li>
+</ul>
+<p>这些方案的共同点是把竞争从“同一行同一字段”扩散到“多个分片”，从而显著降低冲突概率。</p>
+<h2 id="类比说明">类比说明</h2>
+<p>类似于虚拟机内存分配中的线程本地分配缓冲区 LTAB 思路，预先将资源按线程或分片进行划分并分配。线程在自己的分配区间内仅需移动指针顺序获取即可，不再对共享位置进行写入操作，从结构上消除并发写竞争。</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="02-线程基础.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 线程基础">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:00:55.083Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:01:06.591Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+
+    </body>
+</html>
+
