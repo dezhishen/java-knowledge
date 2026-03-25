@@ -298,26 +298,26 @@
 <div class="mermaid">
 graph LR
     A["Java主流的锁"]--&gt;B1["是否需要锁住同步资源"]
-    B1 --&gt;|"Y"| C1["悲观锁"]
-    B1 --&gt;|"N"| C2["乐观锁"]
+    B1 --"Y"--&gt; C1["悲观锁"]
+    B1 --"N"--&gt; C2["乐观锁"]
     A--&gt;B2["锁失败，线程需不需要阻塞"]
-    B2 --&gt;|"Y"| C3["阻塞"]
-    B2 --&gt;|"N"| C4["不阻塞"]--&gt;D1["自旋锁"]
+    B2 --"Y"--&gt; C3["阻塞"]
+    B2 --"N"--&gt; C4["不阻塞"]--&gt;D1["自旋锁"]
     C4--&gt;D2["适应性自旋锁"]
     A--&gt;B3["多个线程竞争同步资源的流程细节有没有区别"]
-    B3--&gt;|"不锁住资源，多个线程中只有一个能修改资源成功，其他线程进行重试"|C5["无锁"]
-    B3--&gt;|"同一个线程执行同步资源时自动获取资源"|C6["偏向锁"]
-    B3--&gt;|"多个线程竞争同步资源时，没有获取资源的线程自旋等待锁释放"|C7["轻量级锁"]
-    B3--&gt;|"多个线程竞争同步资源时，没有获取资源的线程阻塞等待唤醒"|C8["重量级锁"]
+    B3--"不锁住资源，多个线程中只有一个能修改资源成功，其他线程进行重试"--&gt;C5["无锁"]
+    B3--"同一个线程执行同步资源时自动获取资源"--&gt;C6["偏向锁"]
+    B3--"多个线程竞争同步资源时，没有获取资源的线程自旋等待锁释放"--&gt;C7["轻量级锁"]
+    B3--"多个线程竞争同步资源时，没有获取资源的线程阻塞等待唤醒"--&gt;C8["重量级锁"]
     A--&gt;B4["多个线程竞争需不需要排队"]
-    B4--&gt;|"排队"|C9["公平锁"]
-    B4--&gt;|"不排队"|C10["非公平锁"]
+    B4--"排队"--&gt;C9["公平锁"]
+    B4--"不排队"--&gt;C10["非公平锁"]
     A--&gt;B5["一个线程中的多个流程能不能重复获取同一把锁"]
-    B5--&gt;|"Y"|C11["可重入锁"]
-    B5--&gt;|"N"|C12["不可重入锁"]
+    B5--"Y"--&gt;C11["可重入锁"]
+    B5--"N"--&gt;C12["不可重入锁"]
     A--&gt;B6["多个线程能不能持有同一把锁"]
-    B6--&gt;|"Y"|C13["共享锁"]
-    B6--&gt;|"N"|C14["排它锁"]
+    B6--"Y"--&gt;C13["共享锁"]
+    B6--"N"--&gt;C14["排它锁"]
 
 </div>
 
@@ -440,7 +440,7 @@ flowchart TD
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:01:32.043Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:01:40.352Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:03:42.349Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:03:47.396Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
