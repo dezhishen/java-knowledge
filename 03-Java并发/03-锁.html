@@ -364,11 +364,13 @@ graph TD
   F --"否" --&gt; G{"重试次数未超过上限"}
   G --"是" --&gt; I["尝试开启闸门 写入令牌和过期时间(必须有过期)"]
   I --&gt; J{"开启是否成功"}
+  J --"否"--&gt;Failed["失败"]
   J --"是"--&gt;K{"加锁是否成功?"}
+  K --"否"--&gt;Failed
   K --"是"--&gt;L["更新"] 
   L --&gt;M["释放锁"]
-  M --&gt;N{"是否需要打开闸门"}
-  N --"是"--&gt;O["打开闸门(此处先不考虑失败)"]
+  M --&gt;N{"是否需要关闭闸门（回退到乐观锁）"}
+  N --"是"--&gt;O["关闭闸门(此处先不考虑失败)"]
   O --&gt;S
   N --"否"--&gt;S
   G --"否" --&gt; H["退避等待"]
@@ -376,7 +378,7 @@ graph TD
 </div>
 
 <blockquote>
-<p>注：上面存在大量未考虑的问题，如：读到的数据的一致性问题，锁的释放是否成功，闸门的成功失败，快速失败等。</p>
+<p>注：上面存在大量未考虑的问题，如：读到的数据的一致性问题，锁是否成功，闸门是否成功，快速失败等。</p>
 </blockquote>
 <h3 id="1）阈值不是固定值，需要和延迟目标绑定">1）阈值不是固定值，需要和延迟目标绑定</h3>
 <ul>
@@ -443,7 +445,7 @@ graph TD
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:12:03.613Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:12:08.718Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:17:54.592Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:18:02.971Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
