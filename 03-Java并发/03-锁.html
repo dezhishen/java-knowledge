@@ -302,7 +302,8 @@ graph LR
     B1 --"N"--&gt; C2["乐观锁"]
     A--&gt;B2["锁失败，线程需不需要阻塞"]
     B2 --"Y"--&gt; C3["阻塞"]
-    B2 --"N"--&gt; C4["不阻塞"]--&gt;D1["自旋锁"]
+    B2 --"N"--&gt; C4["不阻塞"]
+    C4--&gt;D1["自旋锁"]
     C4--&gt;D2["适应性自旋锁"]
     A--&gt;B3["多个线程竞争同步资源的流程细节有没有区别"]
     B3--"不锁住资源，多个线程中只有一个能修改资源成功，其他线程进行重试"--&gt;C5["无锁"]
@@ -353,22 +354,24 @@ graph LR
 <p>这样可以确保在热点冲突阶段，所有写请求都会收敛到同一条排它路径，从而实现真正意义上的互斥更新。</p>
 <p>流程图如下</p>
 <div class="mermaid">
-flowchart TD
+graph TD
   A["开始 写请求"] --&gt; B{"闸门开启 lock_mode 等于 1"}
-  B -- "否" --&gt; C["进入乐观锁流程"]
+  B --"否" --&gt; C["进入乐观锁流程"]
   B --"是"--&gt;K
   C --&gt; D["按版本号尝试更新"]
   D --&gt; F{"更新成功"}
-  F -- "是" --&gt; S["结束 成功"]
-  F -- "否" --&gt; G{"重试次数未超过上限"}
-  G -- "是" --&gt; I["尝试开启闸门 写入令牌和过期时间(必须有过期)"]
+  F --"是" --&gt; S["结束 成功"]
+  F --"否" --&gt; G{"重试次数未超过上限"}
+  G --"是" --&gt; I["尝试开启闸门 写入令牌和过期时间(必须有过期)"]
   I --&gt; J{"开启是否成功"}
   J --"是"--&gt;K{"加锁是否成功?"}
-  K --"是"--&gt;L["更新"] --&gt;M["释放锁"]
+  K --"是"--&gt;L["更新"] 
+  L --&gt;M["释放锁"]
   M --&gt;N{"是否需要打开闸门"}
-  N --"是"--&gt;O["打开闸门(此处先不考虑失败)"] --&gt;S
+  N --"是"--&gt;O["打开闸门(此处先不考虑失败)"]
+  O --&gt;S
   N --"否"--&gt;S
-  G -- "否" --&gt; H["退避等待"]
+  G --"否" --&gt; H["退避等待"]
   H --&gt; D
 </div>
 
@@ -440,7 +443,7 @@ flowchart TD
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:03:42.349Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:03:47.396Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁","level":"1.4.3","depth":2,"previous":{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/03-锁.md","mtime":"2026-03-25T10:12:03.613Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-25T10:12:08.718Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
