@@ -10,3 +10,5 @@
 	* [线程基础](03-Java并发/02-线程基础.md)
 	* [锁](03-Java并发/03-锁.md)
 	* [synchronized](03-Java并发/04-synchronized.md)
+	* [volatile](03-Java并发/05-volatile.md)
+	* [final](03-Java并发/06-final.md)
