@@ -341,6 +341,64 @@ class ReenterDemo {
    - `synchronized` 进入竞争后不可用中断取消等待  
    - `Lock` 提供 `lockInterruptibly()` 支持可中断获取
 
+    ```java
+    import java.util.concurrent.locks.ReentrantLock;
+
+    public class LockInterruptiblyDemo {
+
+        private static final ReentrantLock LOCK = new ReentrantLock();
+
+        public static void main(String[] args) throws InterruptedException {
+
+            Thread t1 = new Thread(() -> {
+                LOCK.lock();
+                try {
+                    System.out.println("线程1 已获取锁，开始长时间占用");
+                    try {
+                        Thread.sleep(10_000);
+                    } catch (InterruptedException e) {
+                        System.out.println("线程1 在sleep中被中断");
+                        Thread.currentThread().interrupt();
+                    }
+                } finally {
+                    LOCK.unlock();
+                    System.out.println("线程1 释放锁");
+                }
+            }, "t1");
+
+            Thread t2 = new Thread(() -> {
+                try {
+                    System.out.println("线程2 尝试可中断获取锁");
+                    LOCK.lockInterruptibly();
+                    try {
+                        System.out.println("线程2 获取锁成功");
+                    } finally {
+                        LOCK.unlock();
+                        System.out.println("线程2 释放锁");
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println("线程2 在等待锁期间被中断，放弃获取锁");
+                    Thread.currentThread().interrupt();
+                }
+            }, "t2");
+
+            t1.start();
+            Thread.sleep(200); // 确保线程1先拿到锁
+
+            t2.start();
+            Thread.sleep(500); // 让线程2进入等待锁状态
+
+            System.out.println("主线程 中断线程2");
+            t2.interrupt();
+
+            t1.join();
+            t2.join();
+
+            System.out.println("主线程 结束");
+        }
+    }
+    ```
+
 2. **无法尝试获取与超时获取**  
    - `synchronized` 只能一直等到拿到锁  
    - `Lock` 提供 `tryLock()` 与 `tryLock(超时)`，可以失败返回或超时退出
