@@ -9,3 +9,4 @@
 	* [理论基础](03-Java并发/01-理论基础.md)
 	* [线程基础](03-Java并发/02-线程基础.md)
 	* [锁](03-Java并发/03-锁.md)
+	* [synchronized](03-Java并发/04-synchronized.md)
