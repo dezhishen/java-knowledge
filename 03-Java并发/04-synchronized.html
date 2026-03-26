@@ -630,7 +630,64 @@ x</p>
 <li><p><strong>无法中断地等待获取锁</strong>  </p>
 <ul>
 <li><code>synchronized</code> 进入竞争后不可用中断取消等待  </li>
-<li><code>Lock</code> 提供 <code>lockInterruptibly()</code> 支持可中断获取</li>
+<li><p><code>Lock</code> 提供 <code>lockInterruptibly()</code> 支持可中断获取</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.concurrent.locks.ReentrantLock;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LockInterruptiblyDemo</span> {
+
+   <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">ReentrantLock</span> <span class="hljs-variable">LOCK</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();
+
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException {
+
+       <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; {
+           LOCK.lock();
+           <span class="hljs-keyword">try</span> {
+               System.out.println(<span class="hljs-string">"线程1 已获取锁，开始长时间占用"</span>);
+               <span class="hljs-keyword">try</span> {
+                   Thread.sleep(<span class="hljs-number">10_000</span>);
+               } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                   System.out.println(<span class="hljs-string">"线程1 在sleep中被中断"</span>);
+                   Thread.currentThread().interrupt();
+               }
+           } <span class="hljs-keyword">finally</span> {
+               LOCK.unlock();
+               System.out.println(<span class="hljs-string">"线程1 释放锁"</span>);
+           }
+       }, <span class="hljs-string">"t1"</span>);
+
+       <span class="hljs-type">Thread</span> <span class="hljs-variable">t2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; {
+           <span class="hljs-keyword">try</span> {
+               System.out.println(<span class="hljs-string">"线程2 尝试可中断获取锁"</span>);
+               LOCK.lockInterruptibly();
+               <span class="hljs-keyword">try</span> {
+                   System.out.println(<span class="hljs-string">"线程2 获取锁成功"</span>);
+               } <span class="hljs-keyword">finally</span> {
+                   LOCK.unlock();
+                   System.out.println(<span class="hljs-string">"线程2 释放锁"</span>);
+               }
+           } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+               System.out.println(<span class="hljs-string">"线程2 在等待锁期间被中断，放弃获取锁"</span>);
+               Thread.currentThread().interrupt();
+           }
+       }, <span class="hljs-string">"t2"</span>);
+
+       t1.start();
+       Thread.sleep(<span class="hljs-number">200</span>); <span class="hljs-comment">// 确保线程1先拿到锁</span>
+
+       t2.start();
+       Thread.sleep(<span class="hljs-number">500</span>); <span class="hljs-comment">// 让线程2进入等待锁状态</span>
+
+       System.out.println(<span class="hljs-string">"主线程 中断线程2"</span>);
+       t2.interrupt();
+
+       t1.join();
+       t2.join();
+
+       System.out.println(<span class="hljs-string">"主线程 结束"</span>);
+   }
+}
+</code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>无法尝试获取与超时获取</strong>  </p>
@@ -778,7 +835,7 @@ lock.lock();
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"synchronized","level":"1.4.4","depth":2,"previous":{"title":"锁","level":"1.4.3","depth":2,"path":"03-Java并发/03-锁.md","ref":"03-Java并发/03-锁.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/04-synchronized.md","mtime":"2026-03-26T06:06:35.695Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-26T06:06:40.810Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"synchronized","level":"1.4.4","depth":2,"previous":{"title":"锁","level":"1.4.3","depth":2,"path":"03-Java并发/03-锁.md","ref":"03-Java并发/03-锁.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/04-synchronized.md","mtime":"2026-03-26T06:09:07.068Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-26T06:09:15.493Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
