@@ -549,6 +549,196 @@ x</p>
 <li>在能选择的情况下，既不要用Lock也不要用synchronized关键字，用java.util.concurrent包中的各种各样的类，如果不用该包下的类，在满足业务的情况下，可以使用synchronized关键，因为代码量少，避免出错</li>
 <li>synchronized实际上是非公平的，新来的线程有可能立即获得监视器，而在等待区中等候已久的线程可能再次等待，这样有利于提高性能，但是也可能会导致饥饿现象。</li>
 </ul>
+<h2 id="思考后的总结">思考后的总结</h2>
+<h3 id="synchronized可以作用在哪里？分别通过对象锁和类锁进行举例">Synchronized可以作用在哪里？分别通过对象锁和类锁进行举例</h3>
+<p><code>Synchronized</code> 可以作用在 3 类位置：</p>
+<ol>
+<li><strong>实例方法</strong>：锁的是当前实例对象 <code>this</code>，属于对象锁  </li>
+<li><strong>静态方法</strong>：锁的是当前类的 <code>Class</code> 对象，属于类锁  </li>
+<li><strong>代码块</strong>：锁的是括号里指定的对象，可以是对象锁也可以是类锁</li>
+</ol>
+<p>对象锁示例（实例方法与代码块）：</p>
+<pre><code class="lang-java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Counter</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">inc</span><span class="hljs-params">()</span> { <span class="hljs-comment">// 锁 this</span>
+        count++;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">inc2</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">synchronized</span> (<span class="hljs-built_in">this</span>) { <span class="hljs-comment">// 锁 this</span>
+            count++;
+        }
+    }
+}
+</code></pre>
+<p>类锁示例（静态方法与代码块）：</p>
+<pre><code class="lang-java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">GlobalCounter</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">inc</span><span class="hljs-params">()</span> { <span class="hljs-comment">// 锁 GlobalCounter.class</span>
+        count++;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">inc2</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">synchronized</span> (GlobalCounter.class) { <span class="hljs-comment">// 锁 GlobalCounter.class</span>
+            count++;
+        }
+    }
+}
+</code></pre>
+<hr></hr>
+<h3 id="synchronized本质上是通过什么保证线程安全的？">Synchronized本质上是通过什么保证线程安全的？</h3>
+<p>从三个方面回答：<strong>加锁和释放锁的原理</strong>，<strong>可重入原理</strong>，<strong>保证可见性原理</strong>。</p>
+<h4 id="1）加锁和释放锁的原理">1）加锁和释放锁的原理</h4>
+<ul>
+<li><code>synchronized</code> 依赖对象的<strong>监视器（monitor）</strong>实现互斥  </li>
+<li>进入同步块相当于执行 <code>monitorenter</code>，退出同步块相当于执行 <code>monitorexit</code>  </li>
+<li>如果监视器被占用，其他线程会竞争失败并进入阻塞等待，直到持有者释放</li>
+</ul>
+<p>简单理解就是：同一时刻只有一个线程能持有对象监视器，从而保证临界区互斥。</p>
+<h4 id="2）可重入原理">2）可重入原理</h4>
+<p>同一个线程如果已经获得某个对象的监视器，再次进入同一对象的其他 <code>synchronized</code> 代码，不会被自己阻塞。</p>
+<p>可重入的实现效果是“进入次数加一，退出次数减一”，直到次数回到零才真正释放。</p>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ReenterDemo</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span> {
+        b();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">b</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// 同一个线程可再次进入</span>
+    }
+}
+</code></pre>
+<h4 id="3）保证可见性原理">3）保证可见性原理</h4>
+<p><code>Synchronized</code> 通过进入与退出临界区建立内存可见性规则：</p>
+<ul>
+<li><strong>释放锁</strong>之前，会把该线程在临界区内对共享变量的更新刷新出去  </li>
+<li><strong>获取锁</strong>之后，后续读共享变量能看到之前释放锁线程的更新</li>
+</ul>
+<p>所以 <code>synchronized</code> 同时提供：</p>
+<ul>
+<li>互斥（同一时刻仅一个线程执行临界区）</li>
+<li>可见性（线程间能看到更新）</li>
+<li>以及一定程度的有序性约束（临界区内外的重排序受限）</li>
+</ul>
+<hr></hr>
+<h3 id="synchronized有什么样的缺陷？java-lock是怎么弥补这些缺陷的">Synchronized有什么样的缺陷？Java Lock是怎么弥补这些缺陷的</h3>
+<p>常见缺陷与 <code>Lock</code> 的弥补方式：</p>
+<ol>
+<li><p><strong>无法中断地等待获取锁</strong>  </p>
+<ul>
+<li><code>synchronized</code> 进入竞争后不可用中断取消等待  </li>
+<li><code>Lock</code> 提供 <code>lockInterruptibly()</code> 支持可中断获取</li>
+</ul>
+</li>
+<li><p><strong>无法尝试获取与超时获取</strong>  </p>
+<ul>
+<li><code>synchronized</code> 只能一直等到拿到锁  </li>
+<li><code>Lock</code> 提供 <code>tryLock()</code> 与 <code>tryLock(超时)</code>，可以失败返回或超时退出</li>
+</ul>
+</li>
+<li><p><strong>无法实现公平策略</strong>  </p>
+<ul>
+<li><code>synchronized</code> 不提供公平性选择  </li>
+<li><code>ReentrantLock</code> 可构造公平锁（吞吐通常会降低）</li>
+</ul>
+</li>
+<li><p><strong>条件队列不够灵活</strong>  </p>
+<ul>
+<li><code>synchronized</code> 只能配合 <code>wait</code> 与 <code>notify</code> 或 <code>notifyAll</code>，且只有一个等待集合的表达方式  </li>
+<li><code>Lock</code> 搭配 <code>Condition</code> 可以创建多个条件队列，更精细地唤醒</li>
+</ul>
+</li>
+<li><p><strong>锁释放时机不够灵活</strong>  </p>
+<ul>
+<li><code>synchronized</code> 只能在作用域结束自动释放  </li>
+<li><code>Lock</code> 可以在任意位置 <code>unlock()</code>（但必须保证最终释放）</li>
+</ul>
+</li>
+</ol>
+<hr></hr>
+<h3 id="synchronized和lock的对比，和选择">Synchronized和Lock的对比，和选择</h3>
+<ul>
+<li><p>优先用 <code>synchronized</code>：  </p>
+<ul>
+<li>语法简单  </li>
+<li>出错面更小（编译器和虚拟机会保证异常时正确释放）  </li>
+<li>虚拟机有大量优化（轻量级、偏向等）</li>
+</ul>
+</li>
+<li><p>需要以下能力时选择 <code>ReentrantLock</code>：  </p>
+<ul>
+<li>可中断获取 <code>lockInterruptibly()</code>  </li>
+<li>超时获取 <code>tryLock(超时)</code>  </li>
+<li>多条件队列 <code>Condition</code>  </li>
+<li>需要显式公平策略</li>
+</ul>
+</li>
+</ul>
+<hr></hr>
+<h3 id="synchronized在使用时有何注意事项">Synchronized在使用时有何注意事项</h3>
+<ol>
+<li>尽量缩小同步范围，只包住共享数据的关键操作  </li>
+<li>不要在同步块内执行耗时操作（网络、磁盘、长时间计算）  </li>
+<li>避免锁对象频繁变化，锁对象应当稳定  </li>
+<li>避免锁顺序不一致导致死锁（多把锁时固定获取顺序）  </li>
+<li>注意类锁影响范围更大，容易放大竞争</li>
+</ol>
+<hr></hr>
+<h3 id="synchronized修饰的方法在抛出异常时，会释放锁吗">Synchronized修饰的方法在抛出异常时，会释放锁吗</h3>
+<p>会释放。</p>
+<p>线程执行同步代码时，如果抛出未捕获异常导致退出同步块或同步方法，虚拟机会确保执行监视器退出动作，锁会被释放。</p>
+<hr></hr>
+<h3 id="多个线程等待同一个synchronized锁的时候，jvm如何选择下一个获取锁的线程">多个线程等待同一个Synchronized锁的时候，JVM如何选择下一个获取锁的线程</h3>
+<p>一般不保证公平性。</p>
+<p>释放锁后，等待队列中的某个线程会被唤醒或被允许去竞争，最终谁先拿到锁与调度、竞争时机有关。因此不能依赖“先等待先获得”。</p>
+<hr></hr>
+<h3 id="synchronized使得同时只有一个线程可以执行，性能比较差，有什么提升的方法">Synchronized使得同时只有一个线程可以执行，性能比较差，有什么提升的方法</h3>
+<p>常见思路：</p>
+<ol>
+<li><strong>减小锁粒度</strong>：大锁拆小锁，减少无关竞争  </li>
+<li><strong>减小锁持有时间</strong>：把耗时操作移出同步块  </li>
+<li><strong>读多写少用读写锁</strong>：用 <code>ReentrantReadWriteLock</code> 提升读并发  </li>
+<li><strong>无锁与原子类</strong>：例如 <code>AtomicInteger</code> 或 <code>LongAdder</code> 等  </li>
+<li><strong>并发容器</strong>：用并发集合替代手写锁</li>
+</ol>
+<hr></hr>
+<h3 id="我想更加灵活的控制锁的释放和获取，怎么办">我想更加灵活的控制锁的释放和获取，怎么办</h3>
+<p>使用 <code>Lock</code> 接口实现，例如 <code>ReentrantLock</code>：</p>
+<ul>
+<li>可以在更灵活的位置 <code>lock()</code> 与 <code>unlock()</code>  </li>
+<li>可以配合 <code>tryLock</code> 做回退策略  </li>
+<li>可以配合 <code>Condition</code> 做多条件等待与精确唤醒</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">ReentrantLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();
+lock.lock();
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// 临界区</span>
+} <span class="hljs-keyword">finally</span> {
+    lock.unlock();
+}
+</code></pre>
+<hr></hr>
+<h3 id="什么是锁的升级和降级？什么是偏向锁、轻量级锁、重量级锁">什么是锁的升级和降级？什么是偏向锁、轻量级锁、重量级锁</h3>
+<p>锁升级是指：同一把锁在竞争加剧时，虚拟机把锁实现从“偏向”逐步变为“更强的互斥形式”，典型路径：</p>
+<ul>
+<li>偏向锁：无竞争时偏向某线程，进入退出开销更小  </li>
+<li>轻量级锁：少量竞争时自旋加 CAS，避免阻塞  </li>
+<li>重量级锁：竞争激烈时进入监视器阻塞与唤醒</li>
+</ul>
+<p>锁降级在 <code>synchronized</code> 的锁实现语境里不是常用讨论点，通常你只需要理解“竞争加剧会升级”。</p>
+<hr></hr>
+<h3 id="不同的jdk中对synchronized有何优化">不同的JDK中对Synchronized有何优化</h3>
+<p>总体方向是减少无竞争与低竞争情况下的开销，例如：</p>
+<ul>
+<li>引入偏向锁与轻量级锁等优化路径（从 Java 6 开始常被提及）  </li>
+<li>自旋与自适应自旋  </li>
+<li>锁粗化与锁消除等即时编译器优化  </li>
+<li>监视器实现细节不断优化</li>
+</ul>
 
                                 
                                 </section>
@@ -588,7 +778,7 @@ x</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"synchronized","level":"1.4.4","depth":2,"previous":{"title":"锁","level":"1.4.3","depth":2,"path":"03-Java并发/03-锁.md","ref":"03-Java并发/03-锁.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/04-synchronized.md","mtime":"2026-03-26T06:02:43.991Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-26T06:02:52.272Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"synchronized","level":"1.4.4","depth":2,"previous":{"title":"锁","level":"1.4.3","depth":2,"path":"03-Java并发/03-锁.md","ref":"03-Java并发/03-锁.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/04-synchronized.md","mtime":"2026-03-26T06:06:35.695Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-26T06:06:40.810Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
