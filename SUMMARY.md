@@ -12,3 +12,6 @@
 	* [synchronized](03-Java并发/04-synchronized.md)
 	* [volatile](03-Java并发/05-volatile.md)
 	* [final](03-Java并发/06-final.md)
+	* [JUC原子类: CAS, Unsafe和原子类](03-Java并发/07-JUC原子类.md)
+	* [LockSupport](03-Java并发/08-LockSupport.md)
+	* [锁核心类AQS](03-Java并发/09-AQS.md)
