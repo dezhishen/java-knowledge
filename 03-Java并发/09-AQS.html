@@ -408,19 +408,19 @@ sequenceDiagram
 </div>
 
 <p>流程图</p>
-<div class="mermaid">
-graph TD
-    A["线程调用acquire()"] --&gt; BtryAcquire成功?
+<p><img src="AQS_Flow.png" alt="alt text"></img></p>
+<pre><code class="lang-text">graph TB
+    A["线程调用acquire()"] --&gt; B{{"tryAcquire成功?"}}
     B -- "是" --&gt; C["获取锁，流程返回不入队列"]
     B -- "否" --&gt; D["创建Node.thread/waitStatus=0"]
     D --&gt; E["addWaiter/enq追加队尾"]
     E --&gt; F["acquireQueued自旋流程"]
 
     subgraph acquireQueued
-        F --&gt; F1前驱为head且tryAcquire成功?
-        F1 -- "是" --&gt; G["setHead(node)，出队<br></br>获锁，返回"]
+        F --&gt; F1{{"前驱为head且tryAcquire成功?"}}
+        F1 -- "是" --&gt; G["setHead(node)，出队&lt;br&gt;获锁，返回"]
         F1 -- "否" --&gt; H["shouldParkAfterFailedAcquire(pred, node)"]
-        H -- "是" --&gt; I["调用LockSupport.park()，阻塞<br></br>等待unpark唤醒"]
+        H -- "是" --&gt; I["调用LockSupport.park()，阻塞&lt;br&gt;等待unpark唤醒"]
         I --&gt; F
         H -- "否" --&gt; J["CAS设置pred.waitStatus为SIGNAL(-1)"]
         J --&gt; F
@@ -430,21 +430,18 @@ graph TD
     K --&gt; L["release()释放锁"]
 
     subgraph "释放流程"
-        L --&gt; M["tryRelease资源<br></br>CAS更新state"]
-        M --&gt; N队列head的后继节点存在?
+        L --&gt; M["tryRelease资源&lt;br&gt;CAS更新state"]
+        M --&gt; N{{"队列head的后继节点存在?"}}
         N -- "否" --&gt; O["无等待线程，流程返回"]
         N -- "是" --&gt; P["unparkSuccessor(head)"]
         P --&gt; Q["找到head之后第一个waitStatus&lt;=0的有效节点"]
-        Q --&gt; R["LockSupport.unpark(后继Node.thread)<br></br>唤醒"]
+        Q --&gt; R["LockSupport.unpark(后继Node.thread)&lt;br&gt;唤醒"]
     end
 
     F -.-&gt; S["如线程等待时被中断/超时"]
-    S -.-&gt; T["节点waitStatus=CANCELLED(1)，被清理<br></br>队列修复"]
+    S -.-&gt; T["节点waitStatus=CANCELLED(1)，被清理&lt;br&gt;队列修复"]
     T -.-&gt; F
-
-
-</div>
-
+</code></pre>
 <ul>
 <li>线程A：先调用 acquire，直接CAS获取锁成功。</li>
 <li>线程B：<ul>
@@ -612,7 +609,7 @@ graph TD
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"previous":{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/09-AQS.md","mtime":"2026-03-27T08:46:39.772Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T08:46:48.000Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"previous":{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/09-AQS.md","mtime":"2026-03-27T08:53:38.968Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T08:53:48.783Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
