@@ -380,49 +380,82 @@ sequenceDiagram
     participant AQS as AQS同步器
     participant OS as 操作系统（LockSupport）
 
-    %% 线程A先加锁，成功立即返回
     ThreadA-&gt;&gt;AQS: acquire()
     AQS-&gt;&gt;ThreadA: tryAcquire (CAS成功)
     ThreadA--&gt;&gt;ThreadA: 获得锁，执行业务
 
-    %% 线程B尝试加锁失败，进入队列
+    %% %% 线程B尝试加锁失败，进入队列
     ThreadB-&gt;&gt;AQS: acquire()
     AQS-&gt;&gt;ThreadB: tryAcquire (失败)
     ThreadB--&gt;&gt;ThreadB: 创建Node（Node.thread=ThreadB）
-    ThreadB-&gt;&gt;AQS: addWaiter/enq（入队列）
-
-    loop ThreadB自旋
-        ThreadB-&gt;&gt;AQS: 检查前驱
-        alt 前驱是head且tryAcquire成功
-            ThreadB--&gt;&gt;AQS: 设置自己为新head
-            ThreadB--&gt;&gt;ThreadB: 获得锁，退出循环
-        else
-            ThreadB--&gt;&gt;ThreadB: 设置前驱waitStatus=SIGNAL
-            ThreadB-&gt;&gt;OS: LockSupport.park()
-            Note right of ThreadB: 线程B阻塞，挂起，暂停在此<br></br>等待被唤醒
-            %% 被唤醒回到循环首继续尝试
-        end
+    ThreadB-&gt;&gt;AQS: addWaiter/enq（入队列）/创建一个空的头结点
+    AQS-&gt;&gt;ThreadB: 返回Node
+    ThreadB-&gt;&gt;AQS: acquireQueued(node,args)
+    alt 前驱是head且tryAcquire成功
+        ThreadB-&gt;&gt;AQS: 设置自己为新head
+    else
+        ThreadB-&gt;&gt;AQS: 设置前置节点的waitStatus为Signal，提交park请求
+        AQS-&gt;&gt;OS: LockSupport.park
     end
-
-    %% 线程A解锁
     ThreadA-&gt;&gt;AQS: release()
-    AQS-&gt;&gt;ThreadA: tryRelease (CAS归0)
-    alt 队列有后继结点
-        AQS-&gt;&gt;AQS: unparkSuccessor(head)
-        AQS-&gt;&gt;OS: LockSupport.unpark(B)
-        OS--&gt;&gt;ThreadB: 唤醒ThreadB
-        Note right of ThreadB: 被唤醒后继续执行acquire逻辑
-    end
-    ThreadA--&gt;&gt;ThreadA: 完成释放锁
+    AQS-&gt;&gt;AQS: unparkSuccessor（head）
+    AQS-&gt;&gt;OS: 提交unpark(head.next.Thread): 就是threadB
+    OS-&gt;&gt;ThreadB: 唤醒
+    ThreadB--&gt;&gt;AQS: p == head &amp;&amp; tryAcquire(arg): 代码在acquireQueued中
+    AQS-&gt;&gt;ThreadB: tryAcquire (CAS成功)
+    ThreadB--&gt;&gt;ThreadB: 获得锁，执行业务
 
-    %% ThreadB被唤醒后的流程
-    Note over ThreadB: 被唤醒后回到循环首部，尝试获取锁
-    ThreadB-&gt;&gt;AQS: 尝试tryAcquire成功
-    ThreadB--&gt;&gt;AQS: 设置自己为新head
-    ThreadB--&gt;&gt;ThreadB: 获得锁
 </div>
 
+<p>流程图</p>
+<div class="mermaid">
+graph TD
+    A["线程调用acquire()"] --&gt; BtryAcquire成功?
+    B -- "是" --&gt; C["获取锁，流程返回不入队列"]
+    B -- "否" --&gt; D["创建Node.thread/waitStatus=0"]
+    D --&gt; E["addWaiter/enq追加队尾"]
+    E --&gt; F["acquireQueued自旋流程"]
 
+    subgraph acquireQueued
+        F --&gt; F1前驱为head且tryAcquire成功?
+        F1 -- "是" --&gt; G["setHead(node)，出队<br></br>获锁，返回"]
+        F1 -- "否" --&gt; H["shouldParkAfterFailedAcquire(pred, node)"]
+        H -- "是" --&gt; I["调用LockSupport.park()，阻塞<br></br>等待unpark唤醒"]
+        I --&gt; F
+        H -- "否" --&gt; J["CAS设置pred.waitStatus为SIGNAL(-1)"]
+        J --&gt; F
+    end
+
+    G --&gt; K["执行业务"]
+    K --&gt; L["release()释放锁"]
+
+    subgraph "释放流程"
+        L --&gt; M["tryRelease资源<br></br>CAS更新state"]
+        M --&gt; N队列head的后继节点存在?
+        N -- "否" --&gt; O["无等待线程，流程返回"]
+        N -- "是" --&gt; P["unparkSuccessor(head)"]
+        P --&gt; Q["找到head之后第一个waitStatus&lt;=0的有效节点"]
+        Q --&gt; R["LockSupport.unpark(后继Node.thread)<br></br>唤醒"]
+    end
+
+    F -.-&gt; S["如线程等待时被中断/超时"]
+    S -.-&gt; T["节点waitStatus=CANCELLED(1)，被清理<br></br>队列修复"]
+    T -.-&gt; F
+
+
+</div>
+
+<ul>
+<li>线程A：先调用 acquire，直接CAS获取锁成功。</li>
+<li>线程B：<ul>
+<li>acquire失败，自行包装为Node加入队尾。</li>
+<li>进入acquireQueued循环。不是head.next或tryAcquire失败时，设置SIGNAL并调用park，阻塞于该处（Note显示“线程B阻塞/暂停”）。</li>
+<li>只有线程A释放锁后，调用unpark(B)唤醒线程B，B才会从阻塞点继续流程。</li>
+<li>B被唤醒后流程回到循环开头，再次尝试获取锁，若已经是head的直接后继且tryAcquire成功，则成为新head并获得锁。</li>
+</ul>
+</li>
+<li>队列只有B加锁失败会挂入，A直接获得锁不入队。</li>
+</ul>
 <h3 id="clh队列锁">CLH队列锁</h3>
 <blockquote>
 <p>CLH(Craig,Landin,and Hagersten)队列是一个虚拟的双向队列(虚拟的双向队列即不存在队列实例，仅存在结点之间的关联关系)。AQS是将每条请求共享资源的线程封装成一个CLH锁队列的一个结点(Node)来实现锁的分配。</p>
@@ -436,7 +469,110 @@ sequenceDiagram
 <li>减少总线开销：只自旋在自己的前驱节点，避免竞争“全局变量”，大大降低缓存一致性流量。</li>
 <li>高并发可伸缩：适合多CPU/多核环境，性能随核数上升而可扩展。</li>
 </ul>
-<h4 id="clh基本结构">CLH基本结构</h4>
+<h4 id="节点waitstatus状态流转说明">节点waitStatus状态流转说明</h4>
+<p>以独占锁为例，配合状态码说明实际意义。</p>
+<h5 id="1-节点状态waitstatus取值">1. 节点状态(waitStatus)取值</h5>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">CANCELLED</span> <span class="hljs-operator">=</span>  <span class="hljs-number">1</span>;   <span class="hljs-comment">// 节点取消，不再参与同步</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">SIGNAL</span>    <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;  <span class="hljs-comment">// 前驱释放时需唤醒本节点</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">CONDITION</span> <span class="hljs-operator">=</span> -<span class="hljs-number">2</span>;  <span class="hljs-comment">// 节点在Condition队列中</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">PROPAGATE</span> <span class="hljs-operator">=</span> -<span class="hljs-number">3</span>;  <span class="hljs-comment">// 共享模式传播用</span>
+<span class="hljs-comment">// 0（默认值）：新加入Sync队列且还未SIGNALED的正常节点</span>
+</code></pre>
+<h5 id="2-流程图和状态流转">2. 流程图和状态流转</h5>
+<h6 id="新节点入队">新节点入队</h6>
+<ol>
+<li>线程加锁失败，创建Node（waitStatus=0，thread=当前线程）</li>
+<li>通过addWaiter/enq方法，Node插入Sync队列尾部。</li>
+</ol>
+<h6 id="等待与阻塞">等待与阻塞</h6>
+<ol>
+<li><p>在acquireQueued循环中：</p>
+<ul>
+<li>如果自己的前驱不是head或还没抢到锁，调用<code>shouldParkAfterFailedAcquire</code></li>
+<li><strong>此时前驱的waitStatus会被设置为SIGNAL（-1）</strong>，表示“当我释放锁时要唤醒下一个”</li>
+<li>当前节点阻塞自己 <code>LockSupport.park()</code></li>
+</ul>
+</li>
+<li><p>被前驱unpark唤醒后，继续竞争锁</p>
+</li>
+</ol>
+<h6 id="获得锁">获得锁</h6>
+<ol>
+<li>只有head节点的直接后继，且tryAcquire成功，才会：<ul>
+<li>setHead(node)，自己Node升格为新的head（并回收前一个哨兵节点）</li>
+</ul>
+</li>
+</ol>
+<h6 id="取消与异常">取消与异常</h6>
+<ol>
+<li>如果等待过程中线程被中断或超时，会把自己的waitStatus设为CANCELLED（1），链路后续会跳过已取消节点。<ul>
+<li>节点及其前后指针被修正，保证Sync queue删除无效节点。</li>
+<li>取消逻辑保证不会破坏队列完整性。</li>
+</ul>
+</li>
+</ol>
+<h6 id="时序（流转）示意">时序（流转）示意</h6>
+<p>配合每步的waitStatus标记：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>对应waitStatus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新节点刚入队</td>
+<td>0（默认）</td>
+</tr>
+<tr>
+<td>前驱节点设置为SIGNAL</td>
+<td>pred.waitStatus = -1</td>
+</tr>
+<tr>
+<td>开始等待被唤醒</td>
+<td>pred.waitStatus = -1，本节点阻塞</td>
+</tr>
+<tr>
+<td>前驱释放锁</td>
+<td>pred.tryRelease，unpark后继</td>
+</tr>
+<tr>
+<td>获得锁，成新head</td>
+<td>waitStatus = 0，Node入head位置</td>
+</tr>
+<tr>
+<td>取消排队</td>
+<td>waitStatus = 1，节点要被清理</td>
+</tr>
+</tbody>
+</table>
+<p>（说明：只有前驱节点会被设置为SIGNAL! 这样前驱释放锁时负责唤醒其后继。）</p>
+<h6 id="伪流程状态标记举例">伪流程&amp;状态标记举例</h6>
+<p>假设队列有 head -&gt; Node1 -&gt; Node2：</p>
+<ul>
+<li>Node2刚加进来:  waitStatus=0  </li>
+<li>Node1入队后，head的waitStatus会被设为SIGNAL</li>
+<li>Node2自旋时发现还不能获取锁，Node1的waitStatus设为SIGNAL</li>
+<li>Node1释放时unpark(Node2.thread)</li>
+<li>Node2被唤醒、tryAcquire成功升为新head</li>
+</ul>
+<h6 id="概念梳理">概念梳理</h6>
+<ul>
+<li><strong>0</strong>：节点活跃，等待正常</li>
+<li><strong>SIGNAL(-1)</strong>：释放锁时负责唤醒后继节点</li>
+<li><strong>CANCELLED(1)</strong>：此节点已退出排队</li>
+<li><strong>CONDITION(-2)</strong>：节点在Condition队列中（不是Sync队列）</li>
+<li><strong>PROPAGATE(-3)</strong>：仅在共享锁传播时用</li>
+</ul>
+<h6 id="流转全链路总结">流转全链路总结</h6>
+<ol>
+<li><strong>新节点waitStatus=0</strong> -&gt; </li>
+<li><strong>它的前驱设置为SIGNAL</strong>（表示后继等我唤醒） -&gt;</li>
+<li><strong>如果超时/中断，将自身变为CANCELLED</strong> -&gt;</li>
+<li><strong>被唤醒试图变为head</strong> -&gt;</li>
+<li><strong>成为新head，等待下一个节点来排队</strong></li>
+</ol>
 
                                 
                                 </section>
@@ -476,7 +612,7 @@ sequenceDiagram
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"previous":{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/09-AQS.md","mtime":"2026-03-27T07:01:39.366Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T07:01:48.490Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"previous":{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/09-AQS.md","mtime":"2026-03-27T08:46:39.772Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T08:46:48.000Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
