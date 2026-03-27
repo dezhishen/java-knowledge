@@ -3,7 +3,7 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <title>开发原则 · Java知识网络</title>
+        <title>锁核心类AQS · Java知识网络</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="HonKit 5.1.5">
@@ -69,6 +69,8 @@
 
     
     
+    <link rel="prev" href="08-LockSupport.html" />
+    
 
     </head>
     <body>
@@ -123,9 +125,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="01-开发原则.html">
+        <li class="chapter " data-level="1.2.1" data-path="../00-开发理论/01-开发原则.html">
             
-                <a href="01-开发原则.html">
+                <a href="../00-开发理论/01-开发原则.html">
             
                     
                     开发原则
@@ -200,9 +202,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../03-Java并发/01-理论基础.html">
+        <li class="chapter " data-level="1.4.1" data-path="01-理论基础.html">
             
-                <a href="../03-Java并发/01-理论基础.html">
+                <a href="01-理论基础.html">
             
                     
                     理论基础
@@ -213,9 +215,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../03-Java并发/02-线程基础.html">
+        <li class="chapter " data-level="1.4.2" data-path="02-线程基础.html">
             
-                <a href="../03-Java并发/02-线程基础.html">
+                <a href="02-线程基础.html">
             
                     
                     线程基础
@@ -226,9 +228,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../03-Java并发/03-锁.html">
+        <li class="chapter " data-level="1.4.3" data-path="03-锁.html">
             
-                <a href="../03-Java并发/03-锁.html">
+                <a href="03-锁.html">
             
                     
                     锁
@@ -239,9 +241,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../03-Java并发/04-synchronized.html">
+        <li class="chapter " data-level="1.4.4" data-path="04-synchronized.html">
             
-                <a href="../03-Java并发/04-synchronized.html">
+                <a href="04-synchronized.html">
             
                     
                     synchronized
@@ -252,9 +254,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="../03-Java并发/05-volatile.html">
+        <li class="chapter " data-level="1.4.5" data-path="05-volatile.html">
             
-                <a href="../03-Java并发/05-volatile.html">
+                <a href="05-volatile.html">
             
                     
                     volatile
@@ -265,9 +267,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.6" data-path="../03-Java并发/06-final.html">
+        <li class="chapter " data-level="1.4.6" data-path="06-final.html">
             
-                <a href="../03-Java并发/06-final.html">
+                <a href="06-final.html">
             
                     
                     final
@@ -278,9 +280,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.7" data-path="../03-Java并发/07-JUC原子类.html">
+        <li class="chapter " data-level="1.4.7" data-path="07-JUC原子类.html">
             
-                <a href="../03-Java并发/07-JUC原子类.html">
+                <a href="07-JUC原子类.html">
             
                     
                     JUC原子类: CAS, Unsafe和原子类
@@ -291,9 +293,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.8" data-path="../03-Java并发/08-LockSupport.html">
+        <li class="chapter " data-level="1.4.8" data-path="08-LockSupport.html">
             
-                <a href="../03-Java并发/08-LockSupport.html">
+                <a href="08-LockSupport.html">
             
                     
                     LockSupport
@@ -304,9 +306,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.9" data-path="../03-Java并发/09-AQS.html">
+        <li class="chapter active" data-level="1.4.9" data-path="09-AQS.html">
             
-                <a href="../03-Java并发/09-AQS.html">
+                <a href="09-AQS.html">
             
                     
                     锁核心类AQS
@@ -352,7 +354,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >开发原则</a>
+        <a href=".." >锁核心类AQS</a>
     </h1>
 </div>
 
@@ -367,13 +369,74 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="开发原则soild">开发原则SOILD</h1>
-<p>面向对象的基本原则(solid)是五个，但是在经常被提到的除了这五个之外还有 迪米特法则和合成复用原则等， 所以在常见的文章中有表示写六大或七大原则的； 除此之外我还将给出一些其它相关书籍和互联网上出现的原则；</p>
-<h2 id="s单一职责srp">S单一职责SRP</h2>
-<h2 id="o开放封闭原则ocp">O开放封闭原则OCP</h2>
-<h2 id="l里氏替换原则lsp">L里氏替换原则LSP</h2>
-<h2 id="i接口隔离法则">I接口隔离法则</h2>
-<h2 id="d依赖倒置原则dip">D依赖倒置原则DIP</h2>
+                                <h1 id="aqs">AQS</h1>
+<p>AbstractQueuedSynchronizer。AQS是一个用来构建锁和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的ReentrantLock，Semaphore，其他的诸如ReentrantReadWriteLock，SynchronousQueue，FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松容易地构造出符合我们自己需求的同步器。</p>
+<h2 id="核心思想">核心思想</h2>
+<p>AQS核心思想是，如果被请求的共享资源空闲，则将当前请求资源的线程设置为有效的工作线程，并且将共享资源设置为锁定状态。如果被请求的共享资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将暂时获取不到锁的线程加入到队列中。</p>
+<div class="mermaid">
+sequenceDiagram
+    participant ThreadA as 线程A
+    participant ThreadB as 线程B
+    participant AQS as AQS同步器
+    participant OS as 操作系统（LockSupport）
+
+    %% 线程A先加锁，成功立即返回
+    ThreadA-&gt;&gt;AQS: acquire()
+    AQS-&gt;&gt;ThreadA: tryAcquire (CAS成功)
+    ThreadA--&gt;&gt;ThreadA: 获得锁，执行业务
+
+    %% 线程B尝试加锁失败，进入队列
+    ThreadB-&gt;&gt;AQS: acquire()
+    AQS-&gt;&gt;ThreadB: tryAcquire (失败)
+    ThreadB--&gt;&gt;ThreadB: 创建Node（Node.thread=ThreadB）
+    ThreadB-&gt;&gt;AQS: addWaiter/enq（入队列）
+
+    loop ThreadB自旋
+        ThreadB-&gt;&gt;AQS: 检查前驱
+        alt 前驱是head且tryAcquire成功
+            ThreadB--&gt;&gt;AQS: 设置自己为新head
+            ThreadB--&gt;&gt;ThreadB: 获得锁，退出循环
+        else
+            ThreadB--&gt;&gt;ThreadB: 设置前驱waitStatus=SIGNAL
+            ThreadB-&gt;&gt;OS: LockSupport.park()
+            Note right of ThreadB: 线程B阻塞，挂起，暂停在此<br></br>等待被唤醒
+            %% 被唤醒回到循环首继续尝试
+        end
+    end
+
+    %% 线程A解锁
+    ThreadA-&gt;&gt;AQS: release()
+    AQS-&gt;&gt;ThreadA: tryRelease (CAS归0)
+    alt 队列有后继结点
+        AQS-&gt;&gt;AQS: unparkSuccessor(head)
+        AQS-&gt;&gt;OS: LockSupport.unpark(B)
+        OS--&gt;&gt;ThreadB: 唤醒ThreadB
+        Note right of ThreadB: 被唤醒后继续执行acquire逻辑
+    end
+    ThreadA--&gt;&gt;ThreadA: 完成释放锁
+
+    %% ThreadB被唤醒后的流程
+    Note over ThreadB: 被唤醒后回到循环首部，尝试获取锁
+    ThreadB-&gt;&gt;AQS: 尝试tryAcquire成功
+    ThreadB--&gt;&gt;AQS: 设置自己为新head
+    ThreadB--&gt;&gt;ThreadB: 获得锁
+</div>
+
+
+<h3 id="clh队列锁">CLH队列锁</h3>
+<blockquote>
+<p>CLH(Craig,Landin,and Hagersten)队列是一个虚拟的双向队列(虚拟的双向队列即不存在队列实例，仅存在结点之间的关联关系)。AQS是将每条请求共享资源的线程封装成一个CLH锁队列的一个结点(Node)来实现锁的分配。</p>
+</blockquote>
+<p>CLH（Craig, Landin, and Hagersten）队列锁是一种高性能、自旋式的、基于链表的公平锁，在多核并发环境下常用于构建可伸缩、高吞吐的锁组件。</p>
+<h4 id="clh核心思想">CLH核心思想</h4>
+<p>CLH队列锁是一种基于队列的自旋锁（Queue-based Spin Lock），采用“链表排队+本地自旋”策略。每个尝试获取锁的线程会按顺序在队列（链表）尾部排队，自旋观察其前驱节点的状态，自旋结束后才能获得锁。</p>
+<p>主要目标：</p>
+<ul>
+<li>公平性：锁的获取严格按照入队顺序进行，先来先服务。</li>
+<li>减少总线开销：只自旋在自己的前驱节点，避免竞争“全局变量”，大大降低缓存一致性流量。</li>
+<li>高并发可伸缩：适合多CPU/多核环境，性能随核数上升而可扩展。</li>
+</ul>
+<h4 id="clh基本结构">CLH基本结构</h4>
 
                                 
                                 </section>
@@ -401,6 +464,10 @@
 
             
                 
+                <a href="08-LockSupport.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: LockSupport">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
                 
             
         
@@ -409,7 +476,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"开发原则","level":"1.2.1","depth":2,"next":{"title":"Java基础","level":"1.3","depth":1,"ref":"","articles":[{"title":"面对对象","level":"1.3.1","depth":2,"path":"01-Java基础/01-面对对象.md","ref":"01-Java基础/01-面对对象.md","articles":[]},{"title":"基础知识","level":"1.3.2","depth":2,"path":"01-Java基础/02-基础知识.md","ref":"01-Java基础/02-基础知识.md","articles":[]}]},"previous":{"title":"开发理论","level":"1.2","depth":1,"ref":"","articles":[{"title":"开发原则","level":"1.2.1","depth":2,"path":"00-开发理论/01-开发原则.md","ref":"00-开发理论/01-开发原则.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"00-开发理论/01-开发原则.md","mtime":"2026-03-27T07:01:39.365Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T07:01:48.490Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"previous":{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/09-AQS.md","mtime":"2026-03-27T07:01:39.366Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-27T07:01:48.490Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
