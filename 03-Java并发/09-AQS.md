@@ -40,8 +40,10 @@ sequenceDiagram
 
 流程图
 
-```mermaid
-graph TD
+![alt text](AQS_Flow.png)
+
+```text
+graph TB
     A["线程调用acquire()"] --> B{{"tryAcquire成功?"}}
     B -- "是" --> C["获取锁，流程返回不入队列"]
     B -- "否" --> D["创建Node.thread/waitStatus=0"]
@@ -73,8 +75,6 @@ graph TD
     F -.-> S["如线程等待时被中断/超时"]
     S -.-> T["节点waitStatus=CANCELLED(1)，被清理<br>队列修复"]
     T -.-> F
-
-
 ```
 
 - 线程A：先调用 acquire，直接CAS获取锁成功。
