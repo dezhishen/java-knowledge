@@ -1,0 +1,871 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>ReentrantLock · Java知识网络</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 5.1.5">
+        
+        
+        
+    
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="09-AQS.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    开发理论
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00-开发理论/01-开发原则.html">
+            
+                <a href="../00-开发理论/01-开发原则.html">
+            
+                    
+                    开发原则
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Java基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../01-Java基础/01-面对对象.html">
+            
+                <a href="../01-Java基础/01-面对对象.html">
+            
+                    
+                    面对对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../01-Java基础/02-基础知识.html">
+            
+                <a href="../01-Java基础/02-基础知识.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Java并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01-理论基础.html">
+            
+                <a href="01-理论基础.html">
+            
+                    
+                    理论基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="02-线程基础.html">
+            
+                <a href="02-线程基础.html">
+            
+                    
+                    线程基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="03-锁.html">
+            
+                <a href="03-锁.html">
+            
+                    
+                    锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="04-synchronized.html">
+            
+                <a href="04-synchronized.html">
+            
+                    
+                    synchronized
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="05-volatile.html">
+            
+                <a href="05-volatile.html">
+            
+                    
+                    volatile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="06-final.html">
+            
+                <a href="06-final.html">
+            
+                    
+                    final
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="07-JUC原子类.html">
+            
+                <a href="07-JUC原子类.html">
+            
+                    
+                    JUC原子类: CAS, Unsafe和原子类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="08-LockSupport.html">
+            
+                <a href="08-LockSupport.html">
+            
+                    
+                    LockSupport
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="09-AQS.html">
+            
+                <a href="09-AQS.html">
+            
+                    
+                    锁核心类AQS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.10" data-path="10-ReentrantLock.html">
+            
+                <a href="10-ReentrantLock.html">
+            
+                    
+                    ReentrantLock
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >ReentrantLock</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="reentrantlock">ReentrantLock</h1>
+<p>类关系</p>
+<div class="mermaid">
+graph BT
+    Sync--extend--&gt;AbstractQueuedSynchronizer
+    FairSync--extend--&gt;Sync
+    NoFairSync--extend--&gt;Sync
+
+    ReentrantLock--implement--&gt;Lock
+    ReentrantLock-.内部类.-&gt;A["Sync/FairSync/NoFairSync"]
+</div>
+
+<h2 id="abstractqueuedsynchronizer">AbstractQueuedSynchronizer</h2>
+<pre><code class="lang-java"><span class="hljs-comment">/**
+ * Queries whether any threads are waiting to acquire. Note that
+ * because cancellations due to interrupts and timeouts may occur
+ * at any time, a {<span class="hljs-doctag">@code</span> true} return does not guarantee that any
+ * other thread will ever acquire.
+ *
+ * <span class="hljs-doctag">@return</span> {<span class="hljs-doctag">@code</span> true} if there may be other threads waiting to acquire
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasQueuedThreads</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">Node</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> tail, h = head; p != h &amp;&amp; p != <span class="hljs-literal">null</span>; p = p.prev)
+        <span class="hljs-keyword">if</span> (p.status &gt;= <span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<h2 id="reentrantlock">ReentrantLock</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">lock</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">if</span> (!initialTryLock())
+        acquire(<span class="hljs-number">1</span>);
+}
+...
+<span class="hljs-comment">/**
+ * Returns a {<span class="hljs-doctag">@link</span> Condition} instance for use with this
+ * {<span class="hljs-doctag">@link</span> Lock} instance.
+ *
+ * &lt;p&gt;The returned {<span class="hljs-doctag">@link</span> Condition} instance supports the same
+ * usages as do the {<span class="hljs-doctag">@link</span> Object} monitor methods ({<span class="hljs-doctag">@link</span>
+ * Object#wait() wait}, {<span class="hljs-doctag">@link</span> Object#notify notify}, and {<span class="hljs-doctag">@link</span>
+ * Object#notifyAll notifyAll}) when used with the built-in
+ * monitor lock.
+ *
+ * &lt;ul&gt;
+ *
+ * &lt;li&gt;If this lock is not held when any of the {<span class="hljs-doctag">@link</span> Condition}
+ * {<span class="hljs-doctag">@linkplain</span> Condition#await() waiting} or {<span class="hljs-doctag">@linkplain</span>
+ * Condition#signal signalling} methods are called, then an {<span class="hljs-doctag">@link</span>
+ * IllegalMonitorStateException} is thrown.
+ *
+ * &lt;li&gt;When the condition {<span class="hljs-doctag">@linkplain</span> Condition#await() waiting}
+ * methods are called the lock is released and, before they
+ * return, the lock is reacquired and the lock hold count restored
+ * to what it was when the method was called.
+ *
+ * &lt;li&gt;If a thread is {<span class="hljs-doctag">@linkplain</span> Thread#interrupt interrupted}
+ * while waiting then the wait will terminate, an {<span class="hljs-doctag">@link</span>
+ * InterruptedException} will be thrown, and the thread's
+ * interrupted status will be cleared.
+ *
+ * &lt;li&gt;Waiting threads are signalled in FIFO order.
+ *
+ * &lt;li&gt;The ordering of lock reacquisition for threads returning
+ * from waiting methods is the same as for threads initially
+ * acquiring the lock, which is in the default case not specified,
+ * but for &lt;em&gt;fair&lt;/em&gt; locks favors those threads that have been
+ * waiting the longest.
+ *
+ * &lt;/ul&gt;
+ *
+ * <span class="hljs-doctag">@return</span> the Condition object
+ */</span>
+<span class="hljs-keyword">public</span> Condition <span class="hljs-title function_">newCondition</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">return</span> sync.newCondition();
+}
+</code></pre>
+<h2 id="sync">Sync</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">final</span> ConditionObject <span class="hljs-title function_">newCondition</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConditionObject</span>();
+}
+</code></pre>
+<h2 id="nofairsync">NoFairSync</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">initialTryLock</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">Thread</span> <span class="hljs-variable">current</span> <span class="hljs-operator">=</span> Thread.currentThread();
+    <span class="hljs-comment">// 直接尝试CAS</span>
+    <span class="hljs-keyword">if</span> (compareAndSetState(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)) { <span class="hljs-comment">// first attempt is unguarded</span>
+    <span class="hljs-comment">// 设置当前线程为锁持有线程</span>
+        setExclusiveOwnerThread(current);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getExclusiveOwnerThread() == current) {
+        <span class="hljs-comment">// 重入</span>
+        <span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> getState() + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (c &lt; <span class="hljs-number">0</span>) <span class="hljs-comment">// overflow</span>
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">"Maximum lock count exceeded"</span>);
+        setState(c);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    } <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<h2 id="fairsync">FairSync</h2>
+<pre><code class="lang-java"><span class="hljs-comment">/**
+ * Acquires only if reentrant or queue is empty.
+ */</span>
+<span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">initialTryLock</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">Thread</span> <span class="hljs-variable">current</span> <span class="hljs-operator">=</span> Thread.currentThread();
+    <span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> getState();
+    <span class="hljs-keyword">if</span> (c == <span class="hljs-number">0</span>) {
+        <span class="hljs-comment">// 如果c==0，即没有上锁</span>
+        <span class="hljs-keyword">if</span> (!hasQueuedThreads() &amp;&amp; compareAndSetState(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)) {
+        <span class="hljs-comment">// 如果没有queuedThreads，且CAS成功</span>
+            setExclusiveOwnerThread(current);
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getExclusiveOwnerThread() == current) {
+        <span class="hljs-comment">// 重入</span>
+        <span class="hljs-keyword">if</span> (++c &lt; <span class="hljs-number">0</span>) <span class="hljs-comment">// overflow</span>
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">"Maximum lock count exceeded"</span>);
+        setState(c);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<h2 id="conditionobject">ConditionObject</h2>
+<pre><code class="lang-java"><span class="hljs-comment">/**
+ * Implements interruptible condition wait.
+ * &lt;ol&gt;
+ * &lt;li&gt;If current thread is interrupted, throw InterruptedException.
+ * &lt;li&gt;Save lock state returned by {<span class="hljs-doctag">@link</span> #getState}.
+ * &lt;li&gt;Invoke {<span class="hljs-doctag">@link</span> #release} with saved state as argument,
+ *     throwing IllegalMonitorStateException if it fails.
+ * &lt;li&gt;Block until signalled or interrupted.
+ * &lt;li&gt;Reacquire by invoking specialized version of
+ *     {<span class="hljs-doctag">@link</span> #acquire} with saved state as argument.
+ * &lt;li&gt;If interrupted while blocked in step 4, throw InterruptedException.
+ * &lt;/ol&gt;
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException {
+    <span class="hljs-keyword">if</span> (Thread.interrupted())
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InterruptedException</span>();
+    <span class="hljs-comment">// 构建条件节点</span>
+    <span class="hljs-type">ConditionNode</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConditionNode</span>();
+    <span class="hljs-type">int</span> <span class="hljs-variable">savedState</span> <span class="hljs-operator">=</span> enableWait(node);
+    LockSupport.setCurrentBlocker(<span class="hljs-built_in">this</span>); <span class="hljs-comment">// for back-compatibility</span>
+    <span class="hljs-type">boolean</span> <span class="hljs-variable">interrupted</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>, cancelled = <span class="hljs-literal">false</span>, rejected = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">while</span> (!canReacquire(node)) {
+        <span class="hljs-keyword">if</span> (interrupted |= Thread.interrupted()) {
+            <span class="hljs-keyword">if</span> (cancelled = (node.getAndUnsetStatus(COND) &amp; COND) != <span class="hljs-number">0</span>)
+                <span class="hljs-keyword">break</span>;              <span class="hljs-comment">// else interrupted after signal</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((node.status &amp; COND) != <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">try</span> {
+                <span class="hljs-keyword">if</span> (rejected)
+                    node.block();
+                <span class="hljs-keyword">else</span>
+                    ForkJoinPool.managedBlock(node);
+            } <span class="hljs-keyword">catch</span> (RejectedExecutionException ex) {
+                rejected = <span class="hljs-literal">true</span>;
+            } <span class="hljs-keyword">catch</span> (InterruptedException ie) {
+                interrupted = <span class="hljs-literal">true</span>;
+            }
+        } <span class="hljs-keyword">else</span>
+            Thread.onSpinWait();    <span class="hljs-comment">// awoke while enqueuing</span>
+    }
+    LockSupport.setCurrentBlocker(<span class="hljs-literal">null</span>);
+    node.clearStatus();
+    acquire(node, savedState, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-number">0L</span>);
+    <span class="hljs-keyword">if</span> (interrupted) {
+        <span class="hljs-keyword">if</span> (cancelled) {
+            unlinkCancelledWaiters(node);
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InterruptedException</span>();
+        }
+        Thread.currentThread().interrupt();
+    }
+}
+</code></pre>
+<h2 id="条件队列的流程图">条件队列的流程图</h2>
+<div class="mermaid">
+graph TD
+    Start(["开始：线程准备等待条件"])
+    Start --&gt; A_await --&gt; B_checkLock
+    subgraph AwaitFlow [等待流程]
+        A_await["调用: ConditionObject.await()系列方法"]
+        B_checkLock{"是否持有关联锁（ReentrantLock）?"}
+        Err["抛出异常: IllegalMonitorStateException"]
+        C_add["ConditionObject.addConditionWaiter()将线程加入条件队列尾部"]
+        D_release["ReentrantLock.fullyRelease(savedState)\n释放锁的重入计数并保存状态"]
+        E_park["阻塞: LockSupport.park(this)\n线程挂起等待唤醒/中断/超时"]
+        F_wakeup{"被唤醒的原因"}
+        B_checkLock -- 是 --&gt; C_add --&gt; D_release --&gt; E_park --&gt; F_wakeup
+        B_checkLock -- 否 --&gt; Err
+    end
+
+    subgraph SignalFlow [唤醒与转移流程]
+        S_call["另一线程调用: ConditionObject.signal() 或 signalAll()\n（必须持锁）"]
+        G_transfer["ConditionObject.transferForSignal(node)\n将条件节点转为同步队列等待"]
+        SA_loop["signalAll(): 循环调用 transferForSignal 转移所有节点"]
+        S_call --&gt; G_transfer
+        SA_loop --&gt; G_transfer
+    end
+
+    subgraph SyncQueue [同步队列入队与竞争锁]
+        H_enq["AbstractQueuedSynchronizer.enq(node)\n将节点加入同步队列尾部"]
+        I_acquire["AbstractQueuedSynchronizer.acquireQueued(node, savedState)\n竞争重新获取锁，直至成功"]
+        J_unpark["LockSupport.unpark(thread) 或 同步队列竞争使线程恢复\nawait 方法返回"]
+        H_enq --&gt; I_acquire --&gt; J_unpark
+    end
+
+    subgraph CancelCleanup [取消与清理]
+        Cancel["ConditionObject.unlinkCancelledWaiters()\n移除已取消的条件队列节点，防止泄漏"]
+        Cancel --&gt; H_enq
+    end
+
+    subgraph AfterWake [唤醒后行为]
+        K_recheck["重新检查条件谓词（通常在循环中）\n如果不满足则重新进入等待"]
+        End(["结束：线程返回并继续执行"])
+        J_unpark --&gt; K_recheck --&gt; End
+    end
+
+    %% 连接唤醒分支到转移流程或取消流程
+    F_wakeup -- 被 signal/signalAll 转移 --&gt; G_transfer
+    F_wakeup -- 被中断 --&gt; Cancel
+    F_wakeup -- 超时 --&gt; Cancel
+
+    %% 转移后的入队与竞争
+    G_transfer --&gt; H_enq
+
+    %% 其他连接
+    Err --&gt; End
+</div>
+
+
+<h2 id="对比">对比</h2>
+<div class="mermaid">
+graph TD
+  %% 总入口
+  Start(["开始：线程尝试执行临界段或等待条件"])
+
+  %% 共享子图：获取锁流程
+  subgraph LockAcquire ["获取锁（任一实现）"]
+    LA_lock["调用: 获取锁\n- ReentrantLock.lock() -&gt; 抽象队列同步器.acquire\n- synchronized -&gt; 尝试进入对象监视器"]
+    LA_fail["无法获得锁 -&gt; 同步队列入队并阻塞"]
+    LA_enq["AbstractQueuedSynchronizer.enq(node)\n把线程加入同步队列尾部（仅 ReentrantLock 实现）"]
+    LA_park["阻塞: LockSupport.park() 或 等待对象监视器"]
+    LA_acquireReturn["获得锁后返回，进入临界区"]
+    LA_lock --无法获得--&gt; LA_enq
+    LA_enq --&gt; LA_park
+    LA_lock --获得--&gt; LA_acquireReturn
+    LA_park --&gt; LA_acquireReturn
+  end
+
+  %% Condition 等待流程
+  subgraph ConditionAwait ["使用 Condition 的等待流程"]
+    C1["线程调用: ConditionObject.await()"]
+    C2["ConditionObject.addConditionWaiter() -&gt; 条件队列尾部\n节点标记为 CONDITION"]
+    C3["ReentrantLock.fullyRelease(savedState)\n释放锁的重入计数"]
+    C4["阻塞: LockSupport.park()（线程挂起）"]
+    C1 --&gt; C2 --&gt; C3 --&gt; C4
+  end
+
+  %% Condition 唤醒流程（精准唤醒）
+  subgraph ConditionSignal ["Condition 的唤醒/转移流程（精准）"]
+    S_call["另一线程持锁调用: ConditionObject.signal() 或 signalAll()"]
+    Transfer["ConditionObject.transferForSignal(node)\n从条件队列移除特定节点，准备转入同步队列"]
+    Enq["AbstractQueuedSynchronizer.enq(node)\n把该节点加入同步队列尾部"]
+    MaybeUnpark["如果适当，调用 LockSupport.unpark(thread) 或等候 unlock 时由 release 唤醒队首"]
+    S_call --&gt; Transfer --&gt; Enq --&gt; MaybeUnpark
+  end
+
+  %% synchronized wait/notifyAll 比较流程（粗暴唤醒）
+  subgraph MonitorWaitNotify ["使用 synchronized + wait/notify/notifyAll 的情况"]
+    M_wait["线程调用: object.wait()\n加入该对象的单一等待集并释放对象监视器，线程阻塞"]
+    M_notifyAll["另一线程持监视器调用: object.notifyAll()\n将等待集和中全部线程变为可运行（全部唤醒）"]
+    M_notify["另一线程持监视器调用: object.notify()\n任意选择一个等待线程唤醒（选择不可控）"]
+    M_wait --&gt;|notifyAll| M_notifyAll
+    M_wait --&gt;|notify| M_notify
+  end
+
+  %% notifyAll 后的结果（性能问题）
+  subgraph NotifyAllConsequence ["notifyAll 导致的后果（虚拟群起）"]
+    NA_awake["所有等待线程被唤醒并尝试重新获得监视器/锁"]
+    NA_compete["大量线程瞬间竞争锁 -&gt; 许多上下文切换与自旋/排队开销"]
+    NA_wasted["不相关线程被唤醒导致无效重试（性能浪费）"]
+    M_notifyAll --&gt; NA_awake --&gt; NA_compete --&gt; NA_wasted
+  end
+
+  %% Condition 的优势点（指向图中）
+  subgraph ConditionAdvantage ["Condition 的具体优势"]
+    Adv1["多个 Condition 支持多个独立等待集合\n可以按需要精确唤醒某一集合"]
+    Adv2["signal() 仅转移队首等待线程，避免全体唤醒"]
+    Adv3["FIFO 风格的条件队列减少不必要竞争"]
+    Adv1 --&gt; Adv2 --&gt; Adv3
+  end
+
+  %% 合并控制流
+  Start --&gt; LA_lock
+  LA_acquireReturn --&gt;|调用 await 时| ConditionAwait
+  ConditionAwait --&gt;|等待中| LA_park
+
+  %% 当其他线程做出改变后，Condition 唤醒路径
+  LA_acquireReturn --&gt;|修改状态并想唤醒等待者| ConditionSignal
+
+  %% 对比：若使用监视器等待
+  LA_acquireReturn --&gt;|"使用 object.wait()/notifyAll()"| MonitorWaitNotify
+
+  %% 唤醒后回到获取锁的竞争
+  MaybeUnpark --&gt; LA_enq
+  M_notify --&gt; LA_enq
+  NA_awake --&gt; LA_enq
+
+  %% 最终被唤醒线程重新竞争并继续
+  LA_enq --&gt; LA_park --&gt; LA_acquireReturn
+
+  %% 标注性能差异
+  Adv1 --- ConditionSignal
+  Adv2 --- MaybeUnpark
+  NA_wasted --- MonitorWaitNotify
+
+  %% 结束
+  LA_acquireReturn --&gt; End(["结束：线程获得锁并继续执行临界区/后续逻辑"])
+</div>
+<div class="mermaid">
+graph TD
+    subgraph "线程t1"
+        t1lock["t1: lock.lock()"]--&gt;runT1["运行生产者"]
+        runT1--&gt;full满了?
+        full--否--&gt;runT1
+        full--是--&gt;notFullAwait["notFull.await()"]
+        runT1-.-&gt;notEmptySignal["唤醒notEmpty等待队列中的一线程"]
+        notFullAwait--&gt;addConditionNotFullWaiter[加入当前线程到notFull的等待队列中]
+        addConditionNotFullWaiter--&gt;fullyT1Release["完全释放锁(savedState)"]
+        fullyT1Release--&gt;parkT1["挂起T1线程"]
+        parkT1-.-unparkT1[被唤醒]
+        unparkT1-.-&gt;runT1
+    end
+    subgraph "线程t2"
+        t2lock["t2: lock.lock()"]--&gt;runT2["运行消费者"]
+        runT2--&gt;empty空了?
+        empty--否--&gt;runT2
+        empty--是--&gt;notEmptyAwait["notEmpty.await()"]
+        notEmptyAwait--&gt;addConditionNotEmptyWaiter[加入当前线程到notEmpty的等待队列中]
+        addConditionNotEmptyWaiter--&gt;fullyT2Release["完全释放锁(savedState)"]
+        fullyT2Release--&gt;parkT2["挂起T2线程"]
+        runT2-.-&gt;notFullSignal["唤醒notFull等待队列中的一线程"]
+        parkT2-.-unparkT2[被唤醒]
+        unparkT2-.-&gt;runT2
+    end
+    notEmptySignal-.-&gt;unparkT2
+        notFullSignal-.-&gt;unparkT1
+</div>
+
+<ul>
+<li>t1: lock.lock() -&gt; 执行 -&gt; 如果满 -&gt; notFull.await()</li>
+<li>await: addConditionWaiter() -&gt; fullyRelease(savedState) -&gt; LockSupport.park()</li>
+<li>t2: lock.lock() -&gt; 获取锁（因为 t1 已释放） -&gt; take() -&gt; notFull.signal()</li>
+<li>signal: transferForSignal(node) -&gt; AbstractQueuedSynchronizer.enq(node)（转入同步队列）</li>
+<li>t2: lock.unlock() -&gt; AQS.release -&gt; unparkSuccessor(head) -&gt; LockSupport.unpark(t1)</li>
+<li>t1: park 返回 -&gt; acquireQueued(node, savedState) -&gt; 重新获得锁 -&gt; await 返回 -&gt; 继续执行 put()</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="09-AQS.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 锁核心类AQS">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ReentrantLock","level":"1.4.10","depth":2,"previous":{"title":"锁核心类AQS","level":"1.4.9","depth":2,"path":"03-Java并发/09-AQS.md","ref":"03-Java并发/09-AQS.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/10-ReentrantLock.md","mtime":"2026-03-28T06:07:06.601Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-28T06:07:18.409Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+
+    </body>
+</html>
+
