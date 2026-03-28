@@ -369,8 +369,8 @@ graph TD
 ```
 
 - t1: lock.lock() -> 执行 -> 如果满 -> notFull.await()
-- await: addConditionWaiter() -> fullyRelease(savedState) -> LockSupport.park()
+    - await: addConditionWaiter() -> fullyRelease(savedState) -> LockSupport.park()
 - t2: lock.lock() -> 获取锁（因为 t1 已释放） -> take() -> notFull.signal()
-- signal: transferForSignal(node) -> AbstractQueuedSynchronizer.enq(node)（转入同步队列）
+    - signal: transferForSignal(node) -> AbstractQueuedSynchronizer.enq(node)（转入同步队列）
 - t2: lock.unlock() -> AQS.release -> unparkSuccessor(head) -> LockSupport.unpark(t1)
 - t1: park 返回 -> acquireQueued(node, savedState) -> 重新获得锁 -> await 返回 -> 继续执行 put()
