@@ -1,0 +1,694 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <title>位运算 · Java知识网络</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 5.1.5">
+        
+        
+        
+    
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="02-基础知识.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    开发理论
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../00-开发理论/01-开发原则.html">
+            
+                <a href="../00-开发理论/01-开发原则.html">
+            
+                    
+                    开发原则
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Java基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="01-面对对象.html">
+            
+                <a href="01-面对对象.html">
+            
+                    
+                    面对对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="02-基础知识.html">
+            
+                <a href="02-基础知识.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.3" data-path="03-位运算.html">
+            
+                <a href="03-位运算.html">
+            
+                    
+                    位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Java并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../03-Java并发/01-理论基础.html">
+            
+                <a href="../03-Java并发/01-理论基础.html">
+            
+                    
+                    理论基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../03-Java并发/02-线程基础.html">
+            
+                <a href="../03-Java并发/02-线程基础.html">
+            
+                    
+                    线程基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../03-Java并发/03-锁.html">
+            
+                <a href="../03-Java并发/03-锁.html">
+            
+                    
+                    锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../03-Java并发/04-synchronized.html">
+            
+                <a href="../03-Java并发/04-synchronized.html">
+            
+                    
+                    synchronized
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../03-Java并发/05-volatile.html">
+            
+                <a href="../03-Java并发/05-volatile.html">
+            
+                    
+                    volatile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../03-Java并发/06-final.html">
+            
+                <a href="../03-Java并发/06-final.html">
+            
+                    
+                    final
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../03-Java并发/07-JUC原子类.html">
+            
+                <a href="../03-Java并发/07-JUC原子类.html">
+            
+                    
+                    JUC原子类: CAS, Unsafe和原子类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../03-Java并发/08-LockSupport.html">
+            
+                <a href="../03-Java并发/08-LockSupport.html">
+            
+                    
+                    LockSupport
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../03-Java并发/09-AQS.html">
+            
+                <a href="../03-Java并发/09-AQS.html">
+            
+                    
+                    锁核心类AQS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../03-Java并发/10-ReentrantLock.html">
+            
+                <a href="../03-Java并发/10-ReentrantLock.html">
+            
+                    
+                    ReentrantLock
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../03-Java并发/11-ReentrantReadWriteLock.html">
+            
+                <a href="../03-Java并发/11-ReentrantReadWriteLock.html">
+            
+                    
+                    ReentrantReadWriteLock
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >位运算</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="位运算">位运算</h1>
+<h2 id="二进制与符号位">二进制与符号位</h2>
+<p>二进制是以 2 为基数的数制，使用位（bit）表示数值。每一位从右到左代表 2^0、2^1、2^2……的权重。用 N 位二进制可以表示 0 到 2^N - 1 的无符号整数。</p>
+<ul>
+<li>例子：8 位二进制 0000 0101 表示十进制 5。</li>
+<li>把二进制转换为十进制：按位相加，1*2^k 的和。</li>
+</ul>
+<p>有符号与无符号表示的区别</p>
+<ul>
+<li>无符号（unsigned）：所有位共同表示大小，范围为 0 到 2^N - 1。</li>
+<li>有符号（signed，通常采用补码表示）：最高位作为符号位，0 表示非负，1 表示负数，范围为 -2^(N-1) 到 2^(N-1) - 1。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>8 位无符号范围：0 到 255。</li>
+<li>8 位有符号（补码）范围：-128 到 127。</li>
+</ul>
+<h2 id="按位与（and）">按位与（AND）</h2>
+<p>按位与操作用符号 <code>&amp;</code> 表示。对两个二进制位同时为 <code>1</code> 的位返回 <code>1</code>，否则返回 <code>0</code>。常用于掩码（mask）操作，保留目标位域。</p>
+<ul>
+<li>定义：<code>result = a &amp; b</code></li>
+<li>真值表：0&amp;0=0，0&amp;1=0，1&amp;0=0，1&amp;1=1</li>
+<li>用途：屏蔽不需要的位、检测某个位是否为 1</li>
+</ul>
+<p>示例（短表达）：
+<code>if ((flags &amp; MASK) != 0) { ... }</code></p>
+<p>示例（Java）：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">flags</span> <span class="hljs-operator">=</span> <span class="hljs-number">0b10110</span>;        <span class="hljs-comment">// 二进制 22</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">mask</span>  <span class="hljs-operator">=</span> <span class="hljs-number">0b00100</span>;        <span class="hljs-comment">// 只检测第三位</span>
+<span class="hljs-type">boolean</span> <span class="hljs-variable">isSet</span> <span class="hljs-operator">=</span> (flags &amp; mask) != <span class="hljs-number">0</span>; <span class="hljs-comment">// true，第三位为1</span>
+</code></pre>
+<h2 id="按位或（or）">按位或（OR）</h2>
+<p>按位或操作用符号 <code>|</code> 表示。对两个二进制位中任意一个为 <code>1</code> 的位返回 <code>1</code>，否则返回 <code>0</code>。常用于设置某些位为 1。</p>
+<ul>
+<li>定义：<code>result = a | b</code></li>
+<li>真值表：0|0=0，0|1=1，1|0=1，1|1=1</li>
+<li>用途：将若干标志合并、把特定位置为 1</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">flags</span> <span class="hljs-operator">=</span> <span class="hljs-number">0b10000</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">add</span>   <span class="hljs-operator">=</span> <span class="hljs-number">0b00110</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">merged</span> <span class="hljs-operator">=</span> flags | add; <span class="hljs-comment">// 0b10110，将 add 指示的位设置为1</span>
+</code></pre>
+<h2 id="按位异或（xor）">按位异或（XOR）</h2>
+<p>按位异或操作用符号 <code>^</code> 表示。对两个二进制位不同则返回 <code>1</code>，相同返回 <code>0</code>。异或具有可逆性：<code>a ^ b ^ b = a</code>。</p>
+<ul>
+<li>定义：<code>result = a ^ b</code></li>
+<li>真值表：0^0=0，0^1=1，1^0=1，1^1=0</li>
+<li>用途：切换（翻转）位、校验或在无需临时变量时交换两个数（仅整数场景）</li>
+</ul>
+<p>示例（翻转指定位）：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">flags</span> <span class="hljs-operator">=</span> <span class="hljs-number">0b10110</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">toggle</span> <span class="hljs-operator">=</span> <span class="hljs-number">0b00100</span>;         <span class="hljs-comment">// 翻转第三位</span>
+flags = flags ^ toggle;       <span class="hljs-comment">// 第三位被翻转</span>
+</code></pre>
+<p>示例（交换两个整数，不用临时变量，仅示例说明）：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> <span class="hljs-number">7</span>;
+x = x ^ y;
+y = x ^ y; <span class="hljs-comment">// y = 原 x</span>
+x = x ^ y; <span class="hljs-comment">// x = 原 y</span>
+</code></pre>
+<p>注意：用异或交换仅适用于整数且在可读性上较差，一般不推荐用于生产代码。</p>
+<h2 id="按位非（not，取反）">按位非（NOT，取反）</h2>
+<p>按位非用符号 <code>~</code> 表示，对每一位取反，0 变 1，1 变 0。结果长度与数据类型宽度相关（例如在 Java 中对 <code>int</code> 是 32 位）。</p>
+<ul>
+<li>定义：<code>result = ~a</code></li>
+<li>用途：产生掩码的反掩码、快速求相反位模式</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">0b00001111</span>;  <span class="hljs-comment">// 15</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> ~a;          <span class="hljs-comment">// 32位 int 的按位取反，结果为 -16（二进制补码表示）</span>
+</code></pre>
+<p>说明：按位取反和负数的补码表示有关，直接观察十进制结果时要注意符号扩展和数据类型位宽。</p>
+<h2 id="左移（）">左移（&lt;&lt;）</h2>
+<p>左移运算用符号 <code>&lt;&lt;</code>，将二进制位向左移动若干位，<strong>高位丢弃，低位补 0</strong>。等价于乘以 2 的若干次方（对于无符号情形）。在有符号整型中，左移不会改变符号位的定义方式，但可能改变符号。</p>
+<ul>
+<li>定义：<code>result = a &lt;&lt; n</code>（把 <code>a</code> 的位向左移动 <code>n</code> 位）</li>
+<li>用途：快速乘以 2 的幂、在位域中放置值（例如把低位值移到高位段）</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> x &lt;&lt; <span class="hljs-number">4</span>; <span class="hljs-comment">// 1 * 2^4 = 16，二进制 0b10000</span>
+</code></pre>
+<p>注意：当移位位数超过类型位宽或接近时，结果受语言规范影响（例如 Java 中移位的位数会对整型宽度取模）。</p>
+<h2 id="右移（算术右移，）">右移（算术右移，&gt;&gt;）</h2>
+<p>算术右移用符号 <code>&gt;&gt;</code>，将二进制位向右移动若干位，低位丢弃，高位用原符号位填充（保持符号）。等价于除以 2 的若干次方并向负无穷舍入（对负数保持符号）。</p>
+<ul>
+<li>定义：<code>result = a &gt;&gt; n</code></li>
+<li>用途：快速除以 2 的幂（保留符号）、从高位字段恢复带符号值</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> -<span class="hljs-number">16</span>;     <span class="hljs-comment">// 二进制补码表示</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> a &gt;&gt; <span class="hljs-number">2</span>;  <span class="hljs-comment">// 结果为 -4（向右移位，符号位保持）</span>
+</code></pre>
+<h2 id="无符号右移（逻辑右移，）">无符号右移（逻辑右移，&gt;&gt;&gt;）</h2>
+<p>逻辑右移用符号 <code>&gt;&gt;&gt;</code>（在 Java 中），将二进制位向右移动若干位，高位统一补 0（不保留符号）。在需要将带符号整型视为无符号值时常用。</p>
+<ul>
+<li>定义（Java）：<code>result = a &gt;&gt;&gt; n</code></li>
+<li>用途：无符号右移、对位模式的无符号解释、从高位字段恢复无符号值</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;          <span class="hljs-comment">// 所有位为 1（32 位）</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> a &gt;&gt;&gt; <span class="hljs-number">1</span>;     <span class="hljs-comment">// 最高位补 0，结果为 0x7FFFFFFF（正数）</span>
+</code></pre>
+<h2 id="位掩码与位域">位掩码与位域</h2>
+<p>位掩码是使用位运算控制或访问特定位或位段的常用技术。掩码通常使用左移或常量构造。</p>
+<ul>
+<li>创建单个位的掩码：<code>1 &lt;&lt; n</code> 表示第 n 位</li>
+<li>创建连续位段掩码：<code>((1 &lt;&lt; width) - 1) &lt;&lt; offset</code></li>
+</ul>
+<p>示例（短）：
+<code>int mask = ((1 &lt;&lt; 5) - 1) &lt;&lt; 8; // 在偏移 8 上创建宽度 5 的掩码</code></p>
+<p>示例（Java，注意溢出与类型宽度）：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">width</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">offset</span> <span class="hljs-operator">=</span> <span class="hljs-number">8</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">mask</span> <span class="hljs-operator">=</span> ((<span class="hljs-number">1</span> &lt;&lt; width) - <span class="hljs-number">1</span>) &lt;&lt; offset; <span class="hljs-comment">// 掩码覆盖 offset..offset+width-1 的位</span>
+</code></pre>
+<p>注意：当 <code>width</code> 等于或超过数据类型位宽时需要特殊处理，避免 <code>1 &lt;&lt; width</code> 溢出或结果不符合预期。</p>
+<h2 id="位的测试--设置--清除--切换（通用模式）">位的测试 / 设置 / 清除 / 切换（通用模式）</h2>
+<ul>
+<li>测试某位是否为 1：<code>(value &amp; (1 &lt;&lt; n)) != 0</code></li>
+<li>设置某位为 1：<code>value = value | (1 &lt;&lt; n)</code> 或 <code>value |= (1 &lt;&lt; n)</code></li>
+<li>清除某位为 0：<code>value = value &amp; ~(1 &lt;&lt; n)</code> 或 <code>value &amp;= ~(1 &lt;&lt; n)</code></li>
+<li>切换（翻转）某位：<code>value = value ^ (1 &lt;&lt; n)</code> 或 <code>value ^= (1 &lt;&lt; n)</code></li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">flags</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">bit</span> <span class="hljs-operator">=</span> <span class="hljs-number">3</span>;
+flags |= (<span class="hljs-number">1</span> &lt;&lt; bit);   <span class="hljs-comment">// 设置第3位</span>
+<span class="hljs-type">boolean</span> <span class="hljs-variable">isSet</span> <span class="hljs-operator">=</span> (flags &amp; (<span class="hljs-number">1</span> &lt;&lt; bit)) != <span class="hljs-number">0</span>;
+flags &amp;= ~(<span class="hljs-number">1</span> &lt;&lt; bit);  <span class="hljs-comment">// 清除第3位</span>
+flags ^= (<span class="hljs-number">1</span> &lt;&lt; bit);   <span class="hljs-comment">// 切换第3位</span>
+</code></pre>
+<h2 id="常见注意事项与陷阱">常见注意事项与陷阱</h2>
+<ul>
+<li>移位位数的范围：在不同语言中，移位时移位计数可能会被模类型位宽（例如 Java 中 <code>int</code> 的移位计数对 32 取模），要参照语言规范。</li>
+<li>符号扩展：算术右移 <code>&gt;&gt;</code> 会保留符号，逻辑右移 <code>&gt;&gt;&gt;</code> 则补零，注意负数处理差异。</li>
+<li>类型宽度与溢出：构造掩码或使用常量时要注意整型溢出，例如 <code>1 &lt;&lt; 31</code> 在 <code>int</code> 中是负数；在需要时应使用更宽类型或无符号类型（例如 Java 使用 <code>1L &lt;&lt; 31</code>）。</li>
+<li>可读性：尽管位运算高效，但过度使用会降低代码可读性，使用具有描述性的常量和注释提高可维护性。</li>
+</ul>
+<h2 id="示例：reentrantreadwritelock-中的高低位计数模式">示例：ReentrantReadWriteLock 中的高低位计数模式</h2>
+<p>在 Java 的 <code>ReentrantReadWriteLock</code> 源码中，常见的模式是将读计数放在整型状态的高若干位，写计数放在低若干位。例如：</p>
+<ul>
+<li><code>SHARED_SHIFT = 16</code></li>
+<li><code>SHARED_UNIT = (1 &lt;&lt; SHARED_SHIFT)</code>，即 <code>1 &lt;&lt; 16 = 65536</code></li>
+<li>状态 <code>c</code> 的高 16 位：<code>readCount = c &gt;&gt;&gt; SHARED_SHIFT</code></li>
+<li>状态 <code>c</code> 的低 16 位：<code>writeCount = c &amp; ((1 &lt;&lt; SHARED_SHIFT) - 1)</code>（等价于 <code>c &amp; 0xFFFF</code>）</li>
+</ul>
+<p>示例代码片段（Java）：</p>
+<pre><code class="lang-java"><span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> getState();
+<span class="hljs-type">int</span> <span class="hljs-variable">readCount</span> <span class="hljs-operator">=</span> c &gt;&gt;&gt; <span class="hljs-number">16</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">writeCount</span> <span class="hljs-operator">=</span> c &amp; <span class="hljs-number">0xFFFF</span>;
+
+c += SHARED_UNIT; <span class="hljs-comment">// 增加一个读锁计数（c = c + 65536）</span>
+c -= SHARED_UNIT; <span class="hljs-comment">// 减少一个读锁计数</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="02-基础知识.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 基础知识">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"位运算","level":"1.3.3","depth":2,"next":{"title":"Java并发","level":"1.4","depth":1,"ref":"","articles":[{"title":"理论基础","level":"1.4.1","depth":2,"path":"03-Java并发/01-理论基础.md","ref":"03-Java并发/01-理论基础.md","articles":[]},{"title":"线程基础","level":"1.4.2","depth":2,"path":"03-Java并发/02-线程基础.md","ref":"03-Java并发/02-线程基础.md","articles":[]},{"title":"锁","level":"1.4.3","depth":2,"path":"03-Java并发/03-锁.md","ref":"03-Java并发/03-锁.md","articles":[]},{"title":"synchronized","level":"1.4.4","depth":2,"path":"03-Java并发/04-synchronized.md","ref":"03-Java并发/04-synchronized.md","articles":[]},{"title":"volatile","level":"1.4.5","depth":2,"path":"03-Java并发/05-volatile.md","ref":"03-Java并发/05-volatile.md","articles":[]},{"title":"final","level":"1.4.6","depth":2,"path":"03-Java并发/06-final.md","ref":"03-Java并发/06-final.md","articles":[]},{"title":"JUC原子类: CAS, Unsafe和原子类","level":"1.4.7","depth":2,"path":"03-Java并发/07-JUC原子类.md","ref":"03-Java并发/07-JUC原子类.md","articles":[]},{"title":"LockSupport","level":"1.4.8","depth":2,"path":"03-Java并发/08-LockSupport.md","ref":"03-Java并发/08-LockSupport.md","articles":[]},{"title":"锁核心类AQS","level":"1.4.9","depth":2,"path":"03-Java并发/09-AQS.md","ref":"03-Java并发/09-AQS.md","articles":[]},{"title":"ReentrantLock","level":"1.4.10","depth":2,"path":"03-Java并发/10-ReentrantLock.md","ref":"03-Java并发/10-ReentrantLock.md","articles":[]},{"title":"ReentrantReadWriteLock","level":"1.4.11","depth":2,"path":"03-Java并发/11-ReentrantReadWriteLock.md","ref":"03-Java并发/11-ReentrantReadWriteLock.md","articles":[]}]},"previous":{"title":"基础知识","level":"1.3.2","depth":2,"path":"01-Java基础/02-基础知识.md","ref":"01-Java基础/02-基础知识.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"01-Java基础/03-位运算.md","mtime":"2026-03-29T07:26:54.860Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-29T07:27:04.422Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+
+    </body>
+</html>
+
