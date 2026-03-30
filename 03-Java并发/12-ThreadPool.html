@@ -759,8 +759,37 @@ sequenceDiagram
 </ul>
 <h2 id="threadpoolexecutor">ThreadPoolExecutor</h2>
 <h2 id="scheduledthreadpoolexecutor">ScheduledThreadPoolExecutor</h2>
-<h2 id="forkjoin">Fork/Join</h2>
+<h2 id="forkjoinpool">ForkJoinPool</h2>
+<h3 id="图示">图示</h3>
+<div class="mermaid">
+sequenceDiagram
+    participant Main as 主线程
+    participant Worker01 as 工作线程1
+    participant Worker02 as 工作线程2
+    participant Worker03 as 工作线程3
+    Note over Main: 主线程准备并提交/fork 任务
 
+    Main -&gt;&gt; Worker01: fork(taskA) push 到 Worker01 队尾
+    Main-&gt;&gt;Worker01: fork(taskB) push 到 Worker01 队尾
+    Main-&gt;&gt;Worker01: fork(taskC) push 到 Worker01 队尾
+
+    Worker01-&gt;&gt;Worker01: pop() 执行 taskC（LIFO）
+    Worker01-&gt;&gt;Worker01: taskC.compute() 可能 fork 出更多子任务
+
+    Worker02-&gt;&gt;Worker01: 空闲 -&gt; 从 Worker01 窃取()steal() 取队头的较大任务（FIFO）
+    Worker02-&gt;&gt;Worker02: 执行被窃取的任务
+
+    Worker03-&gt;&gt;Worker01: 也可能窃取另一个任务
+    Worker03-&gt;&gt;Worker03: 执行窃取到的任务
+
+    Note Right of Main: 工作线程各自并行执行子任务并可能继续分裂
+    %% Note over Worker01,Worker02,Worker03: 各自并行执行子任务并可能继续分裂
+
+    Main-&gt;&gt;Main: 调用 join() 等待子任务完成
+    Main-&gt;&gt;Worker01: join(taskA) -&gt; 如果 taskA 未完成，Main 可能帮助执行或阻塞等待
+    Worker02--&gt;&gt;Main: 执行完成后设置结果并唤醒等待者
+    Main--&gt;&gt;Main: join 返回合并结果
+</div>
                                 
                                 </section>
                             
@@ -799,7 +828,7 @@ sequenceDiagram
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"线程池","level":"1.4.12","depth":2,"next":{"title":"中间件","level":"1.5","depth":1,"ref":"","articles":[{"title":"MYSQL","level":"1.5.1","depth":2,"path":"04-中间件/01-mysql.md","ref":"./04-中间件/01-mysql.md","articles":[]},{"title":"Redis","level":"1.5.2","depth":2,"path":"04-中间件/02-redis.md","ref":"./04-中间件/02-redis.md","articles":[]},{"title":"Kafka","level":"1.5.3","depth":2,"path":"04-中间件/03-kafka.md","ref":"./04-中间件/03-kafka.md","articles":[]}]},"previous":{"title":"ReentrantReadWriteLock","level":"1.4.11","depth":2,"path":"03-Java并发/11-ReentrantReadWriteLock.md","ref":"./03-Java并发/11-ReentrantReadWriteLock.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/12-ThreadPool.md","mtime":"2026-03-30T07:11:21.467Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-30T07:11:31.457Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"线程池","level":"1.4.12","depth":2,"next":{"title":"中间件","level":"1.5","depth":1,"ref":"","articles":[{"title":"MYSQL","level":"1.5.1","depth":2,"path":"04-中间件/01-mysql.md","ref":"./04-中间件/01-mysql.md","articles":[]},{"title":"Redis","level":"1.5.2","depth":2,"path":"04-中间件/02-redis.md","ref":"./04-中间件/02-redis.md","articles":[]},{"title":"Kafka","level":"1.5.3","depth":2,"path":"04-中间件/03-kafka.md","ref":"./04-中间件/03-kafka.md","articles":[]}]},"previous":{"title":"ReentrantReadWriteLock","level":"1.4.11","depth":2,"path":"03-Java并发/11-ReentrantReadWriteLock.md","ref":"./03-Java并发/11-ReentrantReadWriteLock.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/12-ThreadPool.md","mtime":"2026-03-30T08:22:51.934Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-30T08:22:56.982Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
