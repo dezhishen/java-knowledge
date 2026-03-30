@@ -277,5 +277,37 @@ private V report(int s) throws ExecutionException {
 - finishCompletion() 在最终状态确定后负责唤醒所有阻塞在 get() 的线程，并清理引用与调用 done() 钩子。
 
 ## ThreadPoolExecutor
+
 ## ScheduledThreadPoolExecutor
-## Fork/Join
+
+## ForkJoinPool
+### 图示
+```mermaid
+sequenceDiagram
+    participant Main as 主线程
+    participant Worker01 as 工作线程1
+    participant Worker02 as 工作线程2
+    participant Worker03 as 工作线程3
+    Note over Main: 主线程准备并提交/fork 任务
+
+    Main ->> Worker01: fork(taskA) push 到 Worker01 队尾
+    Main->>Worker01: fork(taskB) push 到 Worker01 队尾
+    Main->>Worker01: fork(taskC) push 到 Worker01 队尾
+
+    Worker01->>Worker01: pop() 执行 taskC（LIFO）
+    Worker01->>Worker01: taskC.compute() 可能 fork 出更多子任务
+
+    Worker02->>Worker01: 空闲 -> 从 Worker01 窃取()steal() 取队头的较大任务（FIFO）
+    Worker02->>Worker02: 执行被窃取的任务
+
+    Worker03->>Worker01: 也可能窃取另一个任务
+    Worker03->>Worker03: 执行窃取到的任务
+
+    Note Right of Main: 工作线程各自并行执行子任务并可能继续分裂
+    %% Note over Worker01,Worker02,Worker03: 各自并行执行子任务并可能继续分裂
+
+    Main->>Main: 调用 join() 等待子任务完成
+    Main->>Worker01: join(taskA) -> 如果 taskA 未完成，Main 可能帮助执行或阻塞等待
+    Worker02-->>Main: 执行完成后设置结果并唤醒等待者
+    Main-->>Main: join 返回合并结果
+```
