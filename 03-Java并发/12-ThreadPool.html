@@ -758,6 +758,97 @@ sequenceDiagram
 <li>finishCompletion() 在最终状态确定后负责唤醒所有阻塞在 get() 的线程，并清理引用与调用 done() 钩子。</li>
 </ul>
 <h2 id="threadpoolexecutor">ThreadPoolExecutor</h2>
+<blockquote>
+<p>提供实现和管理线程池的工具包</p>
+</blockquote>
+<p>其实java线程池的实现原理很简单，说白了就是一个线程集合workerSet和一个阻塞队列workQueue。当用户向线程池提交一个任务(也就是线程)时，线程池会先将任务放入workQueue中。workerSet中的线程会不断的从workQueue中获取线程然后执行。当workQueue中没有任务的时候，worker就会阻塞，直到队列中有任务了就取出来继续执行。</p>
+<h2 id="execute原理">Execute原理</h2>
+<ul>
+<li>把工作单元与执行机制分离开来，工作单元包括Runnable和Callable，而执行机制由Executor框架提供<div class="mermaid">
+graph TD
+Caller[调用者] --&gt; WrapFuture[封装为 FutureTask]
+WrapFuture --&gt; Executor[ThreadPoolExecutor]
+Executor --&gt; CheckCore[检查运行线程数小于核心线程数?]
+CheckCore --|是|--&gt; AddWorkerCore[新增工作线程并执行任务]
+AddWorkerCore --&gt; Worker[工作线程]
+Worker --&gt; Execute[执行任务]
+Execute --&gt; FutureDone[设置 Future 为完成]
+CheckCore --|否|--&gt; OfferQueue[尝试将任务放入工作队列]
+OfferQueue --|接收|--&gt; Queued[任务进入队列]
+Queued --&gt; WorkerTake[工作线程从队列取任务]
+WorkerTake --&gt; Worker
+OfferQueue --|拒绝|--&gt; CheckMax[检查运行线程数小于最大线程数?]
+CheckMax --|是|--&gt; AddWorkerMax[新增工作线程并执行任务]
+AddWorkerMax --&gt; Worker
+CheckMax --|否|--&gt; Reject[使用拒绝策略处理任务]
+Reject --&gt; RejectionHandler[拒绝处理器]
+RejectionHandler -.-&gt; Caller
+</div>
+
+</li>
+</ul>
+<div class="mermaid">
+sequenceDiagram
+  participant Caller as 调用者
+  participant Executor as ThreadPoolExecutor
+  participant Queue as 工作队列
+  participant Worker as 工作线程
+  participant Rejection as 拒绝处理器
+  participant Future as Future
+
+  Caller-&gt;&gt;Executor: submit(task)
+  Executor-&gt;&gt;Executor: 封装为 FutureTask 并创建 Future
+  alt 运行线程数 &lt; 核心线程数
+    Executor-&gt;&gt;Worker: 新增线程并直接执行任务
+    Worker-&gt;&gt;Future: 运行任务并设置结果
+    Future--&gt;&gt;Caller: 返回 Future（已在提交时返回）
+  else 运行线程数 &gt;= 核心线程数
+    Executor-&gt;&gt;Queue: 尝试将任务放入队列
+    alt 队列接收任务
+      Queue--&gt;&gt;Executor: 接收
+      note right of Queue: 任务排队等待
+      Worker-&gt;&gt;Queue: 工作线程取任务
+      Worker-&gt;&gt;Future: 执行任务并设置结果
+      Future--&gt;&gt;Caller: 返回 Future（已在提交时返回）
+    else 队列拒绝任务
+      Queue--&gt;&gt;Executor: 拒绝
+      alt 运行线程数 &lt; 最大线程数
+        Executor-&gt;&gt;Worker: 新增线程并执行任务
+        Worker-&gt;&gt;Future: 运行任务并设置结果
+        Future--&gt;&gt;Caller: 返回 Future（已在提交时返回）
+      else 运行线程数 &gt;= 最大线程数
+        Executor-&gt;&gt;Rejection: 交由拒绝策略处理
+        Rejection--&gt;&gt;Caller: 拒绝异常或回调
+      end
+    end
+  end
+</div>
+
+
+<h3 id="核心参数">核心参数</h3>
+<ul>
+<li>corePoolSize 线程池中的核心线程数，当提交一个任务时，线程池创建一个新线程执行任务，直到当前线程数等于corePoolSize, 即使有其他空闲线程能够执行新来的任务, 也会继续创建线程；如果当前线程数为corePoolSize，继续提交的任务被保存到阻塞队列中，等待被执行；如果执行了线程池的prestartAllCoreThreads()方法，线程池会提前创建并启动所有核心线程。</li>
+<li>workQueue 用来保存等待被执行的任务的阻塞队列. 在JDK中提供了如下阻塞队列: 具体可以参考JUC 集合: BlockQueue详解<ul>
+<li>ArrayBlockingQueue: 基于数组结构的有界阻塞队列，按FIFO排序任务；</li>
+<li>LinkedBlockingQueue: 基于链表结构的阻塞队列，按FIFO排序任务，吞吐量通常要高于ArrayBlockingQueue；</li>
+<li>SynchronousQueue: 一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于LinkedBlockingQueue；</li>
+<li>PriorityBlockingQueue: 具有优先级的无界阻塞队列；</li>
+<li>LinkedBlockingQueue比ArrayBlockingQueue在插入删除节点性能方面更优，但是二者在put(), take()任务的时均需要加锁，SynchronousQueue使用无锁算法，根据节点的状态判断执行，而不需要用到锁，其核心是Transfer.transfer().</li>
+</ul>
+</li>
+<li>maximumPoolSize 线程池中允许的最大线程数。如果当前阻塞队列满了，且继续提交任务，则创建新的线程执行任务，前提是当前线程数小于maximumPoolSize；当阻塞队列是无界队列, 则maximumPoolSize则不起作用, 因为无法提交至核心线程池的线程会一直持续地放入workQueue.</li>
+<li>keepAliveTime 线程空闲时的存活时间，即当线程没有任务执行时，该线程继续存活的时间；默认情况下，该参数只在线程数大于corePoolSize时才有用, 超过这个时间的空闲线程将被终止；</li>
+<li>unit keepAliveTime的单位</li>
+<li>threadFactory 创建线程的工厂，通过自定义的线程工厂可以给每个新建的线程设置一个具有识别度的线程名。默认为DefaultThreadFactory</li>
+<li>handler 线程池的饱和策略，当阻塞队列满了，且没有空闲的工作线程，如果继续提交任务，必须采取一种策略处理该任务，线程池提供了4种策略:<ul>
+<li>AbortPolicy: 直接抛出异常，默认策略；</li>
+<li>CallerRunsPolicy: 用调用者所在的线程来执行任务；</li>
+<li>DiscardOldestPolicy: 丢弃阻塞队列中靠最前的任务，并执行当前任务；</li>
+<li>DiscardPolicy: 直接丢弃任务；</li>
+<li>当然也可以根据应用场景实现RejectedExecutionHandler接口，自定义饱和策略，如记录日志或持久化存储不能处理的任务。</li>
+</ul>
+</li>
+</ul>
 <h2 id="scheduledthreadpoolexecutor">ScheduledThreadPoolExecutor</h2>
 <h2 id="forkjoinpool">ForkJoinPool</h2>
 <h3 id="图示">图示</h3>
@@ -828,7 +919,7 @@ sequenceDiagram
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"线程池","level":"1.4.12","depth":2,"next":{"title":"中间件","level":"1.5","depth":1,"ref":"","articles":[{"title":"MYSQL","level":"1.5.1","depth":2,"path":"04-中间件/01-mysql.md","ref":"./04-中间件/01-mysql.md","articles":[]},{"title":"Redis","level":"1.5.2","depth":2,"path":"04-中间件/02-redis.md","ref":"./04-中间件/02-redis.md","articles":[]},{"title":"Kafka","level":"1.5.3","depth":2,"path":"04-中间件/03-kafka.md","ref":"./04-中间件/03-kafka.md","articles":[]}]},"previous":{"title":"ReentrantReadWriteLock","level":"1.4.11","depth":2,"path":"03-Java并发/11-ReentrantReadWriteLock.md","ref":"./03-Java并发/11-ReentrantReadWriteLock.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/12-ThreadPool.md","mtime":"2026-03-30T08:22:51.934Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-03-30T08:22:56.982Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"线程池","level":"1.4.12","depth":2,"next":{"title":"中间件","level":"1.5","depth":1,"ref":"","articles":[{"title":"MYSQL","level":"1.5.1","depth":2,"path":"04-中间件/01-mysql.md","ref":"./04-中间件/01-mysql.md","articles":[]},{"title":"Redis","level":"1.5.2","depth":2,"path":"04-中间件/02-redis.md","ref":"./04-中间件/02-redis.md","articles":[]},{"title":"Kafka","level":"1.5.3","depth":2,"path":"04-中间件/03-kafka.md","ref":"./04-中间件/03-kafka.md","articles":[]}]},"previous":{"title":"ReentrantReadWriteLock","level":"1.4.11","depth":2,"path":"03-Java并发/11-ReentrantReadWriteLock.md","ref":"./03-Java并发/11-ReentrantReadWriteLock.md","articles":[]},"dir":"ltr"},"config":{"plugins":["page-toc-button","mermaid-gb3"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"page-toc-button":{"maxTocDepth":3,"minTocSize":2},"mermaid-gb3":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Java知识网络","gitbook":"*"},"file":{"path":"03-Java并发/12-ThreadPool.md","mtime":"2026-04-01T07:27:47.050Z","type":"markdown"},"gitbook":{"version":"5.1.5","time":"2026-04-01T07:27:51.964Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
