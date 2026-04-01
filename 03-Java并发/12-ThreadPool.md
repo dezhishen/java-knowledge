@@ -277,6 +277,89 @@ private V report(int s) throws ExecutionException {
 - finishCompletion() 在最终状态确定后负责唤醒所有阻塞在 get() 的线程，并清理引用与调用 done() 钩子。
 
 ## ThreadPoolExecutor
+> 提供实现和管理线程池的工具包
+
+其实java线程池的实现原理很简单，说白了就是一个线程集合workerSet和一个阻塞队列workQueue。当用户向线程池提交一个任务(也就是线程)时，线程池会先将任务放入workQueue中。workerSet中的线程会不断的从workQueue中获取线程然后执行。当workQueue中没有任务的时候，worker就会阻塞，直到队列中有任务了就取出来继续执行。
+
+## Execute原理
+- 把工作单元与执行机制分离开来，工作单元包括Runnable和Callable，而执行机制由Executor框架提供
+```mermaid
+graph TD
+  Caller[调用者] --> WrapFuture[封装为 FutureTask]
+  WrapFuture --> Executor[ThreadPoolExecutor]
+  Executor --> CheckCore[检查运行线程数小于核心线程数?]
+  CheckCore --|是|--> AddWorkerCore[新增工作线程并执行任务]
+  AddWorkerCore --> Worker[工作线程]
+  Worker --> Execute[执行任务]
+  Execute --> FutureDone[设置 Future 为完成]
+  CheckCore --|否|--> OfferQueue[尝试将任务放入工作队列]
+  OfferQueue --|接收|--> Queued[任务进入队列]
+  Queued --> WorkerTake[工作线程从队列取任务]
+  WorkerTake --> Worker
+  OfferQueue --|拒绝|--> CheckMax[检查运行线程数小于最大线程数?]
+  CheckMax --|是|--> AddWorkerMax[新增工作线程并执行任务]
+  AddWorkerMax --> Worker
+  CheckMax --|否|--> Reject[使用拒绝策略处理任务]
+  Reject --> RejectionHandler[拒绝处理器]
+  RejectionHandler -.-> Caller
+```
+
+```mermaid
+sequenceDiagram
+  participant Caller as 调用者
+  participant Executor as ThreadPoolExecutor
+  participant Queue as 工作队列
+  participant Worker as 工作线程
+  participant Rejection as 拒绝处理器
+  participant Future as Future
+
+  Caller->>Executor: submit(task)
+  Executor->>Executor: 封装为 FutureTask 并创建 Future
+  alt 运行线程数 < 核心线程数
+    Executor->>Worker: 新增线程并直接执行任务
+    Worker->>Future: 运行任务并设置结果
+    Future-->>Caller: 返回 Future（已在提交时返回）
+  else 运行线程数 >= 核心线程数
+    Executor->>Queue: 尝试将任务放入队列
+    alt 队列接收任务
+      Queue-->>Executor: 接收
+      note right of Queue: 任务排队等待
+      Worker->>Queue: 工作线程取任务
+      Worker->>Future: 执行任务并设置结果
+      Future-->>Caller: 返回 Future（已在提交时返回）
+    else 队列拒绝任务
+      Queue-->>Executor: 拒绝
+      alt 运行线程数 < 最大线程数
+        Executor->>Worker: 新增线程并执行任务
+        Worker->>Future: 运行任务并设置结果
+        Future-->>Caller: 返回 Future（已在提交时返回）
+      else 运行线程数 >= 最大线程数
+        Executor->>Rejection: 交由拒绝策略处理
+        Rejection-->>Caller: 拒绝异常或回调
+      end
+    end
+  end
+```
+
+
+### 核心参数
+- corePoolSize 线程池中的核心线程数，当提交一个任务时，线程池创建一个新线程执行任务，直到当前线程数等于corePoolSize, 即使有其他空闲线程能够执行新来的任务, 也会继续创建线程；如果当前线程数为corePoolSize，继续提交的任务被保存到阻塞队列中，等待被执行；如果执行了线程池的prestartAllCoreThreads()方法，线程池会提前创建并启动所有核心线程。
+- workQueue 用来保存等待被执行的任务的阻塞队列. 在JDK中提供了如下阻塞队列: 具体可以参考JUC 集合: BlockQueue详解
+    - ArrayBlockingQueue: 基于数组结构的有界阻塞队列，按FIFO排序任务；
+    - LinkedBlockingQueue: 基于链表结构的阻塞队列，按FIFO排序任务，吞吐量通常要高于ArrayBlockingQueue；
+    - SynchronousQueue: 一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于LinkedBlockingQueue；
+    - PriorityBlockingQueue: 具有优先级的无界阻塞队列；
+    - LinkedBlockingQueue比ArrayBlockingQueue在插入删除节点性能方面更优，但是二者在put(), take()任务的时均需要加锁，SynchronousQueue使用无锁算法，根据节点的状态判断执行，而不需要用到锁，其核心是Transfer.transfer().
+- maximumPoolSize 线程池中允许的最大线程数。如果当前阻塞队列满了，且继续提交任务，则创建新的线程执行任务，前提是当前线程数小于maximumPoolSize；当阻塞队列是无界队列, 则maximumPoolSize则不起作用, 因为无法提交至核心线程池的线程会一直持续地放入workQueue.
+- keepAliveTime 线程空闲时的存活时间，即当线程没有任务执行时，该线程继续存活的时间；默认情况下，该参数只在线程数大于corePoolSize时才有用, 超过这个时间的空闲线程将被终止；
+- unit keepAliveTime的单位
+- threadFactory 创建线程的工厂，通过自定义的线程工厂可以给每个新建的线程设置一个具有识别度的线程名。默认为DefaultThreadFactory
+- handler 线程池的饱和策略，当阻塞队列满了，且没有空闲的工作线程，如果继续提交任务，必须采取一种策略处理该任务，线程池提供了4种策略:
+    - AbortPolicy: 直接抛出异常，默认策略；
+    - CallerRunsPolicy: 用调用者所在的线程来执行任务；
+    - DiscardOldestPolicy: 丢弃阻塞队列中靠最前的任务，并执行当前任务；
+    - DiscardPolicy: 直接丢弃任务；
+    - 当然也可以根据应用场景实现RejectedExecutionHandler接口，自定义饱和策略，如记录日志或持久化存储不能处理的任务。
 
 ## ScheduledThreadPoolExecutor
 
