@@ -4,7 +4,7 @@ site_url: https://dezhishen.github.io/java-knowledge/
 repo_url: https://github.com/dezhishen/java-knowledge
 repo_name: dezhishen/java-knowledge
 
-docs_dir: .
+docs_dir: docs
 site_dir: site
 
 theme:
@@ -47,17 +47,6 @@ markdown_extensions:
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
   - javascripts/mermaid-init.js
-
-exclude_docs: |
-  _book/**
-  node_modules/**
-  .git/**
-  .github/**
-  package-lock.json
-  package.json
-  book.json
-  styles/**
-  .bak
 
 nav:
   - 首页: README.md

@@ -28,12 +28,14 @@ MkDocs:
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-mkdocs.txt
+bash scripts/prepare-mkdocs-docs.sh
 mkdocs serve
 ```
 
 如需严格验证 CI 构建：
 
 ```bash
+bash scripts/prepare-mkdocs-docs.sh
 mkdocs build --strict
 ```
 
