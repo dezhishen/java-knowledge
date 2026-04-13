@@ -1,0 +1,98 @@
+site_name: Java知识网络
+site_description: Java后端知识网络（MkDocs 版本）
+site_url: https://dezhishen.github.io/java-knowledge/
+repo_url: https://github.com/dezhishen/java-knowledge
+repo_name: dezhishen/java-knowledge
+
+docs_dir: .
+site_dir: site
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+markdown_extensions:
+  - tables
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
+
+exclude_docs: |
+  _book/**
+  node_modules/**
+  .git/**
+  .github/**
+  package-lock.json
+  package.json
+  book.json
+  styles/**
+  .bak
+
+nav:
+  - 首页: README.md
+  - 开发理论:
+      - 开发原则: 00-开发理论/01-开发原则.md
+  - Java基础:
+      - 面对对象: 01-Java基础/01-面对对象.md
+      - 基础知识: 01-Java基础/02-基础知识.md
+      - 位运算: 01-Java基础/03-位运算.md
+  - JVM:
+      - JVM内存结构: 02-JVM/01-JVM内存结构.md
+      - JVM垃圾回收: 02-JVM/02-GC.md
+  - Java并发:
+      - 理论基础: 03-Java并发/01-理论基础.md
+      - 线程基础: 03-Java并发/02-线程基础.md
+      - 锁: 03-Java并发/03-锁.md
+      - synchronized: 03-Java并发/04-synchronized.md
+      - volatile: 03-Java并发/05-volatile.md
+      - final: 03-Java并发/06-final.md
+      - JUC原子类: 03-Java并发/07-JUC原子类.md
+      - LockSupport: 03-Java并发/08-LockSupport.md
+      - 锁核心类AQS: 03-Java并发/09-AQS.md
+      - ReentrantLock: 03-Java并发/10-ReentrantLock.md
+      - ReentrantReadWriteLock: 03-Java并发/11-ReentrantReadWriteLock.md
+      - 线程池: 03-Java并发/12-ThreadPool.md
+  - 中间件:
+      - MYSQL: 04-中间件/01-mysql.md
+      - Redis: 04-中间件/02-redis.md
+      - Kafka: 04-中间件/03-kafka.md
+  - Spring:
+      - 核心概念: 05-spring/01-核心概念.md
+  - 面试题:
+      - Java基础面试题: qa/01-Java基础面试题.md
+      - Java基础面试题-问题: qa/01-Java基础面试题-问题.md
+      - Java基础面试题-答案: qa/01-Java基础面试题-答案.md
+      - Java并发面试题: qa/02-Java并发面试题.md
+      - Java并发面试题-问题: qa/02-Java并发面试题-问题.md
+      - Java并发面试题-答案: qa/02-Java并发面试题-答案.md
