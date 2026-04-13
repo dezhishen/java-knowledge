@@ -1,0 +1,2615 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Java后端知识网络（MkDocs 版本）">
+      
+      
+      
+        <link rel="canonical" href="https://dezhishen.github.io/java-knowledge/04-%E4%B8%AD%E9%97%B4%E4%BB%B6/03-kafka/">
+      
+      
+        <link rel="prev" href="../02-redis/">
+      
+      
+        <link rel="next" href="../../05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Kafka - Java知识网络</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kafkajava-web" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Java知识网络" class="md-header__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Java知识网络
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kafka
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dezhishen/java-knowledge" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dezhishen/java-knowledge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-tabs__link">
+          
+  
+  
+  开发理论
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-tabs__link">
+          
+  
+  
+  Java基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+  JVM
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
+          
+  
+  
+  Java并发
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-mysql/" class="md-tabs__link">
+          
+  
+  
+  中间件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-tabs__link">
+          
+  
+  
+  Spring
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-tabs__link">
+          
+  
+  
+  面试题
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Java知识网络" class="md-nav__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Java知识网络
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dezhishen/java-knowledge" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dezhishen/java-knowledge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发理论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开发理论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发原则
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    面对对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/02-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/03-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    位运算
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JVM
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM内存结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-JVM/02-GC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM垃圾回收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java并发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    理论基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/02-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/03-%E9%94%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    锁
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/04-synchronized/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    synchronized
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/05-volatile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    volatile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/06-final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    final
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/07-JUC%E5%8E%9F%E5%AD%90%E7%B1%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JUC原子类
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/08-LockSupport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LockSupport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/09-AQS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    锁核心类AQS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/10-ReentrantLock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ReentrantLock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/11-ReentrantReadWriteLock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ReentrantReadWriteLock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/12-ThreadPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程池
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中间件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中间件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-mysql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MYSQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kafka
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kafka
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-kafka" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Kafka 是什么：先看能力边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topicpartitionoffset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 核心模型：Topic、Partition、Offset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 核心模型：Topic、Partition、Offset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-topic-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Topic 与 Partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Offset
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-kafka" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 为什么 Kafka 吞吐高
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-leaderfollower-isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 复制与高可用：Leader/Follower 与 ISR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 生产者可靠性语义
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 生产者可靠性语义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-acks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 acks 语义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 重试与幂等
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-exactly-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 事务消息（Exactly Once 的一部分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 消费者与消费组机制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 消费者与消费组机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-consumer-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Consumer Group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-rebalance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Rebalance（重平衡）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-offset-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 位点提交（Offset Commit）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 消息投递语义与业务落地
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 顺序性、积压与扩缩容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 顺序性、积压与扩缩容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 顺序性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 消息积压
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 分区扩容注意
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 关键参数（入门实战版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 关键参数（入门实战版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-producer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Producer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-consumer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Consumer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-brokertopic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Broker/Topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kafka-redisrabbitmq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Kafka 与 Redis/RabbitMQ 的简单对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-java-web-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Java Web 落地 checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 常见面试/排障问法速答
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 一句话总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Spring
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    核心概念
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    面试题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    面试题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题-问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题-答案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题-问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题-答案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-kafka" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Kafka 是什么：先看能力边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topicpartitionoffset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 核心模型：Topic、Partition、Offset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 核心模型：Topic、Partition、Offset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-topic-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Topic 与 Partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Offset
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-kafka" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 为什么 Kafka 吞吐高
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-leaderfollower-isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 复制与高可用：Leader/Follower 与 ISR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 生产者可靠性语义
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 生产者可靠性语义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-acks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 acks 语义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 重试与幂等
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-exactly-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 事务消息（Exactly Once 的一部分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 消费者与消费组机制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 消费者与消费组机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-consumer-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Consumer Group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-rebalance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Rebalance（重平衡）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-offset-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 位点提交（Offset Commit）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 消息投递语义与业务落地
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 顺序性、积压与扩缩容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 顺序性、积压与扩缩容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 顺序性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 消息积压
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 分区扩容注意
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 关键参数（入门实战版）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 关键参数（入门实战版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-producer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Producer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-consumer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Consumer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-brokertopic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Broker/Topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kafka-redisrabbitmq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Kafka 与 Redis/RabbitMQ 的简单对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-java-web-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Java Web 落地 checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 常见面试/排障问法速答
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 一句话总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="kafkajava-web">Kafka（Java Web 进阶）<a class="headerlink" href="#kafkajava-web" title="Permanent link">&para;</a></h1>
+<p>面向服务端开发：把 Kafka 当作「分布式提交日志（Distributed Log）+ 高吞吐消息系统」来理解。它的核心不是“消息队列”四个字，而是 <strong>顺序追加、分区并行、批量传输、可重放消费</strong> 这套工程能力。</p>
+<hr />
+<h2 id="1-kafka">1. Kafka 是什么：先看能力边界<a class="headerlink" href="#1-kafka" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>核心定位</strong>：高吞吐、可持久化、可回放的事件流平台。</li>
+<li><strong>适合场景</strong>：异步解耦、削峰填谷、日志采集、行为埋点、流式处理、事件驱动架构。</li>
+<li><strong>不擅长</strong>：低延迟强事务请求-响应、复杂路由（比 RabbitMQ 弱）、超长延迟任务调度（要配合其他组件）。</li>
+</ul>
+<p>一句话：Kafka 更像“可订阅的日志”，不是“只能读一次的传统队列”。</p>
+<hr />
+<h2 id="2-topicpartitionoffset">2. 核心模型：Topic、Partition、Offset<a class="headerlink" href="#2-topicpartitionoffset" title="Permanent link">&para;</a></h2>
+<h3 id="21-topic-partition">2.1 Topic 与 Partition<a class="headerlink" href="#21-topic-partition" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Topic</strong>：逻辑主题，表示一类事件（如 <code>order-created</code>）。</li>
+<li><strong>Partition</strong>：Topic 的物理分片，每个分片内部有序、分片之间无全局顺序。</li>
+<li><strong>并行能力来源</strong>：吞吐主要靠分区扩展，不是靠单分区加速。</li>
+</ul>
+<h3 id="22-offset">2.2 Offset<a class="headerlink" href="#22-offset" title="Permanent link">&para;</a></h3>
+<ul>
+<li>每条消息在分区内有递增的 <code>offset</code>。</li>
+<li>消费者本质是“读取某分区某 offset 之后的数据”。</li>
+<li>因为 offset 可控，Kafka 天生支持“重放历史数据”。</li>
+</ul>
+<hr />
+<h2 id="3-kafka">3. 为什么 Kafka 吞吐高<a class="headerlink" href="#3-kafka" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>顺序写磁盘</strong>：追加写对磁盘/SSD 更友好，随机写少。</li>
+<li><strong>批量发送与拉取</strong>：Producer/Consumer 都是批量 I/O，减少系统调用与网络往返。</li>
+<li><strong>零拷贝（sendfile）</strong>：减少用户态/内核态数据复制开销。</li>
+<li><strong>分区并行</strong>：多分区可跨 Broker、跨 CPU 核并行处理。</li>
+<li><strong>页缓存利用</strong>：热数据常驻 OS page cache，读写命中高时延迟更稳。</li>
+</ul>
+<p>工程直觉：Kafka 的“快”是磁盘顺序 I/O + 批处理 + 网络优化共同结果，不是“全内存”方案。</p>
+<hr />
+<h2 id="4-leaderfollower-isr">4. 复制与高可用：Leader/Follower 与 ISR<a class="headerlink" href="#4-leaderfollower-isr" title="Permanent link">&para;</a></h2>
+<ul>
+<li>每个分区有 1 个 <strong>Leader</strong>，多个 <strong>Follower</strong>。</li>
+<li>生产与消费都只面向 Leader，Follower 负责复制数据。</li>
+<li><strong>ISR（In-Sync Replicas）</strong>：与 Leader 保持同步的一组副本。</li>
+<li>Leader 挂掉后，从 ISR 中选新 Leader，保证可用性。</li>
+</ul>
+<p>常见参数理解：</p>
+<ul>
+<li><code>replication.factor</code>：副本数（生产常见 3）。</li>
+<li><code>min.insync.replicas</code>：最小同步副本数，配合 <code>acks=all</code> 决定写入可靠性下限。</li>
+</ul>
+<hr />
+<h2 id="5">5. 生产者可靠性语义<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51-acks">5.1 acks 语义<a class="headerlink" href="#51-acks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>acks=0</code>：不等确认，吞吐高，最不可靠。</li>
+<li><code>acks=1</code>：Leader 写入即返回，Leader 刚写完就宕机可能丢数据。</li>
+<li><code>acks=all</code>：ISR 全部确认才返回，可靠性最高（结合 <code>min.insync.replicas</code>）。</li>
+</ul>
+<h3 id="52">5.2 重试与幂等<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<ul>
+<li>网络抖动下会重试，可能导致重复写。</li>
+<li>开启 <code>enable.idempotence=true</code> 后，单生产者会话内可避免重复写入同分区。</li>
+<li>业务端仍要做幂等（比如按业务主键去重），不要把“绝不重复”只寄托在 MQ。</li>
+</ul>
+<h3 id="53-exactly-once">5.3 事务消息（Exactly Once 的一部分）<a class="headerlink" href="#53-exactly-once" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Kafka 事务可把“写多个分区 + 提交消费位点”绑定成原子提交。</li>
+<li>适合 Kafka Streams / 消费-处理-再生产链路。</li>
+<li>代价是复杂度和延迟上升，普通业务先保证“至少一次 + 业务幂等”通常更划算。</li>
+</ul>
+<hr />
+<h2 id="6">6. 消费者与消费组机制<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61-consumer-group">6.1 Consumer Group<a class="headerlink" href="#61-consumer-group" title="Permanent link">&para;</a></h3>
+<ul>
+<li>同一 group 内：一个分区同一时刻只会分配给一个消费者实例。</li>
+<li>不同 group 间：可各自独立消费同一份数据（天然多订阅者）。</li>
+</ul>
+<h3 id="62-rebalance">6.2 Rebalance（重平衡）<a class="headerlink" href="#62-rebalance" title="Permanent link">&para;</a></h3>
+<ul>
+<li>触发时机：实例增减、订阅变化、心跳超时。</li>
+<li>影响：分区重新分配，短时间暂停消费，可能导致延迟抖动。</li>
+<li>实战建议：控制实例频繁上下线，优先稳定部署，减少无效 rebalance。</li>
+</ul>
+<h3 id="63-offset-commit">6.3 位点提交（Offset Commit）<a class="headerlink" href="#63-offset-commit" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>自动提交</strong>：简单，但故障时重复/丢失窗口更难精确控制。</li>
+<li><strong>手动提交</strong>：处理成功后再提交，语义更可控（常用于重要业务）。</li>
+</ul>
+<hr />
+<h2 id="7">7. 消息投递语义与业务落地<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>At most once</strong>：先提交位点再处理，可能丢消息。</li>
+<li><strong>At least once</strong>：先处理再提交位点，可能重复消息（最常用）。</li>
+<li><strong>Exactly once</strong>：依赖 Kafka 事务 + 端到端配合，成本高。</li>
+</ul>
+<p>Java 业务里最常见策略：</p>
+<ol>
+<li>采用至少一次投递；</li>
+<li>消费端实现幂等（唯一键、去重表、状态机防重）；</li>
+<li>失败重试 + 死信队列，保证“最终处理完成”。</li>
+</ol>
+<hr />
+<h2 id="8">8. 顺序性、积压与扩缩容<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 顺序性<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Kafka 只保证 <strong>分区内顺序</strong>，不保证 Topic 全局顺序。</li>
+<li>需要同一业务键顺序时，用相同 key（如 <code>orderId</code>）路由到同一分区。</li>
+</ul>
+<h3 id="82">8.2 消息积压<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<ul>
+<li>现象：<code>consumer lag</code> 持续增长。</li>
+<li>常见原因：消费慢、下游依赖慢、分区数不足、单条消息处理过重。</li>
+<li>处理思路：扩消费者实例（不超过分区数）、增加分区、拆分主题、优化消费逻辑与批处理。</li>
+</ul>
+<h3 id="83">8.3 分区扩容注意<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
+<ul>
+<li>增加分区会改变 key 到分区的映射（对顺序/热点有影响）。</li>
+<li>对“强依赖分区顺序”的业务，扩分区前要评估迁移窗口和兼容策略。</li>
+</ul>
+<hr />
+<h2 id="9">9. 关键参数（入门实战版）<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<h3 id="91-producer">9.1 Producer<a class="headerlink" href="#91-producer" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>acks=all</code></li>
+<li><code>enable.idempotence=true</code></li>
+<li><code>retries</code>（允许重试）</li>
+<li><code>batch.size</code>、<code>linger.ms</code>（批量与延迟折中）</li>
+<li><code>compression.type</code>（常用 <code>snappy</code>/<code>lz4</code>/<code>zstd</code>）</li>
+</ul>
+<h3 id="92-consumer">9.2 Consumer<a class="headerlink" href="#92-consumer" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>enable.auto.commit=false</code>（重要链路建议手动提交）</li>
+<li><code>max.poll.records</code>（单次拉取条数）</li>
+<li><code>max.poll.interval.ms</code>（处理超时相关）</li>
+<li><code>session.timeout.ms</code>、<code>heartbeat.interval.ms</code>（心跳与存活判定）</li>
+</ul>
+<h3 id="93-brokertopic">9.3 Broker/Topic<a class="headerlink" href="#93-brokertopic" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>num.partitions</code></li>
+<li><code>replication.factor</code></li>
+<li><code>min.insync.replicas</code></li>
+<li><code>retention.ms</code> / <code>retention.bytes</code>（保留策略）</li>
+</ul>
+<hr />
+<h2 id="10-kafka-redisrabbitmq">10. Kafka 与 Redis/RabbitMQ 的简单对比<a class="headerlink" href="#10-kafka-redisrabbitmq" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Kafka vs Redis Stream/List</strong>：Kafka 更适合大吞吐、可回放、长期保留；Redis 更轻量、低延迟、适合中小规模。</li>
+<li><strong>Kafka vs RabbitMQ</strong>：Kafka 强在吞吐、日志流、重放；RabbitMQ 强在复杂路由、协议支持和低延迟任务分发。</li>
+<li><strong>选型原则</strong>：看业务目标优先级——吞吐与可回放优先选 Kafka；复杂路由和即时任务分发可优先 RabbitMQ。</li>
+</ul>
+<hr />
+<h2 id="11-java-web-checklist">11. Java Web 落地 checklist<a class="headerlink" href="#11-java-web-checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>事件建模</strong>：先定义事件名、版本、关键字段，避免后期 schema 混乱。</li>
+<li><strong>消息体规范</strong>：使用 JSON/Avro/Protobuf 并管理版本兼容（新增字段向后兼容）。</li>
+<li><strong>生产端</strong>：发送失败要记录可追踪日志，必要时本地落盘或重试队列兜底。</li>
+<li><strong>消费端</strong>：业务处理与位点提交顺序明确；异常分可重试和不可重试两类。</li>
+<li><strong>幂等设计</strong>：按业务唯一键去重（如订单号 + 事件类型）。</li>
+<li><strong>监控告警</strong>：重点看 TPS、失败率、Consumer Lag、Rebalance 次数、请求延迟 P99。</li>
+<li><strong>容量规划</strong>：按峰值流量估算分区数和副本数，预留扩容空间。</li>
+</ul>
+<hr />
+<h2 id="12">12. 常见面试/排障问法速答<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>为什么会重复消费？</strong><br />
+  因为至少一次语义下，处理成功但位点未提交（或提交失败）后重启会重读。</p>
+</li>
+<li>
+<p><strong>如何保证消息不丢？</strong><br />
+  生产端 <code>acks=all</code> + 合理副本与 ISR；消费端处理成功再提交；关键路径加重试与补偿。</p>
+</li>
+<li>
+<p><strong>如何保证顺序？</strong><br />
+  同一业务 key 固定分区，分区内单线程（或有序）处理。</p>
+</li>
+<li>
+<p><strong>Lag 很高怎么办？</strong><br />
+  先查消费端瓶颈（CPU/IO/下游），再考虑扩实例、增分区、批处理优化。</p>
+</li>
+</ul>
+<hr />
+<h2 id="13">13. 一句话总结<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>Kafka 的本质是“可重放的分布式日志”。在 Java Web 里，最实用的落地套路不是追求理论上的绝对一次，而是 <strong>至少一次 + 幂等 + 可观测 + 补偿机制</strong>，用工程手段拿到稳定性与吞吐的平衡。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3323 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Java后端知识网络（MkDocs 版本）">
+      
+      
+      
+        <link rel="canonical" href="https://dezhishen.github.io/java-knowledge/05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/">
+      
+      
+        <link rel="prev" href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/03-kafka/">
+      
+      
+        <link rel="next" href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>核心概念 - Java知识网络</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spring" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Java知识网络" class="md-header__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Java知识网络
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              核心概念
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dezhishen/java-knowledge" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dezhishen/java-knowledge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-tabs__link">
+          
+  
+  
+  开发理论
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-tabs__link">
+          
+  
+  
+  Java基础
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+  JVM
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
+          
+  
+  
+  Java并发
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-tabs__link">
+          
+  
+  
+  中间件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Spring
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-tabs__link">
+          
+  
+  
+  面试题
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Java知识网络" class="md-nav__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Java知识网络
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dezhishen/java-knowledge" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dezhishen/java-knowledge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发理论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开发理论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发原则
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    面对对象
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/02-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/03-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    位运算
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JVM
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM内存结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-JVM/02-GC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JVM垃圾回收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java并发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    理论基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/02-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/03-%E9%94%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    锁
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/04-synchronized/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    synchronized
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/05-volatile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    volatile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/06-final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    final
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/07-JUC%E5%8E%9F%E5%AD%90%E7%B1%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JUC原子类
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/08-LockSupport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LockSupport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/09-AQS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    锁核心类AQS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/10-ReentrantLock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ReentrantLock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/11-ReentrantReadWriteLock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ReentrantReadWriteLock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-Java%E5%B9%B6%E5%8F%91/12-ThreadPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程池
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    中间件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    中间件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MYSQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/02-redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/03-kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kafka
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Spring
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    核心概念
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    核心概念
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#spring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring的特性和优势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring的特性和优势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优势
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-containerspring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Container（Spring的核心容器）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        销毁
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spring-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Bean 初始化流程（易读版补充）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring Bean 初始化流程（易读版补充）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一句话心智模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五个阶段（对应流程图从左到右）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        和「循环依赖」「三级缓存」的关系（只记结论）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易混淆的两点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与「销毁」「调用」两节的衔接
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        术语中英对照与用途速查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="术语中英对照与用途速查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器与元数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工厂级扩展（改「图纸」，不改「已造好的对象」）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instantiationawarebeanpostprocessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实例化阶段：InstantiationAwareBeanPostProcessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单例与循环依赖（三级缓存相关）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        属性填充与 Aware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化回调链（顺序重要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化之后与 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        销毁阶段
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aop_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行期调用与 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 @Bean 的关系（集中说明）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景与简单代码示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="场景与简单代码示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1beanfactorypostprocessor-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 1：BeanFactoryPostProcessor —— 启动阶段改「Bean 定义」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2beanpostprocessor-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 2：BeanPostProcessor —— 每个 Bean 创建前后「包一层」或打日志
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3instantiationawarebeanpostprocessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 3：InstantiationAwareBeanPostProcessor —— 实例化前后介入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4bean-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 4：@Bean —— 用方法「生产」一个 Bean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5aware-bean-applicationcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 5：Aware —— 让 Bean 拿到容器里的名字或 ApplicationContext
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-postconstructinitializingbeaninit-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 6：初始化回调顺序 —— @PostConstruct、InitializingBean、init-method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-predestroy-disposablebean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 7：销毁 —— @PreDestroy 与 DisposableBean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 8：循环依赖（概念）—— 属性注入可解，构造器注入常报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 9：自我调用与切面 —— this 不调代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-aop-advice-pointcut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 10：启用 AOP —— 切面即「Advice + Pointcut」
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    面试题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    面试题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题-问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java基础面试题-答案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题-问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java并发面试题-答案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#spring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring的特性和优势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring的特性和优势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优势
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-containerspring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Container（Spring的核心容器）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        销毁
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        调用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spring-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Bean 初始化流程（易读版补充）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring Bean 初始化流程（易读版补充）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一句话心智模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五个阶段（对应流程图从左到右）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        和「循环依赖」「三级缓存」的关系（只记结论）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容易混淆的两点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与「销毁」「调用」两节的衔接
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        术语中英对照与用途速查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="术语中英对照与用途速查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器与元数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工厂级扩展（改「图纸」，不改「已造好的对象」）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instantiationawarebeanpostprocessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实例化阶段：InstantiationAwareBeanPostProcessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单例与循环依赖（三级缓存相关）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        属性填充与 Aware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化回调链（顺序重要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化之后与 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        销毁阶段
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aop_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        运行期调用与 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 @Bean 的关系（集中说明）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景与简单代码示例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="场景与简单代码示例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1beanfactorypostprocessor-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 1：BeanFactoryPostProcessor —— 启动阶段改「Bean 定义」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2beanpostprocessor-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 2：BeanPostProcessor —— 每个 Bean 创建前后「包一层」或打日志
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3instantiationawarebeanpostprocessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 3：InstantiationAwareBeanPostProcessor —— 实例化前后介入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4bean-bean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 4：@Bean —— 用方法「生产」一个 Bean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5aware-bean-applicationcontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 5：Aware —— 让 Bean 拿到容器里的名字或 ApplicationContext
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-postconstructinitializingbeaninit-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 6：初始化回调顺序 —— @PostConstruct、InitializingBean、init-method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-predestroy-disposablebean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 7：销毁 —— @PreDestroy 与 DisposableBean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 8：循环依赖（概念）—— 属性注入可解，构造器注入常报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 9：自我调用与切面 —— this 不调代理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-aop-advice-pointcut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        场景 10：启用 AOP —— 切面即「Advice + Pointcut」
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="spring">spring<a class="headerlink" href="#spring" title="Permanent link">&para;</a></h1>
+<p>Spring的一个最大的目的就是使JAVA EE开发更加容易。同时，Spring之所以与Struts、Hibernate等单层框架不同，是因为Spring致力于提供一个以统一的、高效的方式构造整个应用，并且可以将单层框架以最佳的组合揉和在一起建立一个连贯的体系。可以说Spring是一个提供了更完善开发环境的一个框架，可以为POJO(Plain Ordinary Java Object)对象提供企业级的服务。</p>
+<h2 id="spring_1">Spring的特性和优势<a class="headerlink" href="#spring_1" title="Permanent link">&para;</a></h2>
+<h3 id="_1">特性<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>非侵入式：基于Spring开发的应用中的对象可以不依赖于Spring的API</li>
+<li>控制反转：IOC——Inversion of Control，指的是将对象的创建权交给 Spring 去创建。使用 Spring 之前，对象的创建都是由我们自己在代码中new创建。而使用 Spring 之后。对象的创建都是给了 Spring 框架。</li>
+<li>依赖注入：DI——Dependency Injection，是指依赖的对象不需要手动调用 setXX 方法去设置，而是通过配置赋值。</li>
+<li>面向切面编程：Aspect Oriented Programming——AOP</li>
+<li>容器：Spring 是一个容器，因为它包含并且管理应用对象的生命周期</li>
+<li>组件化：Spring 实现了使用简单的组件配置组合成一个复杂的应用。在 Spring 中可以使用XML和Java注解组合这些对象。</li>
+<li>一站式：在 IOC 和 AOP 的基础上可以整合各种企业应用的开源框架和优秀的第三方类库（实际上 Spring 自身也提供了表现层的 SpringMVC 和持久层的 Spring JDBC）</li>
+</ul>
+<h3 id="_2">优势<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Spring 可以使开发人员使用 POJOs 开发企业级的应用程序。只使用 POJOs 的好处是你不需要一个 EJB 容器产品，比如一个应用程序服务器，但是你可以选择使用一个健壮的 servlet 容器，比如 Tomcat 或者一些商业产品。</li>
+<li>Spring 在一个单元模式中是有组织的。即使包和类的数量非常大，你只要担心你需要的，而其它的就可以忽略了。</li>
+<li>Spring 不会让你白费力气做重复工作，它真正的利用了一些现有的技术，像 ORM 框架、日志框架、JEE、Quartz 和 JDK 计时器，其他视图技术。</li>
+<li>测试一个用 Spring 编写的应用程序很容易，因为环境相关的代码被移动到这个框架中。此外，通过使用 JavaBean-style POJOs，它在使用依赖注入注入测试数据时变得更容易。</li>
+<li>Spring 的 web 框架是一个设计良好的 web MVC 框架，它为比如 Structs 或者其他工程上的或者不怎么受欢迎的 web 框架提供了一个很好的供替代的选择。MVC 模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之间的松散耦合。模型-(Model)封装了应用程序数据，通常它们将由 POJO 类组成。视图(View)负责渲染模型数据，一般来说它生成客户端浏览器可以解释 HTML 输出。控制器(Controller)负责处理用户请求并构建适当的模型，并将其传递给视图进行渲染。</li>
+<li>Spring 对 JavaEE 开发中非常难用的一些 API（JDBC、JavaMail、远程调用等），都提供了封装，使这些API应用难度大大降低。</li>
+<li>轻量级的 IOC 容器往往是轻量级的，例如，特别是当与 EJB 容器相比的时候。这有利于在内存和 CPU 资源有限的计算机上开发和部署应用程序。</li>
+<li>Spring 提供了一致的事务管理接口，可向下扩展到（使用一个单一的数据库，例如）本地事务并扩展到全局事务（例如，使用 JTA）</li>
+</ul>
+<h2 id="core-containerspring">Core Container（Spring的核心容器）<a class="headerlink" href="#core-containerspring" title="Permanent link">&para;</a></h2>
+<p>Spring 的核心容器是其他模块建立的基础，由 Beans 模块、Core 核心模块、Context 上下文模块和 SpEL 表达式语言模块组成，没有这些核心容器，也不可能有 AOP、Web 等上层的功能。具体介绍如下。
+- Beans 模块：提供了框架的基础部分，包括控制反转和依赖注入。
+- Core 核心模块：封装了 Spring 框架的底层部分，包括资源访问、类型转换及一些常用工具类。
+- Context 上下文模块：建立在 Core 和 Beans 模块的基础之上，集成 Beans 模块功能并添加资源绑定、数据验证、国际化、Java EE 支持、容器生命周期、事件传播等。ApplicationContext 接口是上下文模块的焦点。
+- SpEL 模块：提供了强大的表达式语言支持，支持访问和修改属性值，方法调用，支持访问及修改数组、容器和索引器，命名变量，支持算数和逻辑运算，支持从 Spring 容器获取 Bean，它也支持列表投影、选择和一般的列表聚合等。</p>
+<h2 id="_3">核心流程<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">启动<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+  Start["ApplicationContext 启动并刷新"]
+  LoadDefinitions["加载并解析 BeanDefinition"]
+  InvokeBFPP["执行 BeanFactoryPostProcessor"]
+  RegisterBPP["注册并初始化 BeanPostProcessor 列表"]
+  ForEachBean["为单个 Bean 开始创建"]
+  BeforeInstDecision{"postProcessBeforeInstantiation 是否返回替代实例"}
+  UseShortInstance["使用替代实例并跳过默认实例化与属性注入"]
+  ShortPostAfter["对替代实例执行 postProcessAfterInitialization"]
+  Instantiate["实例化 Bean（构造器或工厂方法）"]
+  AfterInstDecision{"postProcessAfterInstantiation 是否返回 false（跳过属性填充）"}
+  SkipPopulate["跳过属性填充"]
+  ScopeDecision{"是否为单例作用域"}
+  ExposeEarlyFactory["向 singletonFactories 注册 ObjectFactory 以支持早期引用"]
+  PopulateProperties["填充属性并处理依赖注入"]
+  CheckCircular{"填充过程中是否发现循环依赖"}
+  GetEarlyRef["从 earlySingletonObjects 或 singletonFactories 获取早期引用并注入"]
+  InvokeAware["回调 Aware 接口方法（如 BeanNameAware）"]
+  PostProcessBeforeInit["调用 BeanPostProcessor.postProcessBeforeInitialization"]
+  PostConstructCheck{"是否存在 @PostConstruct 方法"}
+  PostConstructMethods["执行 @PostConstruct 标注的方法"]
+  AfterPropertiesSetCheck{"是否实现 InitializingBean"}
+  AfterPropertiesSet["调用 InitializingBean.afterPropertiesSet"]
+  CustomInitCheck{"是否配置 init-method"}
+  CustomInitMethod["执行自定义 init-method"]
+  PostProcessAfterInit["调用 BeanPostProcessor.postProcessAfterInitialization"]
+  NeedProxy{"是否匹配切点或 Advisor 需要创建代理"}
+  CreateProxy["组装拦截器链并创建代理（JDK 动态代理或 CGLIB）"]
+  BeanReady["Bean 准备就绪并对外暴露（代理或者原始对象）"]
+  EndCreation["创建阶段完成"]
+
+  Start --&gt; LoadDefinitions --&gt; InvokeBFPP --&gt; RegisterBPP --&gt; ForEachBean
+  ForEachBean --&gt; BeforeInstDecision
+  BeforeInstDecision -- "是" --&gt; UseShortInstance --&gt; ShortPostAfter --&gt; BeanReady
+  BeforeInstDecision -- "否" --&gt; Instantiate
+  Instantiate --&gt; AfterInstDecision
+  AfterInstDecision -- "是" --&gt; SkipPopulate --&gt; InvokeAware
+  AfterInstDecision -- "否" --&gt; ScopeDecision
+  ScopeDecision -- "是" --&gt; ExposeEarlyFactory --&gt; PopulateProperties
+  ScopeDecision -- "否" --&gt; PopulateProperties
+  PopulateProperties --&gt; CheckCircular
+  CheckCircular -- "是" --&gt; GetEarlyRef --&gt; PopulateProperties
+  CheckCircular -- "否" --&gt; InvokeAware
+  InvokeAware --&gt; PostProcessBeforeInit --&gt; PostConstructCheck
+  PostConstructCheck -- "是" --&gt; PostConstructMethods --&gt; AfterPropertiesSetCheck
+  PostConstructCheck -- "否" --&gt; AfterPropertiesSetCheck
+  AfterPropertiesSetCheck -- "是" --&gt; AfterPropertiesSet --&gt; CustomInitCheck
+  AfterPropertiesSetCheck -- "否" --&gt; CustomInitCheck
+  CustomInitCheck -- "是" --&gt; CustomInitMethod --&gt; PostProcessAfterInit
+  CustomInitCheck -- "否" --&gt; PostProcessAfterInit
+  PostProcessAfterInit --&gt; NeedProxy
+  NeedProxy -- "是" --&gt; CreateProxy --&gt; BeanReady
+  NeedProxy -- "否" --&gt; BeanReady
+  BeanReady --&gt; EndCreation</code></pre>
+<p>创建阶段方法/节点作用说明（要点）</p>
+<ul>
+<li>ApplicationContext 启动并刷新：启动容器并触发后续解析与处理流程。</li>
+<li>加载并解析 BeanDefinition：读取配置类或 XML，生成每个 Bean 的元数据。</li>
+<li>BeanFactoryPostProcessor：在 Bean 实例化前修改 Bean 定义或配置属性。</li>
+<li>注册 BeanPostProcessor：收集所有后置处理器，供后续实例化生命周期调用。</li>
+<li>postProcessBeforeInstantiation：InstantiationAwareBeanPostProcessor 提供的钩子，可在实例化前短路并返回替代实例（常用于提前创建代理）。</li>
+<li>实例化（构造器或工厂方法）：真正创建对象实例的阶段。</li>
+<li>postProcessAfterInstantiation：可决定是否继续属性填充；返回 false 时跳过填充。</li>
+<li>单例早期引用与三级缓存（ExposeEarlyFactory / earlySingletonObjects 等）：为解决单例属性注入的循环依赖而暴露早期引用。</li>
+<li>属性填充：解析 @Autowired、@Value 等注解并注入依赖。</li>
+<li>Aware 回调：若实现 Aware 接口，容器会注入相关环境并回调接口方法。</li>
+<li>postProcessBeforeInitialization：BeanPostProcessor 的前置方法，常用于准备或包装属性。</li>
+<li>@PostConstruct、afterPropertiesSet、init-method：初始化回调链，按此顺序执行框架和自定义初始化逻辑。</li>
+<li>postProcessAfterInitialization：后置处理器的最后一步，自动代理创建器通常在此判断是否为目标创建代理并返回代理对象。</li>
+<li>代理创建：根据切点组装拦截器链并选择代理实现，代理将替代原始对象对外暴露。</li>
+</ul>
+<p>若觉得上图节点太多，可先翻到文末 <strong>「Spring Bean 初始化流程（易读版补充）」</strong>，看五阶段表和初始化回调顺序。</p>
+<h3 id="_5">销毁<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+  ContextClose["ApplicationContext 触发关闭"]
+  ForEachDestroy["为容器管理的每个单例 Bean 执行销毁流程"]
+  PreDestroyCheck{"是否存在 @PreDestroy 方法"}
+  PreDestroyMethod["执行 @PreDestroy 标注的方法"]
+  DisposableCheck{"是否实现 DisposableBean 接口"}
+  DisposableDestroy["调用 DisposableBean.destroy 方法"]
+  CustomDestroyCheck{"是否配置 destroy-method"}
+  CustomDestroyMethod["执行自定义 destroy-method"]
+  RemoveBean["移除 Bean 并释放资源"]
+  EndDestroy["销毁阶段结束"]
+
+  ContextClose --&gt; ForEachDestroy
+  ForEachDestroy --&gt; PreDestroyCheck
+  PreDestroyCheck -- "是" --&gt; PreDestroyMethod --&gt; DisposableCheck
+  PreDestroyCheck -- "否" --&gt; DisposableCheck
+  DisposableCheck -- "是" --&gt; DisposableDestroy --&gt; CustomDestroyCheck
+  DisposableCheck -- "否" --&gt; CustomDestroyCheck
+  CustomDestroyCheck -- "是" --&gt; CustomDestroyMethod --&gt; RemoveBean
+  CustomDestroyCheck -- "否" --&gt; RemoveBean
+  RemoveBean --&gt; EndDestroy</code></pre>
+<p>销毁阶段方法/节点作用说明（要点）</p>
+<ul>
+<li>ApplicationContext 关闭：触发容器级别的销毁流程，通常在应用停止或热重启时发生。</li>
+<li>@PreDestroy：在销毁前执行的注解方法，用于释放资源或注销注册。</li>
+<li>DisposableBean.destroy：实现 DisposableBean 接口的销毁回调，由容器调用。</li>
+<li>自定义 destroy-method：配置于 Bean 定义的自定义销毁方法，容器在销毁阶段调用。</li>
+<li>移除并释放资源：容器完成回调后回收引用，关闭连接池等资源，完成 Bean 的销毁。</li>
+</ul>
+<h3 id="_6">调用<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+  Ready["Bean 已准备就绪并对外暴露"]
+  ExternalCall["外部或客户端触发方法调用"]
+  SelfInvoke{"是否为对象内部自我调用"}
+  NotIntercepted["自我调用不经过代理默认直接执行目标方法"]
+  ProxyCheck{"调用是否通过代理对象"}
+  InterceptorChain["进入 AOP 拦截器链并按顺序执行 Advice"]
+  BeforeAdvice["执行前置增强"]
+  AroundAdvice["执行环绕增强（可控制目标方法执行）"]
+  TargetInvoke["执行目标方法"]
+  AfterReturning["执行返回增强"]
+  AfterThrowing["执行异常增强（若抛出异常）"]
+  ResultReturn["返回结果给调用方"]
+  EndUsage["使用阶段结束"]
+
+  Ready --&gt; ExternalCall
+  ExternalCall --&gt; SelfInvoke
+  SelfInvoke -- "是" --&gt; NotIntercepted --&gt; TargetInvoke
+  SelfInvoke -- "否" --&gt; ProxyCheck
+  ProxyCheck -- "否" --&gt; TargetInvoke
+  ProxyCheck -- "是" --&gt; InterceptorChain
+  InterceptorChain --&gt; BeforeAdvice --&gt; AroundAdvice --&gt; TargetInvoke
+  TargetInvoke --&gt; AfterReturning --&gt; ResultReturn
+  TargetInvoke --&gt; AfterThrowing --&gt; ResultReturn --&gt; EndUsage</code></pre>
+<p>使用阶段方法/节点作用说明（要点）</p>
+<ul>
+<li>Bean 已准备就绪：此时容器对外提供的可能是代理对象或原始对象。</li>
+<li>自我调用（self-invocation）：对象内部直接调用自身方法通常绕过代理而不触发切面，若需要拦截需通过代理对象调用或获取当前代理。</li>
+<li>代理检查：方法调用到达时判断是否由代理接管；若是代理对象则进入拦截链。</li>
+<li>拦截器链：按切面定义顺序执行增强逻辑，包括前置、环绕、返回、异常等增强。</li>
+<li>环绕增强：可在调用前后执行自定义逻辑并决定是否以及何时调用目标方法。</li>
+<li>返回与异常增强：在目标方法正常返回或抛出异常后分别执行对应增强逻辑。</li>
+</ul>
+<hr />
+<h2 id="spring-bean">Spring Bean 初始化流程（易读版补充）<a class="headerlink" href="#spring-bean" title="Permanent link">&para;</a></h2>
+<p>下面用「先整体、后细节」的方式，和上文 <strong>启动</strong> 小节里的流程图一一对应，降低阅读难度。</p>
+<h3 id="_7">一句话心智模型<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>容器做的是三件事：<strong>先收齐图纸（BeanDefinition）并允许改图纸（BFPP）</strong>，再 <strong>按依赖把对象造出来并互相接线（实例化 + 属性注入）</strong>，最后 <strong>做完初始化回调、必要时包一层代理</strong>，Bean 才算真正可用。</p>
+<h3 id="_8">五个阶段（对应流程图从左到右）<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>在干什么</th>
+<th>你可以把它想成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 容器准备</td>
+<td>刷新上下文、加载 BeanDefinition、执行 <code>BeanFactoryPostProcessor</code>、注册 <code>BeanPostProcessor</code></td>
+<td>开工前：定规格、改配置、登记质检员</td>
+</tr>
+<tr>
+<td>② 实例化与「短路」</td>
+<td><code>postProcessBeforeInstantiation</code> 若返回非 null，则用替代实例并跳过后面的默认实例化与注入</td>
+<td>有人提前塞了一个成品，后面步骤可跳过</td>
+</tr>
+<tr>
+<td>③ 造对象与接线</td>
+<td>构造器/工厂方法 <strong>实例化</strong> →（单例可注册早期引用）→ <strong>属性填充</strong>、解析 <code>@Autowired</code> 等</td>
+<td>先 new，再 setter/字段注入</td>
+</tr>
+<tr>
+<td>④ 初始化前</td>
+<td><code>Aware</code> 回调 → <code>postProcessBeforeInitialization</code></td>
+<td>告诉 Bean「你在容器里的名字/环境」，BPP 再加工一次</td>
+</tr>
+<tr>
+<td>⑤ 初始化与收尾</td>
+<td><code>@PostConstruct</code> → <code>InitializingBean.afterPropertiesSet</code> → <code>init-method</code> → <code>postProcessAfterInitialization</code> → 按需 <strong>创建代理</strong></td>
+<td>业务自定义初始化 → 最后 BPP 常在这里 <strong>生成 AOP 代理</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>记忆口诀（初始化回调顺序）</strong>：<br />
+<code>BeforeInitialization</code>（BPP）→ <code>@PostConstruct</code> → <code>InitializingBean</code> → <code>init-method</code> → <code>AfterInitialization</code>（BPP，代理多在此返回）。</p>
+<h3 id="_9">和「循环依赖」「三级缓存」的关系（只记结论）<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>仅单例</strong>、通过 <strong>属性/setter 注入</strong> 的循环依赖，容器会用 <strong>早期暴露的半成品引用</strong> 先完成注入，再走完完整生命周期；<strong>构造器循环依赖</strong> 一般无法靠三级缓存解决，应改设计或换注入方式。</li>
+<li>流程图中的 <code>singletonFactories</code> / <code>earlySingletonObjects</code> 等，就是为 <strong>「属性填充时对方还没完全建好」</strong> 时仍能拿到可注入的引用。</li>
+</ul>
+<h3 id="_10">容易混淆的两点<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><code>BeanFactoryPostProcessor</code> 与 <code>BeanPostProcessor</code></strong>：前者在 <strong>Bean 实例化之前</strong> 改 <strong>BeanDefinition/配置</strong>；后者在 <strong>每个 Bean 的创建过程中</strong> 前后各插一刀（<code>before</code> / <code>after</code>）。</li>
+<li><strong><code>postProcessAfterInitialization</code> 与代理</strong>：很多 <strong>自动代理</strong> 在 <strong>所有初始化做完之后</strong> 才决定要不要包代理，所以「最终放进容器、被别人 <code>@Autowired</code> 的」常常是 <strong>代理对象</strong>，而不是裸的原始类型（除非未走代理）。</li>
+</ol>
+<h3 id="_11">与「销毁」「调用」两节的衔接<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>初始化</strong>结束得到的是 <strong>就绪 Bean</strong>（可能是代理）。</li>
+<li><strong>调用</strong>一节描述的是：之后每次业务方法被调用时，是否经过代理、切面如何织入。</li>
+<li><strong>销毁</strong>是独立的一条线：容器关闭时对单例依次执行 <code>@PreDestroy</code> → <code>DisposableBean</code> → <code>destroy-method</code>，与初始化顺序 <strong>相反方向</strong> 的「收尾」。</li>
+</ul>
+<hr />
+<h2 id="_12">术语中英对照与用途速查<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>下面按「出现在文档流程里的顺序」归类：先给 <strong>英文含义</strong>，再给 <strong>在 Spring 里干什么 / 典型应用点</strong>。与 <code>@Bean</code> 无直接对应关系的，会单独说明。</p>
+<h3 id="_13">容器与元数据<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文 / 接口</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ApplicationContext</strong></td>
+<td>Application「应用」+ Context「上下文」→ 应用上下文</td>
+<td>高级容器：除 Bean 工厂外，还提供国际化、事件、资源加载等；<code>refresh()</code> 会驱动整次启动流程。</td>
+</tr>
+<tr>
+<td><strong>BeanDefinition</strong></td>
+<td>Bean「组件」+ Definition「定义」→ Bean 定义</td>
+<td>描述「类名、作用域、构造参数、属性、init/destroy 方法」等元数据；配置类/XML 解析后先落成 <code>BeanDefinition</code>，再按需创建实例。</td>
+</tr>
+<tr>
+<td><strong>refresh</strong></td>
+<td>刷新</td>
+<td><code>ApplicationContext</code> 启动时重新加载定义、执行 <code>BeanFactoryPostProcessor</code>、注册 BPP、预实例化单例等；热启动/测试里也会见到。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">工厂级扩展（改「图纸」，不改「已造好的对象」）<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文 / 接口</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BeanFactoryPostProcessor</strong>（常缩写 <strong>BFPP</strong>）</td>
+<td>在 BeanFactory 层后置处理</td>
+<td><strong>在任意 Bean 实例化之前</strong> 修改 <code>BeanDefinition</code>（例如改属性占位符、<code>@Configuration</code> 增强）。实现接口并注册为 Bean 即可，<strong>不是</strong> <code>@Bean</code> 专属注解。</td>
+</tr>
+<tr>
+<td><strong>BeanPostProcessor</strong>（常缩写 <strong>BPP</strong>）</td>
+<td>Bean 后置处理器</td>
+<td><strong>每个 Bean 创建过程中</strong> 介入：<code>postProcessBeforeInitialization</code> / <code>postProcessAfterInitialization</code>。用于包装、校验、<strong>AOP 代理</strong> 等。需注册为 Spring 管理的 Bean。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="instantiationawarebeanpostprocessor">实例化阶段：<code>InstantiationAwareBeanPostProcessor</code><a class="headerlink" href="#instantiationawarebeanpostprocessor" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法 / 概念</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>InstantiationAware</strong></td>
+<td>Instantiation「实例化」+ Aware「可感知」</td>
+<td>子接口扩展了普通 BPP，多两个与「实例化时机」相关的钩子。</td>
+</tr>
+<tr>
+<td><strong>postProcessBeforeInstantiation</strong></td>
+<td>before「在…之前」+ Instantiation「实例化」</td>
+<td>在容器用构造器/<code>@Bean</code> 方法等 <strong>默认方式创建实例之前</strong> 调用；返回 <strong>非 null</strong> 则 <strong>短路</strong>（跳过默认实例化与属性注入），仍走 <code>postProcessAfterInitialization</code>。框架里 <strong>AOP</strong>（如 <code>AbstractAutoProxyCreator</code>）可能用它做早期代理；业务代码少用。</td>
+</tr>
+<tr>
+<td><strong>postProcessAfterInstantiation</strong></td>
+<td>after「在…之后」</td>
+<td>实例已创建、<strong>尚未属性填充</strong> 时调用；若返回 <strong>false</strong> 可 <strong>跳过依赖注入</strong>（慎用，一般用于特殊性能或只读场景）。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_15">单例与循环依赖（三级缓存相关）<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>singletonFactories</strong></td>
+<td>singleton「单例」+ factories「工厂集合」</td>
+<td>单例创建过程中存放 <strong>ObjectFactory</strong>，用于在「属性还没填完」时按需拿到早期引用。</td>
+</tr>
+<tr>
+<td><strong>earlySingletonObjects</strong></td>
+<td>early「早期」+ singleton objects</td>
+<td>存放 <strong>已提前暴露</strong> 的单例半成品，配合循环依赖注入。</td>
+</tr>
+<tr>
+<td><strong>ObjectFactory</strong></td>
+<td>对象工厂</td>
+<td><code>getObject()</code> 时可能创建或返回早期 Bean，供注入方引用；与 <strong>懒加载/早期暴露</strong> 语义相关。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aware">属性填充与 Aware<a class="headerlink" href="#aware" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文 / 注解</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>populate</strong></td>
+<td>填充</td>
+<td>容器向 Bean <strong>注入属性</strong>（<code>@Autowired</code>、<code>@Value</code>、XML property 等）。</td>
+</tr>
+<tr>
+<td><strong>@Autowired</strong></td>
+<td>Auto「自动」+ Wired「接线」</td>
+<td>按类型/名称自动注入依赖；发生在 populate 阶段。</td>
+</tr>
+<tr>
+<td><strong>@Value</strong></td>
+<td>值注入</td>
+<td>注入字面量、<code>${...}</code> 占位符、SpEL 表达式结果。</td>
+</tr>
+<tr>
+<td><strong>Aware</strong></td>
+<td>感知、觉察</td>
+<td>一组 <strong>回调接口</strong>（如 <code>BeanNameAware</code>、<code>ApplicationContextAware</code>），让 Bean <strong>拿到容器/名字等环境信息</strong>；在初始化回调链早期执行。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_16">初始化回调链（顺序重要）<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文 / 接口 / 配置</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>postProcessBeforeInitialization</strong></td>
+<td>Initialization「初始化」之前</td>
+<td>BPP 在「用户自定义初始化」<strong>之前</strong> 再加工一次 Bean（例如某些校验或包装）。</td>
+</tr>
+<tr>
+<td><strong>@PostConstruct</strong></td>
+<td>Post「在…之后」+ Construct「构造」</td>
+<td>实为在 <strong>依赖注入完成之后</strong> 执行带注解的无参方法（JSR-250）；常用于 <strong>轻量初始化</strong>（开线程、校验参数）。</td>
+</tr>
+<tr>
+<td><strong>InitializingBean</strong></td>
+<td>Initializing「正在初始化」</td>
+<td>接口方法 <strong><code>afterPropertiesSet()</code></strong>：<strong>属性都设好后</strong> 调用；与 XML <code>init-method</code>、注解初始化同属「业务初始化」层。</td>
+</tr>
+<tr>
+<td><strong>init-method</strong></td>
+<td>自定义初始化方法名</td>
+<td>XML/JavaConfig 里配置的 <strong>自定义方法名</strong>；与 <code>@PostConstruct</code> / <code>afterPropertiesSet</code> 同属一条链，<strong>顺序在文档图中已标</strong>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aop">初始化之后与 AOP<a class="headerlink" href="#aop" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>postProcessAfterInitialization</strong></td>
+<td>Initialization 之后</td>
+<td>BPP 最后机会；<strong>AnnotationAwareAspectJAutoProxyCreator</strong> 等在此判断是否需要 <strong>代理</strong>，返回代理则容器中暴露的是代理对象。</td>
+</tr>
+<tr>
+<td><strong>Advisor</strong></td>
+<td>顾问、通知器</td>
+<td>Spring AOP 里把 <strong>切点（Pointcut）+ 通知（Advice）</strong> 绑在一起；代理创建时根据 Advisor 决定是否织入。</td>
+</tr>
+<tr>
+<td><strong>Pointcut / 切点</strong></td>
+<td>切入点</td>
+<td>匹配「哪些类的哪些方法」需要增强。</td>
+</tr>
+<tr>
+<td><strong>Advice</strong></td>
+<td>通知、增强</td>
+<td>具体拦截逻辑：前置、后置、环绕、异常等。</td>
+</tr>
+<tr>
+<td><strong>JDK 动态代理</strong></td>
+<td>基于接口的代理</td>
+<td>目标类 <strong>实现接口</strong> 时常用；通过 <code>InvocationHandler</code> 转发。</td>
+</tr>
+<tr>
+<td><strong>CGLIB</strong></td>
+<td>Code Generation Library</td>
+<td><strong>子类代理</strong>；目标无接口或需要代理类本身时常用。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_17">销毁阶段<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文 / 注解</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>@PreDestroy</strong></td>
+<td>Pre「在…之前」+ Destroy「销毁」</td>
+<td>容器关闭单例时 <strong>最先</strong> 调用的注解销毁方法（JSR-250）；关连接、注销监听等。</td>
+</tr>
+<tr>
+<td><strong>DisposableBean</strong></td>
+<td>Disposable「可丢弃的」</td>
+<td>接口 <strong><code>destroy()</code></strong>；与 <code>@PreDestroy</code>、<code>destroy-method</code> 同属销毁链。</td>
+</tr>
+<tr>
+<td><strong>destroy-method</strong></td>
+<td>自定义销毁方法名</td>
+<td>XML/JavaConfig 配置的销毁回调名。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aop_1">运行期调用与 AOP<a class="headerlink" href="#aop_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>字面与含义</th>
+<th>应用点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>self-invocation</strong></td>
+<td>自我调用</td>
+<td>同类内 <code>this.foo()</code> <strong>不经过代理</strong>，切面默认不生效；需通过 <strong>注入自身代理</strong> 或 <strong>AopContext</strong> 等绕过。</td>
+</tr>
+<tr>
+<td><strong>Interceptor chain</strong></td>
+<td>Interceptor「拦截器」+ chain「链」</td>
+<td>代理上方法被调用时，<strong>多个 Advice 按顺序</strong> 形成链条执行。</td>
+</tr>
+<tr>
+<td><strong>BeforeAdvice</strong></td>
+<td>前置增强</td>
+<td>目标方法执行 <strong>前</strong> 运行。</td>
+</tr>
+<tr>
+<td><strong>AroundAdvice</strong></td>
+<td>环绕增强</td>
+<td>包住目标方法，可 <strong>决定是否/何时</strong> 调用原方法（<code>ProceedingJoinPoint.proceed()</code>）。</td>
+</tr>
+<tr>
+<td><strong>AfterReturningAdvice</strong></td>
+<td>返回后增强</td>
+<td>正常返回后执行（可拿到返回值）。</td>
+</tr>
+<tr>
+<td><strong>AfterThrowingAdvice</strong></td>
+<td>抛出后增强</td>
+<td>抛异常后执行（常用于日志、转换异常）。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bean">与 <code>@Bean</code> 的关系（集中说明）<a class="headerlink" href="#bean" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>@Bean</code></strong>：写在 <code>@Configuration</code>（等）方法上，表示 <strong>「由这个方法负责提供一个 Bean 实例」</strong>，属于 <strong>Bean 定义来源</strong>。</li>
+<li><strong><code>postProcessBeforeInstantiation</code> 等</strong>：属于 <strong>生命周期扩展点</strong>，通过实现 <strong><code>InstantiationAwareBeanPostProcessor</code> / <code>BeanPostProcessor</code></strong> 并 <strong>注册成容器里的 Bean</strong> 生效，<strong>不是</strong> 在 <code>@Bean</code> 上声明的。</li>
+<li>二者可能 <strong>同时作用于同一个逻辑 Bean</strong>：先经过 BPP 钩子，再走 <code>@Bean</code> 方法或构造器创建（除非 <code>postProcessBeforeInstantiation</code> 已短路）。</li>
+</ul>
+<hr />
+<h2 id="_18">场景与简单代码示例<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<p>下面每个 <strong>场景</strong> 对应上文流程里的一类能力；代码为 <strong>示意</strong>（省略包名、import），重在看清 <strong>写在哪儿、何时执行</strong>。实际项目需按模块与 Spring Boot 版本微调。</p>
+<h3 id="1beanfactorypostprocessor-bean">场景 1：<code>BeanFactoryPostProcessor</code> —— 启动阶段改「Bean 定义」<a class="headerlink" href="#1beanfactorypostprocessor-bean" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：所有 Bean 还没实例化，想统一改某个 Bean 的元数据（例如给某个 <code>BeanDefinition</code> 多加一个属性值、或注册后处理器前的全局调整）。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DemoBeanFactoryPostProcessor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">BeanFactoryPostProcessor</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postProcessBeanFactory</span><span class="p">(</span><span class="n">ConfigurableListableBeanFactory</span><span class="w"> </span><span class="n">beanFactory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">beanFactory</span><span class="p">.</span><span class="na">containsBeanDefinition</span><span class="p">(</span><span class="s">&quot;reportService&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">BeanDefinition</span><span class="w"> </span><span class="n">bd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beanFactory</span><span class="p">.</span><span class="na">getBeanDefinition</span><span class="p">(</span><span class="s">&quot;reportService&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">bd</span><span class="p">.</span><span class="na">getPropertyValues</span><span class="p">().</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;enabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// 对应 ReportService 的 setEnabled</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>要点</strong>：这里操作的是 <strong><code>BeanDefinition</code></strong>，不是业务实例；执行时机早于 <strong>任何</strong> 该 Bean 的 <code>new</code>。</p>
+<hr />
+<h3 id="2beanpostprocessor-bean">场景 2：<code>BeanPostProcessor</code> —— 每个 Bean 创建前后「包一层」或打日志<a class="headerlink" href="#2beanpostprocessor-bean" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：想在依赖注入完成后、初始化前后统一做增强（业务里更常见的是框架用做 AOP；这里用日志示意）。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DemoBeanPostProcessor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">BeanPostProcessor</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">postProcessBeforeInitialization</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">bean</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 在 @PostConstruct / InitializingBean 之前</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bean</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">postProcessAfterInitialization</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">bean</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 在初始化链末尾；AOP 代理多在这里返回包装后的对象</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bean</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="3instantiationawarebeanpostprocessor">场景 3：<code>InstantiationAwareBeanPostProcessor</code> —— 实例化前后介入<a class="headerlink" href="#3instantiationawarebeanpostprocessor" title="Permanent link">&para;</a></h3>
+<p><strong>场景 A（常见）</strong>：实例化前后做观察或定制；<strong>返回 null / true</strong> 表示交给容器默认逻辑。</p>
+<p><strong>场景 B（少见）</strong>：<code>postProcessBeforeInstantiation</code> 返回 <strong>非 null</strong>，直接短路默认实例化与属性注入（需清楚后果，业务代码慎用）。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DemoInstantiationBpp</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">InstantiationAwareBeanPostProcessor</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">postProcessBeforeInstantiation</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">beanClass</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// null：继续走构造器 / @Bean 等默认创建</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">postProcessAfterInstantiation</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">bean</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">beanName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// true：继续属性填充；false：跳过 @Autowired 等填充</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// 还可重写 postProcessProperties 做属性级别的定制（高级用法）</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="4bean-bean">场景 4：<code>@Bean</code> —— 用方法「生产」一个 Bean<a class="headerlink" href="#4bean-bean" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：把第三方类、或需要手工组装的实例交给容器管理；<strong>不是</strong> <code>BeanPostProcessor</code> 的替代，而是 <strong>定义来源</strong>。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Configuration</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AppConfig</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">RestTemplate</span><span class="w"> </span><span class="nf">restTemplate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RestTemplate</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="5aware-bean-applicationcontext">场景 5：<code>Aware</code> —— 让 Bean 拿到容器里的名字或 <code>ApplicationContext</code><a class="headerlink" href="#5aware-bean-applicationcontext" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：需要 <strong>Bean 在容器中的名称</strong> 或 <strong>发布事件、按名取 Bean</strong>（应克制使用，避免业务过度依赖容器 API）。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DemoAwareService</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">BeanNameAware</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setBeanName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="6-postconstructinitializingbeaninit-method">场景 6：初始化回调顺序 —— <code>@PostConstruct</code>、<code>InitializingBean</code>、<code>init-method</code><a class="headerlink" href="#6-postconstructinitializingbeaninit-method" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：依赖都注入完后，做一次性初始化（打开资源、预热缓存）。下面三种 <strong>会按 Spring 约定顺序</strong> 与 BPP 交织执行（完整顺序见上文流程图）。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LifecycleDemo</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">InitializingBean</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@PostConstruct</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postConstruct</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 1. 在 afterPropertiesSet / init-method 之前（相对这三种而言靠前）</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterPropertiesSet</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 2. InitializingBean</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myInit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 3. 若在 @Bean(initMethod = &quot;myInit&quot;) 或 XML init-method 中配置</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>要点</strong>：日常 <strong>优先 <code>@PostConstruct</code></strong> 即可；<code>InitializingBean</code> 与 XML 时代接口风格一致；<code>init-method</code> 适合配置里指定方法名。</p>
+<hr />
+<h3 id="7-predestroy-disposablebean">场景 7：销毁 —— <code>@PreDestroy</code> 与 <code>DisposableBean</code><a class="headerlink" href="#7-predestroy-disposablebean" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：应用关闭时释放连接、注销客户端。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CloseDemo</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">DisposableBean</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@PreDestroy</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">preDestroy</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 通常先于 destroy() 调用（与 destroy-method 顺序见上文销毁图）</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">destroy</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 接口回调</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nd">@Bean</span><span class="p">(</span><span class="n">destroyMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;shutdown&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">DemoClient</span><span class="w"> </span><span class="nf">demoClient</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DemoClient</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="8">场景 8：循环依赖（概念）—— 属性注入可解，构造器注入常报错<a class="headerlink" href="#8" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：<code>A</code> 依赖 <code>B</code>，<code>B</code> 依赖 <code>A</code>。单例 + <strong>setter/字段</strong> 注入时，容器可用早期引用完成填充；<strong>构造器</strong> 互相要求对方已构造完成，往往无法解决。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceA</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">ServiceB</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ServiceB</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">ServiceA</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>缓解思路（示意）</strong>：打破环（抽第三方法）、或一方 <code>@Lazy</code> 延迟注入、或改 <strong>setter/接口</strong> 注入；根本办法仍是 <strong>调整依赖结构</strong>。</p>
+<hr />
+<h3 id="9-this">场景 9：自我调用与切面 —— <code>this</code> 不调代理<a class="headerlink" href="#9-this" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：同类中 <code>this.internal()</code> 不会走代理，<strong><code>@Transactional</code> / <code>@Cacheable</code> 等可能不生效</strong>。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Service</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderService</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">placeOrder</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">validate</span><span class="p">();</span><span class="w"> </span><span class="c1">// 内部调用：通常不经过 Spring 代理</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Transactional</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">validate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>思路</strong>：把 <code>validate</code> 挪到 <strong>另一个 Bean</strong>、或 <strong>注入本接口代理</strong>、或使用 <code>AopContext.currentProxy()</code>（需开启 <code>exposeProxy</code>）。与上文 <strong>调用</strong> 流程图中的 self-invocation 一致。</p>
+<hr />
+<h3 id="10-aop-advice-pointcut">场景 10：启用 AOP —— 切面即「Advice + Pointcut」<a class="headerlink" href="#10-aop-advice-pointcut" title="Permanent link">&para;</a></h3>
+<p><strong>场景</strong>：对 <strong>通过代理暴露的 Bean</strong> 的 <strong>外部调用</strong> 做日志/事务。</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Aspect</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DemoAspect</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Before</span><span class="p">(</span><span class="s">&quot;execution(* com.example.service..*(..))&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">before</span><span class="p">(</span><span class="n">JoinPoint</span><span class="w"> </span><span class="n">jp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// BeforeAdvice：目标方法前</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableAspectJAutoProxy</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AopConfig</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>要点</strong>：是否走代理取决于 <strong>是否从容器取的是代理</strong> 以及 <strong>切点是否匹配</strong>；与 <strong>场景 9</strong> 结合理解。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

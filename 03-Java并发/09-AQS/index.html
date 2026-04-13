@@ -10,26 +10,28 @@
       
       
       
-        <link rel="canonical" href="https://dezhishen.github.io/java-knowledge/">
+        <link rel="canonical" href="https://dezhishen.github.io/java-knowledge/03-Java%E5%B9%B6%E5%8F%91/09-AQS/">
       
       
+        <link rel="prev" href="../08-LockSupport/">
       
-        <link rel="next" href="00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/">
+      
+        <link rel="next" href="../10-ReentrantLock/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Java知识网络</title>
+        <title>锁核心类AQS - Java知识网络</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -48,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#java" class="md-skip">
+        <a href="#aqs" class="md-skip">
           跳转至
         </a>
       
@@ -80,7 +82,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="." title="Java知识网络" class="md-header__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+    <a href="../.." title="Java知识网络" class="md-header__button md-logo" aria-label="Java知识网络" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -100,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              首页
+              锁核心类AQS
             
           </span>
         </div>
@@ -185,11 +187,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -210,7 +210,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-tabs__link">
+        <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-tabs__link">
           
   
   
@@ -230,7 +230,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-tabs__link">
+        <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-tabs__link">
           
   
   
@@ -250,7 +250,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-tabs__link">
+        <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-tabs__link">
           
   
   
@@ -266,11 +266,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
           
   
   
@@ -290,7 +292,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-tabs__link">
+        <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-tabs__link">
           
   
   
@@ -310,7 +312,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-tabs__link">
+        <a href="../../05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-tabs__link">
           
   
   
@@ -330,7 +332,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-tabs__link">
+        <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-tabs__link">
           
   
   
@@ -364,7 +366,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Java知识网络" class="md-nav__button md-logo" aria-label="Java知识网络" data-md-component="logo">
+    <a href="../.." title="Java知识网络" class="md-nav__button md-logo" aria-label="Java知识网络" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -391,37 +393,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    首页
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -437,65 +412,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gitbook-mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        渲染方案（GitBook + MkDocs 并行）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="渲染方案（GitBook + MkDocs 并行）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        本地预览
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mermaid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mermaid 使用
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -559,7 +475,7 @@
   
   
     <li class="md-nav__item">
-      <a href="00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-nav__link">
+      <a href="../../00-%E5%BC%80%E5%8F%91%E7%90%86%E8%AE%BA/01-%E5%BC%80%E5%8F%91%E5%8E%9F%E5%88%99/" class="md-nav__link">
         
   
   
@@ -646,7 +562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/01-%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1/" class="md-nav__link">
         
   
   
@@ -674,7 +590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="01-Java%E5%9F%BA%E7%A1%80/02-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/02-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -702,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="01-Java%E5%9F%BA%E7%A1%80/03-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="md-nav__link">
+      <a href="../../01-Java%E5%9F%BA%E7%A1%80/03-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="md-nav__link">
         
   
   
@@ -789,7 +705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-nav__link">
+      <a href="../../02-JVM/01-JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="md-nav__link">
         
   
   
@@ -817,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="02-JVM/02-GC/" class="md-nav__link">
+      <a href="../../02-JVM/02-GC/" class="md-nav__link">
         
   
   
@@ -849,26 +765,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -886,7 +807,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -904,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+      <a href="../01-%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
         
   
   
@@ -932,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/02-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+      <a href="../02-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
         
   
   
@@ -960,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/03-%E9%94%81/" class="md-nav__link">
+      <a href="../03-%E9%94%81/" class="md-nav__link">
         
   
   
@@ -988,7 +909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/04-synchronized/" class="md-nav__link">
+      <a href="../04-synchronized/" class="md-nav__link">
         
   
   
@@ -1016,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/05-volatile/" class="md-nav__link">
+      <a href="../05-volatile/" class="md-nav__link">
         
   
   
@@ -1044,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/06-final/" class="md-nav__link">
+      <a href="../06-final/" class="md-nav__link">
         
   
   
@@ -1072,7 +993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/07-JUC%E5%8E%9F%E5%AD%90%E7%B1%BB/" class="md-nav__link">
+      <a href="../07-JUC%E5%8E%9F%E5%AD%90%E7%B1%BB/" class="md-nav__link">
         
   
   
@@ -1100,7 +1021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/08-LockSupport/" class="md-nav__link">
+      <a href="../08-LockSupport/" class="md-nav__link">
         
   
   
@@ -1125,10 +1046,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/09-AQS/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    锁核心类AQS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1144,6 +1092,204 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心思想
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心思想">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLH队列锁
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLH队列锁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clh_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLH核心思想
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waitstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点waitStatus状态流转说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="节点waitStatus状态流转说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-waitstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 节点状态(waitStatus)取值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 流程图和状态流转
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 流程图和状态流转">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新节点入队
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        等待与阻塞
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        获得锁
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        取消与异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时序（流转）示意
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        伪流程&amp;状态标记举例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念梳理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流转全链路总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1156,7 +1302,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/10-ReentrantLock/" class="md-nav__link">
+      <a href="../10-ReentrantLock/" class="md-nav__link">
         
   
   
@@ -1184,7 +1330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/11-ReentrantReadWriteLock/" class="md-nav__link">
+      <a href="../11-ReentrantReadWriteLock/" class="md-nav__link">
         
   
   
@@ -1212,7 +1358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="03-Java%E5%B9%B6%E5%8F%91/12-ThreadPool/" class="md-nav__link">
+      <a href="../12-ThreadPool/" class="md-nav__link">
         
   
   
@@ -1299,7 +1445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-nav__link">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/01-mysql/" class="md-nav__link">
         
   
   
@@ -1327,7 +1473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="04-%E4%B8%AD%E9%97%B4%E4%BB%B6/02-redis/" class="md-nav__link">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/02-redis/" class="md-nav__link">
         
   
   
@@ -1355,7 +1501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="04-%E4%B8%AD%E9%97%B4%E4%BB%B6/03-kafka/" class="md-nav__link">
+      <a href="../../04-%E4%B8%AD%E9%97%B4%E4%BB%B6/03-kafka/" class="md-nav__link">
         
   
   
@@ -1442,7 +1588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-nav__link">
+      <a href="../../05-spring/01-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" class="md-nav__link">
         
   
   
@@ -1529,7 +1675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
         
   
   
@@ -1557,7 +1703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
         
   
   
@@ -1585,7 +1731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+      <a href="../../qa/01-Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
         
   
   
@@ -1613,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/" class="md-nav__link">
         
   
   
@@ -1641,7 +1787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E9%97%AE%E9%A2%98/" class="md-nav__link">
         
   
   
@@ -1669,7 +1815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
+      <a href="../../qa/02-Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98-%E7%AD%94%E6%A1%88/" class="md-nav__link">
         
   
   
@@ -1724,22 +1870,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gitbook-mkdocs" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        渲染方案（GitBook + MkDocs 并行）
+        核心思想
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="渲染方案（GitBook + MkDocs 并行）">
+    <nav class="md-nav" aria-label="核心思想">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#clh" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本地预览
+        CLH队列锁
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLH队列锁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clh_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLH核心思想
       
     </span>
   </a>
@@ -1747,13 +1905,140 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mermaid" class="md-nav__link">
+  <a href="#waitstatus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mermaid 使用
+        节点waitStatus状态流转说明
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="节点waitStatus状态流转说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-waitstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 节点状态(waitStatus)取值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 流程图和状态流转
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 流程图和状态流转">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新节点入队
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        等待与阻塞
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        获得锁
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        取消与异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时序（流转）示意
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        伪流程&amp;状态标记举例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念梳理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流转全链路总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1782,43 +2067,204 @@
   
 
 
-<h1 id="java">Java知识网络<a class="headerlink" href="#java" title="Permanent link">&para;</a></h1>
-<p>https://github.com/dezhishen/java-knowledge</p>
-<blockquote>
-<p>知识树来源-&gt; https://pdai.tech/md/java/basic/java-basic-oop.html</p>
-</blockquote>
-<p>自用复习，只用于强化自身学习，<strong>不具备完整知识</strong>。</p>
-<h2 id="gitbook-mkdocs">渲染方案（GitBook + MkDocs 并行）<a class="headerlink" href="#gitbook-mkdocs" title="Permanent link">&para;</a></h2>
-<p>当前仓库保留两套文档渲染方式：</p>
+<h1 id="aqs">AQS<a class="headerlink" href="#aqs" title="Permanent link">&para;</a></h1>
+<p>AbstractQueuedSynchronizer。AQS是一个用来构建锁和同步器的框架，使用AQS能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的ReentrantLock，Semaphore，其他的诸如ReentrantReadWriteLock，SynchronousQueue，FutureTask等等皆是基于AQS的。当然，我们自己也能利用AQS非常轻松容易地构造出符合我们自己需求的同步器。</p>
+<h2 id="_1">核心思想<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>AQS核心思想是，如果被请求的共享资源空闲，则将当前请求资源的线程设置为有效的工作线程，并且将共享资源设置为锁定状态。如果被请求的共享资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将暂时获取不到锁的线程加入到队列中。</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant ThreadA as 线程A
+    participant ThreadB as 线程B
+    participant AQS as AQS同步器
+    participant OS as 操作系统（LockSupport）
+
+    ThreadA-&gt;&gt;AQS: acquire()
+    AQS-&gt;&gt;ThreadA: tryAcquire (CAS成功)
+    ThreadA--&gt;&gt;ThreadA: 获得锁，执行业务
+
+    %% %% 线程B尝试加锁失败，进入队列
+    ThreadB-&gt;&gt;AQS: acquire()
+    AQS-&gt;&gt;ThreadB: tryAcquire (失败)
+    ThreadB--&gt;&gt;ThreadB: 创建Node（Node.thread=ThreadB）
+    ThreadB-&gt;&gt;AQS: addWaiter/enq（入队列）/创建一个空的头结点
+    AQS-&gt;&gt;ThreadB: 返回Node
+    ThreadB-&gt;&gt;AQS: acquireQueued(node,args)
+    alt 前驱是head且tryAcquire成功
+        ThreadB-&gt;&gt;AQS: 设置自己为新head
+    else
+        ThreadB-&gt;&gt;AQS: 设置前置节点的waitStatus为Signal，提交park请求
+        AQS-&gt;&gt;OS: LockSupport.park
+    end
+    ThreadA-&gt;&gt;AQS: release()
+    AQS-&gt;&gt;AQS: unparkSuccessor（head）
+    AQS-&gt;&gt;OS: 提交unpark(head.next.Thread): 就是threadB
+    OS-&gt;&gt;ThreadB: 唤醒
+    ThreadB--&gt;&gt;AQS: p == head &amp;&amp; tryAcquire(arg): 代码在acquireQueued中
+    AQS-&gt;&gt;ThreadB: tryAcquire (CAS成功)
+    ThreadB--&gt;&gt;ThreadB: 获得锁，执行业务
+</code></pre>
+<p>流程图</p>
+<p><img alt="alt text" src="../AQS_Flow.png" /></p>
+<div class="highlight"><pre><span></span><code>graph TB
+    A[&quot;线程调用acquire()&quot;] --&gt; B{{&quot;tryAcquire成功?&quot;}}
+    B -- &quot;是&quot; --&gt; C[&quot;获取锁，流程返回不入队列&quot;]
+    B -- &quot;否&quot; --&gt; D[&quot;创建Node.thread/waitStatus=0&quot;]
+    D --&gt; E[&quot;addWaiter/enq追加队尾&quot;]
+    E --&gt; F[&quot;acquireQueued自旋流程&quot;]
+
+    subgraph acquireQueued
+        F --&gt; F1{{&quot;前驱为head且tryAcquire成功?&quot;}}
+        F1 -- &quot;是&quot; --&gt; G[&quot;setHead(node)，出队&lt;br&gt;获锁，返回&quot;]
+        F1 -- &quot;否&quot; --&gt; H[&quot;shouldParkAfterFailedAcquire(pred, node)&quot;]
+        H -- &quot;是&quot; --&gt; I[&quot;调用LockSupport.park()，阻塞&lt;br&gt;等待unpark唤醒&quot;]
+        I --&gt; F
+        H -- &quot;否&quot; --&gt; J[&quot;CAS设置pred.waitStatus为SIGNAL(-1)&quot;]
+        J --&gt; F
+    end
+
+    G --&gt; K[&quot;执行业务&quot;]
+    K --&gt; L[&quot;release()释放锁&quot;]
+
+    subgraph &quot;释放流程&quot;
+        L --&gt; M[&quot;tryRelease资源&lt;br&gt;CAS更新state&quot;]
+        M --&gt; N{{&quot;队列head的后继节点存在?&quot;}}
+        N -- &quot;否&quot; --&gt; O[&quot;无等待线程，流程返回&quot;]
+        N -- &quot;是&quot; --&gt; P[&quot;unparkSuccessor(head)&quot;]
+        P --&gt; Q[&quot;找到head之后第一个waitStatus&lt;=0的有效节点&quot;]
+        Q --&gt; R[&quot;LockSupport.unpark(后继Node.thread)&lt;br&gt;唤醒&quot;]
+    end
+
+    F -.-&gt; S[&quot;如线程等待时被中断/超时&quot;]
+    S -.-&gt; T[&quot;节点waitStatus=CANCELLED(1)，被清理&lt;br&gt;队列修复&quot;]
+    T -.-&gt; F
+</code></pre></div>
 <ul>
-<li><code>GitBook(Honkit)</code>：仅保留为备份方案，工作流 <code>.github/workflows/gitbook.yml</code> 仅手动触发。</li>
-<li><code>MkDocs(Material)</code>：主发布方案，配置文件 <code>mkdocs.yml</code>，工作流 <code>.github/workflows/mkdocs.yml</code> 在推送到 <code>main/master</code> 时自动部署 GitHub Pages（也支持手动触发）。</li>
+<li>线程A：先调用 acquire，直接CAS获取锁成功。</li>
+<li>线程B：<ul>
+<li>acquire失败，自行包装为Node加入队尾。</li>
+<li>进入acquireQueued循环。不是head.next或tryAcquire失败时，设置SIGNAL并调用park，阻塞于该处（Note显示“线程B阻塞/暂停”）。</li>
+<li>只有线程A释放锁后，调用unpark(B)唤醒线程B，B才会从阻塞点继续流程。</li>
+<li>B被唤醒后流程回到循环开头，再次尝试获取锁，若已经是head的直接后继且tryAcquire成功，则成为新head并获得锁。</li>
 </ul>
-<h3 id="_1">本地预览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<p>GitBook:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install
-npm<span class="w"> </span>run<span class="w"> </span>serve
+</li>
+<li>队列只有B加锁失败会挂入，A直接获得锁不入队。</li>
+</ul>
+<h3 id="clh">CLH队列锁<a class="headerlink" href="#clh" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>CLH(Craig,Landin,and Hagersten)队列是一个虚拟的双向队列(虚拟的双向队列即不存在队列实例，仅存在结点之间的关联关系)。AQS是将每条请求共享资源的线程封装成一个CLH锁队列的一个结点(Node)来实现锁的分配。</p>
+</blockquote>
+<p>CLH（Craig, Landin, and Hagersten）队列锁是一种高性能、自旋式的、基于链表的公平锁，在多核并发环境下常用于构建可伸缩、高吞吐的锁组件。</p>
+<h4 id="clh_1">CLH核心思想<a class="headerlink" href="#clh_1" title="Permanent link">&para;</a></h4>
+<p>CLH队列锁是一种基于队列的自旋锁（Queue-based Spin Lock），采用“链表排队+本地自旋”策略。每个尝试获取锁的线程会按顺序在队列（链表）尾部排队，自旋观察其前驱节点的状态，自旋结束后才能获得锁。</p>
+<p>主要目标：
+- 公平性：锁的获取严格按照入队顺序进行，先来先服务。
+- 减少总线开销：只自旋在自己的前驱节点，避免竞争“全局变量”，大大降低缓存一致性流量。
+- 高并发可伸缩：适合多CPU/多核环境，性能随核数上升而可扩展。</p>
+<h4 id="waitstatus">节点waitStatus状态流转说明<a class="headerlink" href="#waitstatus" title="Permanent link">&para;</a></h4>
+<p>以独占锁为例，配合状态码说明实际意义。</p>
+<h5 id="1-waitstatus">1. 节点状态(waitStatus)取值<a class="headerlink" href="#1-waitstatus" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CANCELLED</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="c1">// 节点取消，不再参与同步</span>
+<span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SIGNAL</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// 前驱释放时需唤醒本节点</span>
+<span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CONDITION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w">  </span><span class="c1">// 节点在Condition队列中</span>
+<span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PROPAGATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">;</span><span class="w">  </span><span class="c1">// 共享模式传播用</span>
+<span class="c1">// 0（默认值）：新加入Sync队列且还未SIGNALED的正常节点</span>
 </code></pre></div>
-<p>MkDocs:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
-<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-mkdocs.txt
-bash<span class="w"> </span>scripts/prepare-mkdocs-docs.sh
-mkdocs<span class="w"> </span>serve
-</code></pre></div>
-<p>如需严格验证 CI 构建：</p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>scripts/prepare-mkdocs-docs.sh
-mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
-</code></pre></div>
-<h3 id="mermaid">Mermaid 使用<a class="headerlink" href="#mermaid" title="Permanent link">&para;</a></h3>
-<p>在 Markdown 中使用标准 fenced code：</p>
-<p><div class="highlight"><pre><span></span><code>```mermaid
-graph TD
-  A[Producer] --&gt; B[Kafka]
-  B --&gt; C[Consumer]
-</code></pre></div>
-```</p>
-<p>MkDocs 已在 <code>mkdocs.yml</code> 中配置 Mermaid 渲染脚本，GitBook 继续使用原有 <code>mermaid-gb3</code> 插件。</p>
+<h5 id="2">2. 流程图和状态流转<a class="headerlink" href="#2" title="Permanent link">&para;</a></h5>
+<h6 id="_2">新节点入队<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h6>
+<ol>
+<li>线程加锁失败，创建Node（waitStatus=0，thread=当前线程）</li>
+<li>通过addWaiter/enq方法，Node插入Sync队列尾部。</li>
+</ol>
+<h6 id="_3">等待与阻塞<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h6>
+<ol>
+<li>
+<p>在acquireQueued循环中：</p>
+<ul>
+<li>如果自己的前驱不是head或还没抢到锁，调用<code>shouldParkAfterFailedAcquire</code></li>
+<li><strong>此时前驱的waitStatus会被设置为SIGNAL（-1）</strong>，表示“当我释放锁时要唤醒下一个”</li>
+<li>当前节点阻塞自己 <code>LockSupport.park()</code></li>
+</ul>
+</li>
+<li>
+<p>被前驱unpark唤醒后，继续竞争锁</p>
+</li>
+</ol>
+<h6 id="_4">获得锁<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h6>
+<ol>
+<li>只有head节点的直接后继，且tryAcquire成功，才会：<ul>
+<li>setHead(node)，自己Node升格为新的head（并回收前一个哨兵节点）</li>
+</ul>
+</li>
+</ol>
+<h6 id="_5">取消与异常<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h6>
+<ol>
+<li>如果等待过程中线程被中断或超时，会把自己的waitStatus设为CANCELLED（1），链路后续会跳过已取消节点。<ul>
+<li>节点及其前后指针被修正，保证Sync queue删除无效节点。</li>
+<li>取消逻辑保证不会破坏队列完整性。</li>
+</ul>
+</li>
+</ol>
+<h6 id="_6">时序（流转）示意<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h6>
+<p>配合每步的waitStatus标记：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>对应waitStatus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新节点刚入队</td>
+<td>0（默认）</td>
+</tr>
+<tr>
+<td>前驱节点设置为SIGNAL</td>
+<td>pred.waitStatus = -1</td>
+</tr>
+<tr>
+<td>开始等待被唤醒</td>
+<td>pred.waitStatus = -1，本节点阻塞</td>
+</tr>
+<tr>
+<td>前驱释放锁</td>
+<td>pred.tryRelease，unpark后继</td>
+</tr>
+<tr>
+<td>获得锁，成新head</td>
+<td>waitStatus = 0，Node入head位置</td>
+</tr>
+<tr>
+<td>取消排队</td>
+<td>waitStatus = 1，节点要被清理</td>
+</tr>
+</tbody>
+</table>
+<p>（说明：只有前驱节点会被设置为SIGNAL! 这样前驱释放锁时负责唤醒其后继。）</p>
+<h6 id="_7">伪流程&amp;状态标记举例<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h6>
+<p>假设队列有 head -&gt; Node1 -&gt; Node2：</p>
+<ul>
+<li>Node2刚加进来:  waitStatus=0  </li>
+<li>Node1入队后，head的waitStatus会被设为SIGNAL</li>
+<li>Node2自旋时发现还不能获取锁，Node1的waitStatus设为SIGNAL</li>
+<li>Node1释放时unpark(Node2.thread)</li>
+<li>Node2被唤醒、tryAcquire成功升为新head</li>
+</ul>
+<h6 id="_8">概念梳理<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h6>
+<ul>
+<li><strong>0</strong>：节点活跃，等待正常</li>
+<li><strong>SIGNAL(-1)</strong>：释放锁时负责唤醒后继节点</li>
+<li><strong>CANCELLED(1)</strong>：此节点已退出排队</li>
+<li><strong>CONDITION(-2)</strong>：节点在Condition队列中（不是Sync队列）</li>
+<li><strong>PROPAGATE(-3)</strong>：仅在共享锁传播时用</li>
+</ul>
+<h6 id="_9">流转全链路总结<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h6>
+<ol>
+<li><strong>新节点waitStatus=0</strong> -&gt; </li>
+<li><strong>它的前驱设置为SIGNAL</strong>（表示后继等我唤醒） -&gt;</li>
+<li><strong>如果超时/中断，将自身变为CANCELLED</strong> -&gt;</li>
+<li><strong>被唤醒试图变为head</strong> -&gt;</li>
+<li><strong>成为新head，等待下一个节点来排队</strong></li>
+</ol>
 
 
 
@@ -1874,14 +2320,14 @@ graph TD
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
       
-        <script src="javascripts/mermaid-init.js"></script>
+        <script src="../../javascripts/mermaid-init.js"></script>
       
     
   </body>
