@@ -78,7 +78,7 @@ nav:
       - Kafka: 04-中间件/03-kafka.md
   - Spring:
       - 核心概念: 05-spring/01-核心概念.md
-      - 核心概念: 05-spring/02-AOP.md
+      - AOP: 05-spring/02-AOP.md
   - 面试题:
       - Java基础面试题: qa/01-Java基础面试题.md
       - Java基础面试题-问题: qa/01-Java基础面试题-问题.md
